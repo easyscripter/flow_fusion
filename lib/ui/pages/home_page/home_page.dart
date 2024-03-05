@@ -1,3 +1,4 @@
+import 'package:flow_fusion/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,9 @@ class HomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Flow Fusion'),
       ),
-      body: Container(),
+      body: Center(
+        child: Assets.images.bucket.image(),
+      ),
     );
   }
 }

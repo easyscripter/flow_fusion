@@ -31,6 +31,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+# build_runner related
+/lib/gen/
+
 # Symbolication related
 app.*.symbols
 
