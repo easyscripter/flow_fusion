@@ -1,11 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@singleton
 class Prefs {
-  late final SharedPreferences _prefs;
-
-  Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
-  }
+  final SharedPreferences _prefs;
+  Prefs(this._prefs);
 
   static const String _bucketsKey = 'buckets';
   int? get buckets => _prefs.getInt(_bucketsKey);
@@ -17,6 +16,3 @@ class Prefs {
     }
   }
 }
-
-// TODO: Add `injectable` to project
-final prefs = Prefs();
