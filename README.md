@@ -18,7 +18,7 @@ To get started with Flow Fusion, follow these steps:
 1. **Clone the Repository**
 2. **Navigate to the Project Directory**: `cd flow_fusion`
 3. **Install Dependencies**: `flutter pub get`
-4. **Generate Files**: `flutter pub run build_runner build`
+4. **Generate Files**: `dart run build_runner build` (or use `dart run build_runner watch` for development)
 5. **Run the Application**: `flutter run`
 
 ## License
