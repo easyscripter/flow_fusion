@@ -1,5 +1,5 @@
 name: flow_fusion
-description: "A new Flutter project."
+description: "Pomodoro timer with focus mode"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
