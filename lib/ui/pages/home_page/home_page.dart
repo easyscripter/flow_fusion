@@ -1,5 +1,7 @@
 import 'package:flow_fusion/gen/assets.gen.dart';
+import 'package:flow_fusion/model/datasources/database/dao/person_dao.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
+import 'package:flow_fusion/model/entity/database/person.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,8 +17,19 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    final prefs = GetIt.instance.get<Prefs>();
-    prefs.buckets = 1;
+    (() async {
+      final prefs = GetIt.I.get<Prefs>();
+
+      prefs.buckets = 1;
+      print(prefs.buckets);
+
+      final personDao = GetIt.I.get<PersonDao>();
+
+      await personDao.clear();
+      await personDao.insertPerson(Person.optional(name: "Joe"));
+      await personDao.insertPerson(Person.optional(name: "Mike"));
+      personDao.findAllPeople().then((value) => print(value));
+    })();
   }
 
   @override
