@@ -13,7 +13,7 @@ abstract class PrefsModule {
 
 @module
 abstract class DatabaseModule {
-   @preResolve
+  @preResolve
   Future<AppDatabase> get db =>
       $FloorAppDatabase.databaseBuilder('app_database.db').build();
 }
