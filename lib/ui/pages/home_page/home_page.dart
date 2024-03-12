@@ -3,8 +3,8 @@ import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/pages/session_page/session_page.dart';
 import 'package:flow_fusion/ui/pages/settings_page/settings_page.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
+import 'package:flow_fusion/ui/pages/home_page/home_page_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _viewModel = HomePageViewModel();
+
   @override
   int _selectedIndex = 0;
   final List<Widget> _pages = [
@@ -22,9 +24,7 @@ class _HomePageState extends State<HomePage> {
   ];
   void initState() {
     super.initState();
-
-    final prefs = GetIt.instance.get<Prefs>();
-    prefs.buckets = 1;
+    _viewModel.init();
   }
 
   void _onDestinationSelected(int index) {
