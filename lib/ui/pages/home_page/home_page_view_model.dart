@@ -9,6 +9,14 @@ part 'home_page_view_model.g.dart';
 class HomePageViewModel = _HomePageViewModelBase with _$HomePageViewModel;
 
 abstract class _HomePageViewModelBase with Store {
+  @observable
+  int selectedIndex = 0;
+
+  @action
+  void selectTab(int index) {
+    this.selectedIndex = index;
+  }
+
   @action
   Future<void> init() async {
     final prefs = GetIt.I.get<Prefs>();
