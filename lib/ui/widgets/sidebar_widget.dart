@@ -17,22 +17,18 @@ class SidebarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<NavigationRailDestination> destinations = [];
-    for (int i = 0; i < menuIcons.length; i++) {
-      destinations.add(
-        NavigationRailDestination(
-          icon: Icon(menuIcons[i]),
-          selectedIcon: Icon(menuIcons[i]),
-          label: Text(menuLabels != null ? menuLabels![i] : ''),
-        ),
-      );
-    }
-
     return NavigationRail(
       selectedIndex: selectedIndex,
       onDestinationSelected: onDestinationSelected,
       labelType: NavigationRailLabelType.all,
-      destinations: destinations,
+      destinations: [
+        for (int i = 0; i < menuIcons.length; i++)
+          NavigationRailDestination(
+            icon: Icon(menuIcons[i]),
+            selectedIcon: Icon(menuIcons[i]),
+            label: Text(menuLabels != null ? menuLabels![i] : ''),
+          ),
+      ],
     );
   }
 }
