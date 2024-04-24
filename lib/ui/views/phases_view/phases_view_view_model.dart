@@ -14,8 +14,9 @@ abstract class _PhasesViewViewModelBase with Store {
     _phaseDao = GetIt.I.get<PhaseDao>();
   }
 
-  _PhasesViewViewModelBase() {
-    _setupDataBase();
+  @action
+  Future<void> init() async {
+    await _setupDataBase();
   }
 
   @action

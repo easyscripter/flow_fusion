@@ -21,6 +21,7 @@ class _PhasesViewState extends State<PhasesView> {
   @override
   void initState() {
     super.initState();
+    _viewModel.init();
   }
 
   @override
@@ -30,25 +31,26 @@ class _PhasesViewState extends State<PhasesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Observer(
-            builder: (context) => FutureBuilder<List<Phase>>(
-                  future: _viewModel.getPhasesBySessionId(widget.sessionId),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          Phase phase = snapshot.data![index];
-                          return PhaseWidget(phase: phase);
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text("Error: ${snapshot.error}"));
-                    } else {
-                      return Center(child: Text("No phases found"));
-                    }
-                  },
-                )));
+    print(widget.sessionId); // Logging for debugging
+    return FutureBuilder<List<Phase>>(
+      future: _viewModel.getPhasesBySessionId(widget.sessionId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              Phase phase = snapshot.data![index];
+              return PhaseWidget(phase: phase);
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        } else {
+          return const Center(child: Text("No phases found"));
+        }
+      },
+    );
   }
 }

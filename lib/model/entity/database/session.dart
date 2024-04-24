@@ -1,9 +1,11 @@
 import 'package:floor/floor.dart';
 
-@entity
+@Entity(tableName: 'Session')
 class Session {
   @PrimaryKey(autoGenerate: true)
   final int? id;
+
+  @ColumnInfo(name: 'name')
   String name;
 
   Session({
