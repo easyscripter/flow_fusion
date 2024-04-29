@@ -14,7 +14,7 @@ abstract class _HomePageViewModelBase with Store {
   int selectedIndex = 0;
 
   @observable
-  Session currentSession = Session(name: "Default Session");
+  Session currentSession = Session(id: 1, name: "Default Session");
 
   @action
   void selectTab(int index) {
@@ -25,9 +25,11 @@ abstract class _HomePageViewModelBase with Store {
   Future<void> init() async {
     _sessionDao = GetIt.I.get<SessionDao>();
     final sessions = await _sessionDao.findAllSession();
-    if (sessions.isNotEmpty) {
-      currentSession = sessions.first;
+    if (sessions.isEmpty) {
+      _sessionDao.insertSession(currentSession);
+      return;
     }
+    currentSession = sessions.first;
   }
 
   @action

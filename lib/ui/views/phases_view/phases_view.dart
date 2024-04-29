@@ -1,7 +1,9 @@
+import 'package:flow_fusion/enums/PhaseType.dart';
 import 'package:flow_fusion/model/entity/database/phase.dart';
 import 'package:flow_fusion/ui/views/phases_view/phases_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/phase_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PhasesView extends StatefulWidget {
@@ -21,7 +23,7 @@ class _PhasesViewState extends State<PhasesView> {
   @override
   void initState() {
     super.initState();
-    _viewModel.init();
+    _viewModel.init(widget.sessionId);
   }
 
   @override
@@ -31,26 +33,68 @@ class _PhasesViewState extends State<PhasesView> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.sessionId); // Logging for debugging
-    return FutureBuilder<List<Phase>>(
-      future: _viewModel.getPhasesBySessionId(widget.sessionId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              Phase phase = snapshot.data![index];
-              return PhaseWidget(phase: phase);
-            },
-          );
-        } else if (snapshot.hasError) {
-          return Center(child: Text("Error: ${snapshot.error}"));
-        } else {
-          return const Center(child: Text("No phases found"));
-        }
-      },
-    );
+    return Observer(
+        builder: (context) => Scaffold(
+                body: Column(children: <Widget>[
+              Expanded(
+                  child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 300),
+                child: ListView.separated(
+                    itemCount: _viewModel.phases.length,
+                    itemBuilder: (context, index) {
+                      return PhaseWidget(
+                          number: index + 1,
+                          title: _viewModel.phases[index].name,
+                          type: _viewModel.phases[index].type,
+                          color: _viewModel.phases[index].type == PhaseType.work
+                              ? Colors.orange
+                              : Colors.green,
+                          duration: _viewModel.phases[index].duration);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 12);
+                    }),
+              )),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                      ElevatedButton.icon(
+                          onPressed: () => {
+                                if (_viewModel.phases.length % 2 == 0)
+                                  {
+                                    _viewModel.addPhase(Phase(
+                                      sessionId: widget.sessionId,
+                                      name: 'Work',
+                                      type: PhaseType.work,
+                                      duration: const Duration(minutes: 25),
+                                    ))
+                                  }
+                                else
+                                  {
+                                    _viewModel.addPhase(Phase(
+                                      sessionId: widget.sessionId,
+                                      name: 'Chill',
+                                      type: PhaseType.chill,
+                                      duration: const Duration(minutes: 15),
+                                    ))
+                                  }
+                              },
+                          icon: const Icon(Icons.add),
+                          label: const Text('Add Phase')),
+                      const SizedBox(width: 12.0),
+                      ElevatedButton.icon(
+                          onPressed: _viewModel.phases.isEmpty
+                              ? null
+                              : () => {
+                                    //TODO: Add navigate to timer screen
+                                  },
+                          icon: const Icon(Icons.timer),
+                          label: const Text('Start Timer')),
+                    ])),
+              ),
+            ])));
   }
 }

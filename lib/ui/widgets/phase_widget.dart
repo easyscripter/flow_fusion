@@ -1,62 +1,54 @@
 import 'package:flow_fusion/enums/PhaseType.dart';
-import 'package:flow_fusion/model/entity/database/phase.dart';
 import 'package:flutter/material.dart';
 
-class PhaseWidget extends StatefulWidget {
-  final Phase phase;
+class PhaseWidget extends StatelessWidget {
+  final int number;
+  final Color color;
+  final String title;
+  final PhaseType type;
+  final Duration duration;
+  final double width;
+
   const PhaseWidget({
     Key? key,
-    required this.phase,
+    this.width = 300.0,
+    required this.number,
+    required this.color,
+    required this.title,
+    required this.type,
+    required this.duration,
   }) : super(key: key);
-
-  @override
-  State<PhaseWidget> createState() => _PhaseWidgetState();
-}
-
-class _PhaseWidgetState extends State<PhaseWidget> {
-  late TextEditingController _nameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: widget.phase.name);
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
-
-  void _updateName() {
-    setState(() {
-      widget.phase.name = _nameController.text;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: widget.phase.type == PhaseType.work
-                  ? Colors.red
-                  : Colors.green),
-          borderRadius: BorderRadius.circular(8.0),
+      width: width,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(
+          color: color,
+          width: 1.0,
         ),
-        child: Row(children: <Widget>[
-          TextFormField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Phase Name',
-            ),
-            onChanged: (value) => _updateName(),
-            maxLines: 1,
-            maxLength: 15,
-          ),
-          const SizedBox(width: 8.0),
-          Text('${widget.phase.duration}'),
-        ]));
+      ),
+      child: Row(children: <Widget>[
+        CircleAvatar(
+          backgroundColor: color,
+          child: Text(number.toString(),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
+        ),
+        const SizedBox(width: 8.0),
+        Icon(type == PhaseType.work ? Icons.work : Icons.coffee, color: color),
+        const SizedBox(width: 12.0),
+        Text(
+          title,
+          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(width: 16.0),
+        Text('${duration.inMinutes} min',
+            style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+      ]),
+    );
   }
 }
