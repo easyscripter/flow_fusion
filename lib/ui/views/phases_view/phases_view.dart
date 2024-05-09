@@ -32,68 +32,79 @@ class _PhasesViewState extends State<PhasesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-        builder: (context) => Scaffold(
-                body: Column(children: <Widget>[
-              Expanded(
-                  child: ConstrainedBox(
+    return Scaffold(
+      body: Observer(
+        builder: (context) => Column(
+          children: <Widget>[
+            Expanded(
+              child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 300),
                 child: ListView.separated(
-                    itemCount: _viewModel.phases.length,
-                    itemBuilder: (context, index) {
-                      return PhaseWidget(
-                          number: index + 1,
-                          title: _viewModel.phases[index].name,
-                          type: _viewModel.phases[index].type,
-                          color: _viewModel.phases[index].type == PhaseType.work
-                              ? Colors.orange
-                              : Colors.green,
-                          duration: _viewModel.phases[index].duration);
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 12);
-                    }),
-              )),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                      ElevatedButton.icon(
-                          onPressed: () => {
-                                if (_viewModel.phases.length % 2 == 0)
-                                  {
-                                    _viewModel.addPhase(Phase(
-                                      sessionId: widget.sessionId,
-                                      name: 'Work',
-                                      type: PhaseType.work,
-                                      duration: const Duration(minutes: 25),
-                                    ))
-                                  }
-                                else
-                                  {
-                                    _viewModel.addPhase(Phase(
-                                      sessionId: widget.sessionId,
-                                      name: 'Chill',
-                                      type: PhaseType.chill,
-                                      duration: const Duration(minutes: 15),
-                                    ))
-                                  }
-                              },
-                          icon: const Icon(Icons.add),
-                          label: const Text('Add Phase')),
-                      const SizedBox(width: 12.0),
-                      ElevatedButton.icon(
-                          onPressed: _viewModel.phases.isEmpty
-                              ? null
-                              : () => {
-                                    //TODO: Add navigate to timer screen
-                                  },
-                          icon: const Icon(Icons.timer),
-                          label: const Text('Start Timer')),
-                    ])),
+                  itemCount: _viewModel.phases.length,
+                  itemBuilder: (context, index) {
+                    return PhaseWidget(
+                      number: index + 1,
+                      title: _viewModel.phases[index].name,
+                      type: _viewModel.phases[index].type,
+                      color: _viewModel.phases[index].type == PhaseType.work
+                          ? Colors.orange
+                          : Colors.green,
+                      duration: _viewModel.phases[index].duration,
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 12);
+                  },
+                ),
               ),
-            ])));
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton.icon(
+                      onPressed: () => {
+                        if (_viewModel.phases.length % 2 == 0)
+                          {
+                            _viewModel.addPhase(Phase(
+                              sessionId: widget.sessionId,
+                              name: 'Work',
+                              type: PhaseType.work,
+                              duration: const Duration(minutes: 25),
+                            ))
+                          }
+                        else
+                          {
+                            _viewModel.addPhase(Phase(
+                              sessionId: widget.sessionId,
+                              name: 'Chill',
+                              type: PhaseType.chill,
+                              duration: const Duration(minutes: 15),
+                            ))
+                          }
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Phase'),
+                    ),
+                    const SizedBox(width: 12.0),
+                    ElevatedButton.icon(
+                      onPressed: _viewModel.phases.isEmpty
+                          ? null
+                          : () => {
+                                //TODO: Add navigate to timer screen
+                              },
+                      icon: const Icon(Icons.timer),
+                      label: const Text('Start Timer'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
