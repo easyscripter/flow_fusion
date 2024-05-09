@@ -8,9 +8,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class PhasesView extends StatefulWidget {
   final int sessionId;
   const PhasesView({
-    Key? key,
+    super.key,
     required this.sessionId,
-  }) : super(key: key);
+  });
 
   @override
   State<PhasesView> createState() => _PhasesViewState();

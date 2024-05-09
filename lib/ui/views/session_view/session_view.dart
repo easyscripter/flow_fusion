@@ -8,9 +8,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class SessionView extends StatefulWidget {
   final Session currentSession;
   const SessionView({
-    Key? key,
+    super.key,
     required this.currentSession,
-  }) : super(key: key);
+  });
   @override
   State<SessionView> createState() => _SessionViewState();
 }

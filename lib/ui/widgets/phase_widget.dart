@@ -10,14 +10,14 @@ class PhaseWidget extends StatelessWidget {
   final double width;
 
   const PhaseWidget({
-    Key? key,
+    super.key,
     this.width = 300.0,
     required this.number,
     required this.color,
     required this.title,
     required this.type,
     required this.duration,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
