@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/ui/views/phases_view/phases_view.dart';
 import 'package:flow_fusion/ui/views/session_view/session_view_view_model.dart';

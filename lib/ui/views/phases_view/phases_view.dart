@@ -3,7 +3,6 @@ import 'package:flow_fusion/model/entity/database/phase.dart';
 import 'package:flow_fusion/ui/views/phases_view/phases_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/phase_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PhasesView extends StatefulWidget {
