@@ -1,4 +1,4 @@
-import 'package:flow_fusion/enums/PhaseType.dart';
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/entity/database/phase.dart';
 import 'package:flow_fusion/ui/views/phases_view/phases_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/phase_widget.dart';

@@ -1,4 +1,4 @@
-import 'package:flow_fusion/enums/PhaseType.dart';
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flutter/material.dart';
 
 class PhaseWidget extends StatelessWidget {

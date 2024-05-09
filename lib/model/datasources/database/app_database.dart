@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:floor/floor.dart';
-import 'package:flow_fusion/enums/PhaseType.dart';
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/datasources/database/converter/duration_converter.dart';
 import 'package:flow_fusion/model/datasources/database/dao/phase_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';

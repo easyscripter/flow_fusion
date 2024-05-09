@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:flow_fusion/enums/PhaseType.dart';
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 
 @Entity(

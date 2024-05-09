@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:flow_fusion/enums/PhaseType.dart';
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/datasources/database/app_database.dart';
 import 'package:flow_fusion/model/entity/database/phase.dart';
 import 'package:injectable/injectable.dart';
