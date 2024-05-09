@@ -8,8 +8,8 @@ Future<void> main() async {
   await configureDependencies();
   await windowManager.ensureInitialized();
   WindowOptions windowOptions = const WindowOptions(
-    size: Size(1200, 700),
-    minimumSize: Size(1200, 700),
+    size: Size(1000, 600),
+    minimumSize: Size(500, 500),
     center: true,
     skipTaskbar: false,
     title: 'Flow Fusion',
