@@ -31,24 +31,35 @@ class PhaseWidget extends StatelessWidget {
           width: 1.0,
         ),
       ),
-      child: Row(children: <Widget>[
-        CircleAvatar(
-          backgroundColor: color,
-          child: Text(number.toString(),
+      child: Row(
+        children: <Widget>[
+          CircleAvatar(
+            backgroundColor: color,
+            child: Text(
+              number.toString(),
               style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold)),
-        ),
-        const SizedBox(width: 8.0),
-        Icon(type == PhaseType.work ? Icons.work : Icons.coffee, color: color),
-        const SizedBox(width: 12.0),
-        Text(
-          title,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(width: 16.0),
-        Text('${duration.inMinutes} min',
-            style: TextStyle(color: color, fontWeight: FontWeight.bold)),
-      ]),
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8.0),
+          Icon(
+            type == PhaseType.work ? Icons.work : Icons.coffee,
+            color: color,
+          ),
+          const SizedBox(width: 12.0),
+          Text(
+            title,
+            style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 16.0),
+          Text(
+            '${duration.inMinutes} min',
+            style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
