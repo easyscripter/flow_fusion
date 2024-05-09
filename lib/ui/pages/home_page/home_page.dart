@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Center(
                 child: switch (_viewModel.selectedIndex) {
-                  0 => const SessionView(),
+                  0 => SessionView(currentSession: _viewModel.currentSession),
                   _ => const SettingsView(),
                 },
               ),

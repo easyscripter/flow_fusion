@@ -7,13 +7,12 @@ class SidebarWidget extends StatelessWidget {
   final int selectedIndex;
 
   const SidebarWidget({
-    Key? key,
+    super.key,
     required this.menuIcons,
     required this.onDestinationSelected,
     this.menuLabels,
     this.selectedIndex = 0, // Default selected index
-  })  : assert(menuIcons.length == menuLabels?.length || menuLabels == null),
-        super(key: key);
+  }) : assert(menuIcons.length == menuLabels?.length || menuLabels == null);
 
   @override
   Widget build(BuildContext context) {
