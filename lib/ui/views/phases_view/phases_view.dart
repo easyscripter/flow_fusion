@@ -75,7 +75,7 @@ class _PhasesViewState extends State<PhasesView> {
                               sessionId: widget.sessionId,
                               name: 'Work',
                               type: PhaseType.work,
-                              duration: const Duration(seconds: 25),
+                              duration: const Duration(seconds: 15),
                             ))
                           }
                         else
@@ -84,7 +84,7 @@ class _PhasesViewState extends State<PhasesView> {
                               sessionId: widget.sessionId,
                               name: 'Chill',
                               type: PhaseType.chill,
-                              duration: const Duration(seconds: 15),
+                              duration: const Duration(seconds: 10),
                             ))
                           }
                       },
@@ -95,10 +95,7 @@ class _PhasesViewState extends State<PhasesView> {
                     ElevatedButton.icon(
                       onPressed: _viewModel.phases.isEmpty
                           ? null
-                          : () {
-                              //TODO: Add navigate to timer screen
-                              widget.onStartTimer();
-                            },
+                          : () => widget.onStartTimer(),
                       icon: const Icon(Icons.timer),
                       label: const Text('Start Timer'),
                     ),
