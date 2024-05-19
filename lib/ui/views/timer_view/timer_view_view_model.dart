@@ -17,7 +17,11 @@ abstract class _TimerViewViewModelBase with Store {
   @observable
   int phase = 0;
   @computed
-  Phase get currentPhase => phases[phase];
+  Phase? get currentPhase {
+    if (phase >= 0 && phase < phases.length) return phases[phase];
+    return null;
+  }
+
   @observable
   List<Phase> phases = [];
 
@@ -35,7 +39,7 @@ abstract class _TimerViewViewModelBase with Store {
   @computed
   bool get isNotStarted =>
       isPaused &&
-      timeLeft?.inMilliseconds == currentPhase.duration.inMilliseconds;
+      timeLeft?.inMilliseconds == currentPhase?.duration.inMilliseconds;
 
   @computed
   String get timerString {
@@ -51,8 +55,8 @@ abstract class _TimerViewViewModelBase with Store {
 
   @computed
   double get progress {
-    if (timeLeft != null) {
-      return timeLeft!.inMilliseconds / currentPhase.duration.inMilliseconds;
+    if (timeLeft != null && currentPhase != null) {
+      return timeLeft!.inMilliseconds / currentPhase!.duration.inMilliseconds;
     } else {
       return 0.0;
     }
@@ -71,23 +75,29 @@ abstract class _TimerViewViewModelBase with Store {
   @action
   void _startTimer() {
     if (timeLeft != null) {
-      endTimer = Timer(timeLeft!, () {
-        timeLeft = null;
-        end = null;
-        _stopTimer();
-        phase++;
-        if (phase < phases.length) {
-          timeLeft = currentPhase.duration;
-          end = DateTime.now().add(currentPhase.duration);
-          _startTimer();
-        }
-      });
+      endTimer = Timer(
+        timeLeft!,
+        () {
+          timeLeft = null;
+          end = null;
+          _stopTimer();
+          phase++;
+          if (currentPhase != null) {
+            timeLeft = currentPhase!.duration;
+            end = DateTime.now().add(currentPhase!.duration);
+            _startTimer();
+          }
+        },
+      );
 
-      tickTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-        if (end != null) {
-          timeLeft = end!.difference(DateTime.now());
-        }
-      });
+      tickTimer = Timer.periodic(
+        const Duration(milliseconds: 100),
+        (timer) {
+          if (end != null) {
+            timeLeft = end!.difference(DateTime.now());
+          }
+        },
+      );
     }
   }
 
@@ -103,10 +113,12 @@ abstract class _TimerViewViewModelBase with Store {
       endTimer = null;
     }
   }
+
   @action
   void onTogglePause() {
     if (end == null) {
-      end = DateTime.now().add(timeLeft ?? currentPhase.duration);
+      end = DateTime.now()
+          .add(timeLeft ?? currentPhase?.duration ?? Duration.zero);
       _startTimer();
     } else {
       end = null;

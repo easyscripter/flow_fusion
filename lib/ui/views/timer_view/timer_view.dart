@@ -1,3 +1,4 @@
+import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/ui/views/timer_view/timer_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/timer_progress_bar/timer_progress_bar.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +32,7 @@ class _TimerViewState extends State<TimerView> {
       children: [
         if (_viewModel.isRunning || _viewModel.isPaused)
           FilledButton.tonalIcon(
-            onPressed: () {
-              _viewModel.onTogglePause();
-            },
+            onPressed: () => _viewModel.onTogglePause(),
             label: Text(
               _viewModel.isNotStarted
                   ? 'Start'
@@ -50,17 +49,13 @@ class _TimerViewState extends State<TimerView> {
           FilledButton.tonalIcon(
             label: const Text('Stop'),
             icon: const Icon(Icons.stop),
-            onPressed: () {
-              _viewModel.onStop();
-            },
+            onPressed: () => _viewModel.onStop(),
           ),
         if (_viewModel.isEnded)
           FilledButton.tonalIcon(
             label: const Text('Reset'),
             icon: const Icon(Icons.restart_alt),
-            onPressed: () {
-              _viewModel.onReset();
-            },
+            onPressed: () => _viewModel.onReset(),
           ),
       ],
     );
@@ -80,9 +75,15 @@ class _TimerViewState extends State<TimerView> {
                   height: 200,
                   child: Stack(
                     children: [
-                      TimerProgressBar(
-                        value: _viewModel.progress,
-                      ),
+                      if (_viewModel.currentPhase != null)
+                        if (_viewModel.currentPhase!.type == PhaseType.work)
+                          TimerProgressBar.work(
+                            value: _viewModel.progress,
+                          )
+                        else
+                          TimerProgressBar.chill(
+                            value: _viewModel.progress,
+                          ),
                       Center(
                         child: Text(
                           ' ${_viewModel.timerString}',
@@ -94,7 +95,7 @@ class _TimerViewState extends State<TimerView> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             _buildButtons(context),
