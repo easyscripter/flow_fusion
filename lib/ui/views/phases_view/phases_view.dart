@@ -7,9 +7,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PhasesView extends StatefulWidget {
   final int sessionId;
+  final Function onStartTimer;
+
   const PhasesView({
     super.key,
     required this.sessionId,
+    required this.onStartTimer,
   });
 
   @override
@@ -72,7 +75,7 @@ class _PhasesViewState extends State<PhasesView> {
                               sessionId: widget.sessionId,
                               name: 'Work',
                               type: PhaseType.work,
-                              duration: const Duration(minutes: 25),
+                              duration: const Duration(seconds: 25),
                             ))
                           }
                         else
@@ -81,7 +84,7 @@ class _PhasesViewState extends State<PhasesView> {
                               sessionId: widget.sessionId,
                               name: 'Chill',
                               type: PhaseType.chill,
-                              duration: const Duration(minutes: 15),
+                              duration: const Duration(seconds: 15),
                             ))
                           }
                       },
@@ -92,9 +95,10 @@ class _PhasesViewState extends State<PhasesView> {
                     ElevatedButton.icon(
                       onPressed: _viewModel.phases.isEmpty
                           ? null
-                          : () => {
-                                //TODO: Add navigate to timer screen
-                              },
+                          : () {
+                              //TODO: Add navigate to timer screen
+                              widget.onStartTimer();
+                            },
                       icon: const Icon(Icons.timer),
                       label: const Text('Start Timer'),
                     ),

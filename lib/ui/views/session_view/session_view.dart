@@ -33,8 +33,13 @@ class _SessionViewState extends State<SessionView> {
     return Observer(
       builder: (context) => Center(
         child: switch (_viewModel.currentView) {
-          0 => const TimerView(),
-          _ => PhasesView(sessionId: widget.currentSession.id ?? 1),
+          0 => TimerView(sessionId: widget.currentSession.id ?? 1),
+          _ => PhasesView(
+              sessionId: widget.currentSession.id ?? 1,
+              onStartTimer: () {
+                _viewModel.setCurrentView(0);
+              },
+            ),
         },
       ),
     );
