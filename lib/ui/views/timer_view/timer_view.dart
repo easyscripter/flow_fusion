@@ -85,9 +85,23 @@ class _TimerViewState extends State<TimerView> {
                             value: _viewModel.progress,
                           ),
                       Center(
-                        child: Text(
-                          ' ${_viewModel.timerString}',
-                          style: const TextStyle(fontSize: 48.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              _viewModel.timeRemainingString,
+                              style: const TextStyle(
+                                fontSize: 48.0,
+                              ),
+                            ),
+                            Text(
+                              _viewModel.timeRemainingMilliseconds,
+                              style: const TextStyle(
+                                  fontSize: 24.0, color: Colors.grey),
+                            ),
+                          ],
                         ),
                       )
                     ],

@@ -42,14 +42,22 @@ abstract class _TimerViewViewModelBase with Store {
       timeLeft?.inMilliseconds == currentPhase?.duration.inMilliseconds;
 
   @computed
-  String get timerString {
+  String get timeRemainingString {
     if (timeLeft != null) {
       final mins = timeLeft!.inMinutes.toString().padLeft(2, '0');
       final seconds = (timeLeft!.inSeconds % 60).toString().padLeft(2, '0');
-      final milliseconds = (timeLeft!.inMilliseconds % 1000 ~/ 100).toString();
-      return "$mins:$seconds.$milliseconds";
+      return '$mins:$seconds';
     } else {
-      return '--:--.-';
+      return '--:--';
+    }
+  }
+
+  String get timeRemainingMilliseconds {
+    if (timeLeft != null) {
+      final milliseconds = (timeLeft!.inMilliseconds % 1000 ~/ 100).toString();
+      return '.$milliseconds';
+    } else {
+      return '.-';
     }
   }
 
