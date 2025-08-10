@@ -1,5 +1,6 @@
 import 'package:flow_fusion/ui/views/session_view/session_view.dart';
 import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
+import 'package:flow_fusion/ui/views/home_view/home_view.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
 import 'package:flow_fusion/ui/pages/home_page/home_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -34,29 +35,35 @@ class _HomePageState extends State<HomePage> {
           children: [
             SidebarWidget(
               menuIcons: const [
-                Icons.schedule,
-                Icons.settings,
+                Icons.home_outlined,      // Главная
+                Icons.schedule_outlined,  // Сессии
+                Icons.settings_outlined,  // Настройки
               ],
               menuLabels: const [
-                'Session',
-                'Settings',
+                'Главная',
+                'Сессии',
+                'Настройки',
               ],
               selectedIndex: _viewModel.selectedIndex,
               onDestinationSelected: _viewModel.selectTab,
             ),
-            const VerticalDivider(thickness: 1, width: 1),
-            // Main content area
+            
+            
             Expanded(
-              child: Center(
-                child: switch (_viewModel.selectedIndex) {
-                  0 => SessionView(currentSession: _viewModel.currentSession),
-                  _ => const SettingsView(),
-                },
-              ),
+              child: _buildContent(),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildContent() {
+    return switch (_viewModel.selectedIndex) {
+      0 => HomeView(onNavigate: _viewModel.selectTab), // Главная страница с навигацией
+      1 => SessionView(currentSession: _viewModel.currentSession), // Сессии
+      2 => const SettingsView(),               // Настройки
+      _ => HomeView(onNavigate: _viewModel.selectTab), // По умолчанию главная
+    };
   }
 }
