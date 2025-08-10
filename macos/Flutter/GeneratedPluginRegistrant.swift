@@ -7,7 +7,7 @@ import Foundation
 
 import screen_retriever
 import shared_preferences_foundation
-import sqflite
+import sqflite_darwin
 import window_manager
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
