@@ -18,34 +18,35 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
-  shared_preferences: ^2.2.2
-  injectable: ^2.3.2
-  get_it: ^7.6.7
-  floor: ^1.4.2
-  sqflite: ^2.3.2
-  mobx: ^2.3.0+1
-  flutter_mobx: ^2.2.0+2
-  window_manager: ^0.3.8
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.3
+  injectable: ^2.5.1
+  get_it: ^8.2.0
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  mobx: ^2.5.0
+  flutter_mobx: ^2.3.0
+  froom: ^3.0.2
+  sqflite: ^2.4.2
+  window_manager: ^0.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
-  build_runner: ^2.4.8
-  flutter_gen_runner: ^5.4.0
-  freezed: ^2.4.7
-  json_serializable: ^6.7.1
-  injectable_generator: 2.4.1 # https://github.com/Milad-Akarie/injectable/issues/431
-  floor_generator: ^1.4.2
-  mobx_codegen: ^2.6.0+1
+  build_runner: ^2.7.0
+  injectable_generator: ^2.8.1
+  # injectable_generator: 2.4.1 # https://github.com/Milad-Akarie/injectable/issues/431
+  json_serializable: ^6.11.0
+  freezed: ^3.2.0
+  mobx_codegen: ^2.7.2
+  flutter_gen_runner: ^5.11.0
+  froom_generator: ^3.0.2
+  flutter_lints: ^6.0.0
 
 flutter_gen:
   # output: lib/gen/ # Optional (default: lib/gen/)
