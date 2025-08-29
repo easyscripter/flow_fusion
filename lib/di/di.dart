@@ -1,5 +1,4 @@
 import 'package:flow_fusion/model/datasources/database/app_database.dart';
-import 'package:flow_fusion/ui/providers/theme_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +15,7 @@ abstract class PrefsModule {
 abstract class DatabaseModule {
   @preResolve
   Future<AppDatabase> get db =>
-      $FloorAppDatabase.databaseBuilder('app_database.db').build();
+      $FroomAppDatabase.databaseBuilder('app_database.db').build();
 }
 
 @InjectableInit()
