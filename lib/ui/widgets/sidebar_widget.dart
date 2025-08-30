@@ -33,7 +33,7 @@ class SidebarWidget extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         border: Border(
           right: BorderSide(
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.8),
             width: 1,
           ),
         ),
@@ -42,18 +42,16 @@ class SidebarWidget extends StatelessWidget {
         children: [
           // Заголовок приложения
           _buildAppHeader(context),
-          
+
           // Разделитель
           Divider(
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.8),
             height: 1,
           ),
-          
+
           // Навигационное меню
-          Expanded(
-            child: _buildNavigationMenu(context),
-          ),
-          
+          Expanded(child: _buildNavigationMenu(context)),
+
           // Нижняя часть сайдбара (можно добавить дополнительную информацию)
           _buildBottomSection(context),
         ],
@@ -98,18 +96,24 @@ class SidebarWidget extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSizes.paddingSmall, vertical: 2),
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppSizes.paddingSmall,
+        vertical: 2,
+      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingMedium, vertical: AppSizes.paddingSmall),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSizes.paddingMedium,
+              vertical: AppSizes.paddingSmall,
+            ),
             decoration: BoxDecoration(
-              color: isSelected 
-                ? Theme.of(context).colorScheme.primaryContainer
-                : Colors.transparent,
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium),
             ),
             child: Row(
@@ -118,20 +122,23 @@ class SidebarWidget extends StatelessWidget {
                   icon,
                   size: AppSizes.iconSizeMedium,
                   color: isSelected
-                    ? Theme.of(context).colorScheme.onPrimaryContainer
-                    : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ? Theme.of(context).colorScheme.onPrimaryContainer
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 const SizedBox(width: AppSizes.paddingSmall),
                 Expanded(
                   child: Text(
                     label,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.normal,
                       color: isSelected
-                        ? Theme.of(context).colorScheme.onPrimaryContainer
-                        : Theme.of(context).colorScheme.onSurface,
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context).colorScheme.onSurface,
                     ),
-                    overflow: TextOverflow.ellipsis, // Обрезаем текст если не помещается
+                    overflow: TextOverflow
+                        .ellipsis, // Обрезаем текст если не помещается
                   ),
                 ),
               ],
@@ -148,7 +155,7 @@ class SidebarWidget extends StatelessWidget {
       child: Column(
         children: [
           Divider(
-            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.8),
             height: 1,
           ),
           const SizedBox(height: AppSizes.paddingSmall),

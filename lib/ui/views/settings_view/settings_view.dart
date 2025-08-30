@@ -104,7 +104,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<ThemeMode>(
-            value: _viewModel.themeMode,
+            initialValue: _viewModel.themeMode,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
