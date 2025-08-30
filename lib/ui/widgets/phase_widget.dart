@@ -26,10 +26,7 @@ class PhaseWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(
-          color: color,
-          width: 1.0,
-        ),
+        border: Border.all(color: color, width: 1.0),
       ),
       child: Row(
         children: <Widget>[

@@ -10,14 +10,7 @@ class Person {
 
   Person(this.id, this.name);
 
-  factory Person.optional({
-    int? id,
-    String? name,
-  }) =>
-      Person(
-        id,
-        name ?? '',
-      );
+  factory Person.optional({int? id, String? name}) => Person(id, name ?? '');
 
   @override
   String toString() {

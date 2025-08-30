@@ -7,8 +7,5 @@ class Session {
 
   String name;
 
-  Session({
-    this.id,
-    required this.name,
-  });
+  Session({this.id, required this.name});
 }

@@ -42,11 +42,7 @@ class QuickActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min, // Карточка занимает минимум места
             children: [
-              Icon(
-                icon,
-                size: AppSizes.iconSizeLarge,
-                color: color,
-              ),
+              Icon(icon, size: AppSizes.iconSizeLarge, color: color),
               const SizedBox(height: AppSizes.paddingSmall),
               Expanded(
                 child: Text(
@@ -54,7 +50,8 @@ class QuickActionCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
-                  overflow: TextOverflow.ellipsis, // Обрезаем текст если не помещается
+                  overflow: TextOverflow
+                      .ellipsis, // Обрезаем текст если не помещается
                   maxLines: 2, // Максимум 2 строки
                 ),
               ),

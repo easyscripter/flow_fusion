@@ -39,14 +39,20 @@ abstract class _PhasesViewViewModelBase with Store {
 
   @action
   Future<void> updatePhaseDuration(
-      int phaseId, int sessionId, Duration duration) async {
+    int phaseId,
+    int sessionId,
+    Duration duration,
+  ) async {
     await _phaseDao.updatePhaseDuration(phaseId, sessionId, duration);
     await update(sessionId);
   }
 
   @action
   Future<void> updatePhaseType(
-      int phaseId, int sessionId, PhaseType type) async {
+    int phaseId,
+    int sessionId,
+    PhaseType type,
+  ) async {
     await _phaseDao.updatePhaseType(phaseId, sessionId, type);
     await update(sessionId);
   }

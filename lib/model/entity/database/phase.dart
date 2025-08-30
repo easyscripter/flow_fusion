@@ -8,7 +8,7 @@ import 'package:flow_fusion/model/entity/database/session.dart';
       childColumns: ['sessionId'],
       parentColumns: ['id'],
       entity: Session,
-    )
+    ),
   ],
 )
 class Phase {

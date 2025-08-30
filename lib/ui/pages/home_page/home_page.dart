@@ -35,23 +35,16 @@ class _HomePageState extends State<HomePage> {
           children: [
             SidebarWidget(
               menuIcons: const [
-                Icons.home_outlined,      // Главная
-                Icons.schedule_outlined,  // Сессии
-                Icons.settings_outlined,  // Настройки
+                Icons.home_outlined, // Главная
+                Icons.schedule_outlined, // Сессии
+                Icons.settings_outlined, // Настройки
               ],
-              menuLabels: const [
-                'Главная',
-                'Сессии',
-                'Настройки',
-              ],
+              menuLabels: const ['Главная', 'Сессии', 'Настройки'],
               selectedIndex: _viewModel.selectedIndex,
               onDestinationSelected: _viewModel.selectTab,
             ),
-            
-            
-            Expanded(
-              child: _buildContent(),
-            ),
+
+            Expanded(child: _buildContent()),
           ],
         ),
       ),
@@ -60,9 +53,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildContent() {
     return switch (_viewModel.selectedIndex) {
-      0 => HomeView(onNavigate: _viewModel.selectTab), // Главная страница с навигацией
+      0 => HomeView(
+        onNavigate: _viewModel.selectTab,
+      ), // Главная страница с навигацией
       1 => SessionView(currentSession: _viewModel.currentSession), // Сессии
-      2 => const SettingsView(),               // Настройки
+      2 => const SettingsView(), // Настройки
       _ => HomeView(onNavigate: _viewModel.selectTab), // По умолчанию главная
     };
   }

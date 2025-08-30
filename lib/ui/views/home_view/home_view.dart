@@ -38,25 +38,27 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppSizes.paddingLarge),
-            
+
             // Карточки с быстрыми действиями
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   // Определяем количество колонок в зависимости от ширины
-                  int crossAxisCount = defaultCrossAxisCount ?? AppSizes.defaultCrossAxisCount;
+                  int crossAxisCount =
+                      defaultCrossAxisCount ?? AppSizes.defaultCrossAxisCount;
                   if (constraints.maxWidth > 800) {
                     crossAxisCount = 3;
                   }
                   if (constraints.maxWidth > 1200) {
                     crossAxisCount = 4;
                   }
-                  
+
                   return GridView.count(
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: gridSpacing ?? AppSizes.gridSpacing,
                     mainAxisSpacing: gridSpacing ?? AppSizes.gridSpacing,
-                    childAspectRatio: childAspectRatio ?? AppSizes.childAspectRatio,
+                    childAspectRatio:
+                        childAspectRatio ?? AppSizes.childAspectRatio,
                     children: [
                       QuickActionCard(
                         icon: Icons.schedule,

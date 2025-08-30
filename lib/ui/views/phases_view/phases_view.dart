@@ -7,10 +7,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PhasesView extends StatefulWidget {
   final int sessionId;
-  const PhasesView({
-    super.key,
-    required this.sessionId,
-  });
+  const PhasesView({super.key, required this.sessionId});
 
   @override
   State<PhasesView> createState() => _PhasesViewState();
@@ -68,22 +65,26 @@ class _PhasesViewState extends State<PhasesView> {
                       onPressed: () => {
                         if (_viewModel.phases.length % 2 == 0)
                           {
-                            _viewModel.addPhase(Phase(
-                              sessionId: widget.sessionId,
-                              name: 'Work',
-                              type: PhaseType.work,
-                              duration: const Duration(minutes: 25),
-                            ))
+                            _viewModel.addPhase(
+                              Phase(
+                                sessionId: widget.sessionId,
+                                name: 'Work',
+                                type: PhaseType.work,
+                                duration: const Duration(minutes: 25),
+                              ),
+                            ),
                           }
                         else
                           {
-                            _viewModel.addPhase(Phase(
-                              sessionId: widget.sessionId,
-                              name: 'Chill',
-                              type: PhaseType.chill,
-                              duration: const Duration(minutes: 15),
-                            ))
-                          }
+                            _viewModel.addPhase(
+                              Phase(
+                                sessionId: widget.sessionId,
+                                name: 'Chill',
+                                type: PhaseType.chill,
+                                duration: const Duration(minutes: 15),
+                              ),
+                            ),
+                          },
                       },
                       icon: const Icon(Icons.add),
                       label: const Text('Add Phase'),
@@ -93,8 +94,8 @@ class _PhasesViewState extends State<PhasesView> {
                       onPressed: _viewModel.phases.isEmpty
                           ? null
                           : () => {
-                                //TODO: Add navigate to timer screen
-                              },
+                              //TODO: Add navigate to timer screen
+                            },
                       icon: const Icon(Icons.timer),
                       label: const Text('Start Timer'),
                     ),
