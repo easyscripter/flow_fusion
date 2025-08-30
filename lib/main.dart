@@ -1,5 +1,5 @@
 import 'package:flow_fusion/di/di.dart';
-import 'package:flow_fusion/ui/app.dart';
+import 'package:flow_fusion/ui/app/app.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
