@@ -1,7 +1,6 @@
-import 'package:flow_fusion/di/di.dart';
-import 'package:flow_fusion/ui/providers/theme_provider.dart';
+import 'package:flow_fusion/ui/views/settings_view/settings_view_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -11,13 +10,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  late ThemeProvider _themeProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    _themeProvider = GetIt.instance<ThemeProvider>();
-  }
+  final _viewModel = SettingsViewViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +37,6 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ),
             const SizedBox(height: 32),
-            
             // Настройки
             Expanded(
               child: SingleChildScrollView(
@@ -54,10 +46,7 @@ class _SettingsViewState extends State<SettingsView> {
                       context,
                       title: 'Внешний вид',
                       children: [
-                        ListenableBuilder(
-                          listenable: _themeProvider,
-                          builder: (context, child) => _buildThemeTile(context),
-                        ),
+                        Observer(builder: (_) => _buildThemeTile(context)),
                       ],
                     ),
                   ],
@@ -86,11 +75,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
         ),
         const SizedBox(height: 12),
-        Card(
-          child: Column(
-            children: children,
-          ),
-        ),
+        Card(child: Column(children: children)),
       ],
     );
   }
@@ -111,20 +96,23 @@ class _SettingsViewState extends State<SettingsView> {
               const SizedBox(width: 12),
               Text(
                 'Тема',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
               ),
             ],
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<ThemeMode>(
-            value: _themeProvider.themeMode,
+            value: _viewModel.themeMode,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 8,
+              ),
             ),
             items: [
               DropdownMenuItem(
@@ -160,7 +148,7 @@ class _SettingsViewState extends State<SettingsView> {
             ],
             onChanged: (ThemeMode? newValue) {
               if (newValue != null) {
-                _themeProvider.setThemeMode(newValue);
+                _viewModel.setThemeMode(newValue);
               }
             },
           ),
@@ -169,14 +157,9 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  IconData _getThemeIcon() {
-    switch (_themeProvider.themeMode) {
-      case ThemeMode.light:
-        return Icons.light_mode;
-      case ThemeMode.dark:
-        return Icons.dark_mode;
-      case ThemeMode.system:
-        return Icons.brightness_auto;
-    }
-  }
+  IconData _getThemeIcon() => switch (_viewModel.themeMode) {
+    ThemeMode.light => Icons.light_mode,
+    ThemeMode.dark => Icons.dark_mode,
+    ThemeMode.system => Icons.brightness_auto,
+  };
 }
