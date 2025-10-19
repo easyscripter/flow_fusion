@@ -40,8 +40,8 @@ class SidebarWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Заголовок приложения
-          _buildAppHeader(context),
+          // // Заголовок приложения
+          // _buildAppHeader(context),
           // Навигационное меню
           Expanded(child: _buildNavigationMenu(context)),
           // Нижняя часть сайдбара (можно добавить дополнительную информацию)
@@ -51,18 +51,9 @@ class SidebarWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildAppHeader(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSizes.paddingLarge),
-      child: Text(
-        'Flow Fusion',
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.onSurface,
-        ),
-      ),
-    );
-  }
+  // Widget _buildAppHeader(BuildContext context) {
+  //   return 
+  // }
 
   Widget _buildNavigationMenu(BuildContext context) {
     return ListView(
