@@ -1,4 +1,4 @@
-import 'package:floor/floor.dart';
+import 'package:froom/froom.dart';
 
 @Entity()
 class Session {
@@ -7,8 +7,5 @@ class Session {
 
   String name;
 
-  Session({
-    this.id,
-    required this.name,
-  });
+  Session({this.id, required this.name});
 }

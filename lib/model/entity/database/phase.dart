@@ -1,4 +1,4 @@
-import 'package:floor/floor.dart';
+import 'package:froom/froom.dart';
 import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 
@@ -8,7 +8,7 @@ import 'package:flow_fusion/model/entity/database/session.dart';
       childColumns: ['sessionId'],
       parentColumns: ['id'],
       entity: Session,
-    )
+    ),
   ],
 )
 class Phase {

@@ -10,6 +10,7 @@ class HomePageViewModel = _HomePageViewModelBase with _$HomePageViewModel;
 abstract class _HomePageViewModelBase with Store {
   late SessionDao _sessionDao;
 
+  // Индекс выбранного пункта меню (0 - Главная, 1 - Сессии, 2 - Настройки)
   @observable
   int selectedIndex = 0;
 

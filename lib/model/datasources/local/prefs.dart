@@ -15,4 +15,14 @@ class Prefs {
       _prefs.remove(_bucketsKey);
     }
   }
+
+  static const String _themeModeKey = 'theme_mode';
+  int? get themeMode => _prefs.getInt(_themeModeKey);
+  set themeMode(int? value) {
+    if (value != null) {
+      _prefs.setInt(_themeModeKey, value);
+    } else {
+      _prefs.remove(_themeModeKey);
+    }
+  }
 }

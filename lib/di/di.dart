@@ -15,7 +15,7 @@ abstract class PrefsModule {
 abstract class DatabaseModule {
   @preResolve
   Future<AppDatabase> get db =>
-      $FloorAppDatabase.databaseBuilder('app_database.db').build();
+      $FroomAppDatabase.databaseBuilder('app_database.db').build();
 }
 
 @InjectableInit()

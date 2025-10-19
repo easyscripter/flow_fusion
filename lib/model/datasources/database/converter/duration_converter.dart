@@ -1,4 +1,4 @@
-import 'package:floor/floor.dart';
+import 'package:froom/froom.dart';
 
 class DurationConverter extends TypeConverter<Duration, int> {
   @override

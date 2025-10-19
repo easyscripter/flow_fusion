@@ -10,8 +10,6 @@ class TimerView extends StatefulWidget {
 class _TimerViewState extends State<TimerView> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('TimerView'),
-    );
+    return const Center(child: Text('TimerView'));
   }
 }

@@ -1,4 +1,4 @@
-import 'package:floor/floor.dart';
+import 'package:froom/froom.dart';
 import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/datasources/database/app_database.dart';
 import 'package:flow_fusion/model/entity/database/phase.dart';
@@ -17,15 +17,18 @@ abstract class PhaseDao {
   Future<void> deletePhaseById(int sessionId, int id);
 
   @Query(
-      'UPDATE Phase SET name = :name WHERE id = :id AND sessionId = :sessionId')
+    'UPDATE Phase SET name = :name WHERE id = :id AND sessionId = :sessionId',
+  )
   Future<void> updatePhaseName(int id, int sessionId, String name);
 
   @Query(
-      'UPDATE Phase SET duration = :duration WHERE id = :id AND sessionId = :sessionId')
+    'UPDATE Phase SET duration = :duration WHERE id = :id AND sessionId = :sessionId',
+  )
   Future<void> updatePhaseDuration(int id, int sessionId, Duration duration);
 
   @Query(
-      'UPDATE Phase SET type = :type WHERE id = :id AND sessionId = :sessionId')
+    'UPDATE Phase SET type = :type WHERE id = :id AND sessionId = :sessionId',
+  )
   Future<void> updatePhaseType(int id, int sessionId, PhaseType type);
 
   @Insert(onConflict: OnConflictStrategy.replace)
