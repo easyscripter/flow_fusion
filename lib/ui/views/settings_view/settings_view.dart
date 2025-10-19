@@ -1,6 +1,7 @@
-import 'package:flow_fusion/ui/views/settings_view/settings_view_view_model.dart';
+import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -10,7 +11,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  final _viewModel = SettingsViewViewModel();
+  final _appViewModel = GetIt.I.get<AppViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<ThemeMode>(
-            initialValue: _viewModel.themeMode,
+            initialValue: _appViewModel.themeMode,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -148,7 +149,7 @@ class _SettingsViewState extends State<SettingsView> {
             ],
             onChanged: (ThemeMode? newValue) {
               if (newValue != null) {
-                _viewModel.setThemeMode(newValue);
+                _appViewModel.setThemeMode(newValue);
               }
             },
           ),
@@ -157,7 +158,7 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
-  IconData _getThemeIcon() => switch (_viewModel.themeMode) {
+  IconData _getThemeIcon() => switch (_appViewModel.themeMode) {
     ThemeMode.light => Icons.light_mode,
     ThemeMode.dark => Icons.dark_mode,
     ThemeMode.system => Icons.brightness_auto,
