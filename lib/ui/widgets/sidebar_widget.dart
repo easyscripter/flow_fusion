@@ -42,16 +42,8 @@ class SidebarWidget extends StatelessWidget {
         children: [
           // Заголовок приложения
           _buildAppHeader(context),
-
-          // Разделитель
-          Divider(
-            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.8),
-            height: 1,
-          ),
-
           // Навигационное меню
           Expanded(child: _buildNavigationMenu(context)),
-
           // Нижняя часть сайдбара (можно добавить дополнительную информацию)
           _buildBottomSection(context),
         ],
@@ -154,10 +146,6 @@ class SidebarWidget extends StatelessWidget {
       padding: const EdgeInsets.all(AppSizes.paddingMedium),
       child: Column(
         children: [
-          Divider(
-            color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.8),
-            height: 1,
-          ),
           const SizedBox(height: AppSizes.paddingSmall),
           Text(
             'v0.1.0',
