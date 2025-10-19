@@ -1,6 +1,7 @@
 import 'package:flow_fusion/model/datasources/database/app_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'di.config.dart';
@@ -16,6 +17,12 @@ abstract class DatabaseModule {
   @preResolve
   Future<AppDatabase> get db =>
       $FroomAppDatabase.databaseBuilder('app_database.db').build();
+}
+
+@module
+abstract class PackageVersionModule {
+  @preResolve
+  Future<PackageInfo> get packageInfo => PackageInfo.fromPlatform();
 }
 
 @InjectableInit()

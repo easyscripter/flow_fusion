@@ -35,7 +35,7 @@ abstract class _HomePageViewModelBase with Store {
       return;
     }
     currentSession = sessions.first;
-    _packageInfo = await PackageInfo.fromPlatform();
+    _packageInfo = GetIt.I.get<PackageInfo>();
   }
 
   @action
