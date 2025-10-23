@@ -1,4 +1,4 @@
-import 'package:flow_fusion/ui/views/session_view/session_view.dart';
+import 'package:flow_fusion/ui/views/sessions_view/sessions_view.dart';
 import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view.dart';
 import 'package:flow_fusion/ui/pages/home_page/home_page_view_model.dart';
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       0 => HomeView(
         onNavigate: _viewModel.selectTab,
       ), // Главная страница с навигацией
-      1 => SessionView(currentSession: _viewModel.currentSession), // Сессии
+      1 => SessionsView(), // Сессии
       2 => const SettingsView(), // Настройки
       _ => HomeView(onNavigate: _viewModel.selectTab), // По умолчанию главная
     };
