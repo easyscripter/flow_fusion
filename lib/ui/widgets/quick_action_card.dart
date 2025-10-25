@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 
 class QuickActionCard extends StatelessWidget {
-  final IconData? icon;
   final String title;
   final VoidCallback onTap;
-  final Color? color;
+  final Icon? icon;
   final double? maxHeight;
   final double? minHeight;
   final double? maxWidth;
@@ -15,7 +14,6 @@ class QuickActionCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    this.color,
     this.icon,
     this.maxHeight,
     this.minHeight,
@@ -42,7 +40,7 @@ class QuickActionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min, // Карточка занимает минимум места
             children: [
-              if (icon != null) Icon(icon!, size: AppSizes.iconSizeLarge, color: color ?? Theme.of(context).colorScheme.onSurface),
+              if (icon != null) icon!,
               const SizedBox(height: AppSizes.paddingSmall),
               Expanded(
                 child: Text(

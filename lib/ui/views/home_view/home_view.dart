@@ -61,17 +61,15 @@ class HomeView extends StatelessWidget {
                         childAspectRatio ?? AppSizes.childAspectRatio,
                     children: [
                       QuickActionCard(
-                        icon: Icons.schedule,
+                        icon: Icon(Icons.schedule),
                         title: 'Мои сессии',
-                        color: Colors.green,
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
                         onTap: () => onNavigate(1), // Переход к сессиям
                       ),
                       QuickActionCard(
-                        icon: Icons.settings_outlined,
+                        icon: Icon(Icons.settings_outlined),
                         title: 'Настройки',
-                        color: Colors.purple,
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
                         onTap: () => onNavigate(2), // Переход к настройкам
