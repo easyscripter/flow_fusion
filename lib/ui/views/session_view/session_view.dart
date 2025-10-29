@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SessionView extends StatefulWidget {
-  final Session currentSession;
-  const SessionView({super.key, required this.currentSession});
+  final Session? currentSession;
+  const SessionView({super.key, this.currentSession});
   @override
   State<SessionView> createState() => _SessionViewState();
 }
@@ -17,7 +17,7 @@ class _SessionViewState extends State<SessionView> {
   @override
   void initState() {
     super.initState();
-    _viewModel.init();
+    _viewModel.init(widget.currentSession);
   }
 
   @override
@@ -29,10 +29,7 @@ class _SessionViewState extends State<SessionView> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) => Center(
-        child: switch (_viewModel.currentView) {
-          0 => const TimerView(),
-          _ => PhasesView(sessionId: widget.currentSession.id ?? 1),
-        },
+        child: Text(_viewModel.currentSession?.name ?? ''),
       ),
     );
   }

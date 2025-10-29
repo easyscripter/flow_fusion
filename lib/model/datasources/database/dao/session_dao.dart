@@ -24,6 +24,9 @@ abstract class SessionDao {
   @Query('UPDATE Session SET name = :name WHERE id = :id')
   Future<void> updateSessionName(String name, int id);
 
+  @Query('DELETE FROM Session WHERE id = :id')
+  Future<void> deleteSessionById(int id);
+
   @factoryMethod
   static SessionDao create(AppDatabase appDatabase) => appDatabase.sessionDao;
 }

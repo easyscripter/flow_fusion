@@ -34,6 +34,9 @@ abstract class PhaseDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertPhase(Phase phase);
 
+  @Query('DELETE FROM Phase WHERE sessionId = :sessionId')
+  Future<void> deleteBySessionId(int sessionId);
+
   @factoryMethod
   static PhaseDao create(AppDatabase appDatabase) => appDatabase.phaseDao;
 }

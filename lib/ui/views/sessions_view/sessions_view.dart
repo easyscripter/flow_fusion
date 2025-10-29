@@ -1,7 +1,9 @@
+import 'package:flow_fusion/ui/views/session_view/session_view.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view_view_model.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/widgets/quick_action_card.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/ui/widgets/session_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -37,6 +39,10 @@ class _SessionsViewState extends State<SessionsView> {
             return const Center(child: CircularProgressIndicator());
           }
 
+          if (_viewModel.currentViewIndex == 1) {
+            return SessionView(currentSession: _viewModel.currentSession);
+          }
+ 
           return Padding(
             padding: const EdgeInsets.all(AppSizes.paddingLarge),
             child: Column(
@@ -75,9 +81,11 @@ class _SessionsViewState extends State<SessionsView> {
                           }
 
                           final session = _viewModel.sessions[index];
-                          return QuickActionCard(
-                            title: session.name,
+                          return SessionCard(
+                            session: session,
                             onTap: () => _openSession(session),
+                            onStart: () => _onStartSession(session),
+                            onDelete: () => _deleteSession(session),
                           );
                         },
                       );
@@ -93,16 +101,36 @@ class _SessionsViewState extends State<SessionsView> {
   }
 
   void _createNewSession() {
-    // TODO: Реализовать создание новой сессии
+    _viewModel.setCurrentSession(null);
+    _viewModel.currentViewIndex = 1;
+  }
+
+  void _onStartSession(Session session) {
+    // TODO: реализовать запуск сессии
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Создание новой сессии')));
+    ).showSnackBar(const SnackBar(content: Text('Запуск сессии')));
   }
 
   void _openSession(Session session) {
-    // TODO: Реализовать навигацию к сессии
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Открытие сессии: ${session.name}')));
+    _viewModel.setCurrentSession(session);
+    _viewModel.currentViewIndex = 1;
+  }
+
+  Future<void> _deleteSession(Session session) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Удалить сессию?'),
+        content: const Text('Это действие удалит сессию и все её фазы.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Отмена')),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Удалить')),
+        ],
+      ),
+    );
+    if (confirm == true) {
+      await _viewModel.deleteSession(session.id!);
+    }
   }
 }
