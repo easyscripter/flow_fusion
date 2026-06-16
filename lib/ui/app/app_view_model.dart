@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 part 'app_view_model.g.dart';
 
@@ -15,9 +16,13 @@ abstract class _AppViewModelBase with Store {
   @observable
   ThemeMode themeMode = ThemeMode.system;
 
+  @observable
+  PackageInfo? _packageInfo;
+
   @action
   void init() {
     themeMode = ThemeMode.values[prefs.themeMode ?? 0];
+     _packageInfo = GetIt.I.get<PackageInfo>();
   }
 
   @action
@@ -25,4 +30,6 @@ abstract class _AppViewModelBase with Store {
     prefs.themeMode = themeMode.index;
     this.themeMode = themeMode;
   }
+
+  String get packageVersion => _packageInfo?.version ?? '';
 }

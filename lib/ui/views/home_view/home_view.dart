@@ -1,9 +1,10 @@
+import 'package:flow_fusion/enums/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flow_fusion/ui/widgets/quick_action_card.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatelessWidget {
-  final Function(int) onNavigate;
   final double? cardMaxHeight;
   final double? cardMinHeight;
   final double? gridSpacing;
@@ -12,7 +13,6 @@ class HomeView extends StatelessWidget {
 
   const HomeView({
     super.key,
-    required this.onNavigate,
     this.cardMaxHeight,
     this.cardMinHeight,
     this.gridSpacing,
@@ -65,14 +65,14 @@ class HomeView extends StatelessWidget {
                         title: 'Мои сессии',
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
-                        onTap: () => onNavigate(1), // Переход к сессиям
+                        onTap: () => context.go(Routes.sessions.path), // Переход к сессиям
                       ),
                       QuickActionCard(
                         icon: Icon(Icons.settings_outlined),
                         title: 'Настройки',
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
-                        onTap: () => onNavigate(2), // Переход к настройкам
+                        onTap: () => context.go(Routes.settings.path), // Переход к настройкам
                       ),
                     ],
                   );

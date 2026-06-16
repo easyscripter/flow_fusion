@@ -1,5 +1,5 @@
-import 'package:flow_fusion/ui/pages/home_page/home_page.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
+import 'package:flow_fusion/ui/app/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +25,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Flow Fusion',
           themeMode: _appViewModel.themeMode,
           theme: ThemeData(
@@ -42,7 +42,7 @@ class _AppState extends State<App> {
             ),
             useMaterial3: true,
           ),
-          home: const HomePage(),
+          routerConfig: router,
         );
       },
     );
