@@ -1,4 +1,9 @@
 import 'package:flow_fusion/ui/app/app_view_model.dart';
+import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/widgets/app_badge.dart';
+import 'package:flow_fusion/ui/widgets/app_page_header.dart';
+import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -18,34 +23,27 @@ class _SettingsViewState extends State<SettingsView> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(AppSizes.paddingLarge),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок страницы
-            Text(
-              'Настройки',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Персонализируйте ваше приложение',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+            AppPageHeader(
+              title: 'Настройки',
+              subtitle:
+                  'Базовый набор теперь ближе к shadcn: нейтральные поверхности, четкие границы и спокойный контраст.',
+              trailing: const AppBadge(
+                label: 'Theme',
+                icon: Icons.palette_outlined,
               ),
             ),
             const SizedBox(height: 32),
-            // Настройки
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     _buildSettingsSection(
                       context,
-                      title: 'Внешний вид',
+                      title: 'Оформление',
                       children: [
                         Observer(builder: (_) => _buildThemeTile(context)),
                       ],
@@ -72,18 +70,17 @@ class _SettingsViewState extends State<SettingsView> {
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 12),
-        Card(child: Column(children: children)),
+        AppPanel(child: Column(children: children)),
       ],
     );
   }
 
   Widget _buildThemeTile(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -103,54 +100,41 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          DropdownButtonFormField<ThemeMode>(
-            initialValue: _appViewModel.themeMode,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 8,
-              ),
+          const SizedBox(height: AppSizes.paddingSmall),
+          Text(
+            'Темная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: context.fusionColors.mutedForeground,
             ),
-            items: [
-              DropdownMenuItem(
-                value: ThemeMode.light,
-                child: Row(
-                  children: [
-                    Icon(Icons.light_mode, size: 18),
-                    const SizedBox(width: 8),
-                    const Text('Светлая'),
-                  ],
-                ),
-              ),
-              DropdownMenuItem(
+          ),
+          const SizedBox(height: AppSizes.paddingMedium),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: const [
+              AppBadge(label: 'Neutral surfaces'),
+              AppBadge(label: 'Subtle borders'),
+              AppBadge(label: 'Rounded corners'),
+            ],
+          ),
+          const SizedBox(height: AppSizes.paddingMedium),
+          SegmentedButton<ThemeMode>(
+            showSelectedIcon: false,
+            segments: const [
+              ButtonSegment<ThemeMode>(
                 value: ThemeMode.dark,
-                child: Row(
-                  children: [
-                    Icon(Icons.dark_mode, size: 18),
-                    const SizedBox(width: 8),
-                    const Text('Темная'),
-                  ],
-                ),
+                icon: Icon(Icons.dark_mode_outlined),
+                label: Text('Темная'),
               ),
-              DropdownMenuItem(
-                value: ThemeMode.system,
-                child: Row(
-                  children: [
-                    Icon(Icons.brightness_auto, size: 18),
-                    const SizedBox(width: 8),
-                    const Text('Системная'),
-                  ],
-                ),
+              ButtonSegment<ThemeMode>(
+                value: ThemeMode.light,
+                icon: Icon(Icons.light_mode_outlined),
+                label: Text('Светлая'),
               ),
             ],
-            onChanged: (ThemeMode? newValue) {
-              if (newValue != null) {
-                _appViewModel.setThemeMode(newValue);
-              }
+            selected: {_appViewModel.themeMode},
+            onSelectionChanged: (selection) {
+              _appViewModel.setThemeMode(selection.first);
             },
           ),
         ],
@@ -161,6 +145,6 @@ class _SettingsViewState extends State<SettingsView> {
   IconData _getThemeIcon() => switch (_appViewModel.themeMode) {
     ThemeMode.light => Icons.light_mode,
     ThemeMode.dark => Icons.dark_mode,
-    ThemeMode.system => Icons.brightness_auto,
+    ThemeMode.system => Icons.dark_mode,
   };
 }

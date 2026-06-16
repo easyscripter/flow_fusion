@@ -1,7 +1,10 @@
 import 'package:flow_fusion/enums/routes.dart';
-import 'package:flutter/material.dart';
-import 'package:flow_fusion/ui/widgets/quick_action_card.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/widgets/app_badge.dart';
+import 'package:flow_fusion/ui/widgets/app_button.dart';
+import 'package:flow_fusion/ui/widgets/app_page_header.dart';
+import 'package:flow_fusion/ui/widgets/quick_action_card.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeView extends StatelessWidget {
@@ -29,21 +32,37 @@ class HomeView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Заголовок страницы
-            Text(
-              'Добро пожаловать в Flow Fusion',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+            AppPageHeader(
+              title: 'Рабочее пространство',
+              subtitle:
+                  'Минималистичный интерфейс в стиле shadcn для спокойной работы с фокус-сессиями и повседневными ритуалами.',
+              trailing: const AppBadge(
+                label: 'shadcn-like',
+                icon: Icons.layers_outlined,
               ),
             ),
             const SizedBox(height: AppSizes.paddingLarge),
-
-            // Карточки с быстрыми действиями
+            Wrap(
+              spacing: AppSizes.paddingMedium,
+              runSpacing: AppSizes.paddingMedium,
+              children: [
+                AppButton(
+                  label: 'Открыть сессии',
+                  icon: Icons.schedule_rounded,
+                  onPressed: () => context.go(Routes.sessions.path),
+                ),
+                AppButton(
+                  label: 'Настройки темы',
+                  icon: Icons.tune_rounded,
+                  variant: AppButtonVariant.secondary,
+                  onPressed: () => context.go(Routes.settings.path),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSizes.paddingLarge),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  // Определяем количество колонок в зависимости от ширины
                   int crossAxisCount =
                       defaultCrossAxisCount ?? AppSizes.defaultCrossAxisCount;
                   if (constraints.maxWidth > 800) {
@@ -61,18 +80,22 @@ class HomeView extends StatelessWidget {
                         childAspectRatio ?? AppSizes.childAspectRatio,
                     children: [
                       QuickActionCard(
-                        icon: Icon(Icons.schedule),
-                        title: 'Мои сессии',
+                        icon: const Icon(Icons.schedule_rounded),
+                        title: 'Сессии фокуса',
+                        subtitle:
+                            'Откройте сценарии, просмотрите фазы и переходите к следующему циклу без лишнего шума.',
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
-                        onTap: () => context.go(Routes.sessions.path), // Переход к сессиям
+                        onTap: () => context.go(Routes.sessions.path),
                       ),
                       QuickActionCard(
-                        icon: Icon(Icons.settings_outlined),
-                        title: 'Настройки',
+                        icon: const Icon(Icons.tune_rounded),
+                        title: 'Тема и поведение',
+                        subtitle:
+                            'Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.',
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
-                        onTap: () => context.go(Routes.settings.path), // Переход к настройкам
+                        onTap: () => context.go(Routes.settings.path),
                       ),
                     ],
                   );

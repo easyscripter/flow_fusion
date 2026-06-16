@@ -1,5 +1,7 @@
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,51 +40,72 @@ class SidebarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedIndex = _getSelectedIndex(context);
 
-    return NavigationDrawer(
-      onDestinationSelected: (index) => _onDestinationSelected(context, index),
-      selectedIndex: selectedIndex,
-      tilePadding: const EdgeInsets.all(2),
-      indicatorShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+    return Container(
+      width: AppSizes.sidebarWidth,
+      decoration: BoxDecoration(
+        color: context.fusionColors.sidebarBackground,
+        border: Border(
+          right: BorderSide(color: context.fusionColors.sidebarBorder),
+        ),
       ),
-      header: Container(
-        padding: const EdgeInsets.all(AppSizes.paddingLarge),
-        child: Text(
-          'Flow Fusion',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
+      child: NavigationDrawer(
+        onDestinationSelected: (index) => _onDestinationSelected(context, index),
+        selectedIndex: selectedIndex,
+        tilePadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        header: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSizes.paddingLarge,
+            28,
+            AppSizes.paddingLarge,
+            12,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Flow Fusion',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.4,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const AppBadge(
+                label: 'Dark by default',
+                icon: Icons.nightlight_round,
+              ),
+            ],
           ),
         ),
-      ),
-      footer: Container(
-        padding: const EdgeInsets.all(AppSizes.paddingMedium),
-        child: Column(
-          children: [
-            const SizedBox(height: AppSizes.paddingSmall),
-            Text(
-              packageVersion,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+        footer: Padding(
+          padding: const EdgeInsets.all(AppSizes.paddingMedium),
+          child: Text(
+            'v$packageVersion',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: context.fusionColors.mutedForeground,
             ),
-          ],
+          ),
         ),
+        children: const [
+          NavigationDrawerDestination(
+            icon: Icon(Icons.dashboard_outlined),
+            selectedIcon: Icon(Icons.dashboard_rounded),
+            label: Text('Обзор'),
+          ),
+          NavigationDrawerDestination(
+            icon: Icon(Icons.schedule_outlined),
+            selectedIcon: Icon(Icons.schedule_rounded),
+            label: Text('Сессии'),
+          ),
+          NavigationDrawerDestination(
+            icon: Icon(Icons.tune_outlined),
+            selectedIcon: Icon(Icons.tune_rounded),
+            label: Text('Настройки'),
+          ),
+        ],
       ),
-      children: [
-        NavigationDrawerDestination(
-          icon: const Icon(Icons.home_outlined),
-          label: const Text('Главная'),
-        ),
-        NavigationDrawerDestination(
-          icon: const Icon(Icons.schedule_outlined),
-          label: const Text('Сессии'),
-        ),
-        NavigationDrawerDestination(
-          icon: const Icon(Icons.settings_outlined),
-          label: const Text('Настройки'),
-        ),
-      ],
     );
   }
 }
