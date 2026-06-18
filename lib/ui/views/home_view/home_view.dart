@@ -35,10 +35,10 @@ class HomeView extends StatelessWidget {
             AppPageHeader(
               title: 'Рабочее пространство',
               subtitle:
-                  'Минималистичный интерфейс в стиле shadcn для спокойной работы с фокус-сессиями и повседневными ритуалами.',
+                  'Спокойный фокус-таймер для рабочих сессий и пауз: открывайте сценарии, следите за фазами и держите ритм.',
               trailing: const AppBadge(
-                label: 'shadcn-like',
-                icon: Icons.layers_outlined,
+                label: 'Pomodoro',
+                icon: Icons.timer_outlined,
               ),
             ),
             const SizedBox(height: AppSizes.paddingLarge),

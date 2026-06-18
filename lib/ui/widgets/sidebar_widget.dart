@@ -1,7 +1,7 @@
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
-import 'package:flow_fusion/ui/widgets/app_badge.dart';
+import 'package:flow_fusion/ui/widgets/brand_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -61,20 +61,30 @@ class SidebarWidget extends StatelessWidget {
             AppSizes.paddingLarge,
             12,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Text(
-                'Flow Fusion',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.4,
+              const BrandLogo(),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Flow Fusion',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.4,
+                      ),
+                    ),
+                    Text(
+                      'Focus workspace',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: context.fusionColors.mutedForeground,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 10),
-              const AppBadge(
-                label: 'Dark by default',
-                icon: Icons.nightlight_round,
               ),
             ],
           ),

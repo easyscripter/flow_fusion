@@ -43,9 +43,6 @@ class _PhasesViewState extends State<PhasesView> {
                       number: index + 1,
                       title: _viewModel.phases[index].name,
                       type: _viewModel.phases[index].type,
-                      color: _viewModel.phases[index].type == PhaseType.work
-                          ? Colors.orange
-                          : Colors.green,
                       duration: _viewModel.phases[index].duration,
                     );
                   },

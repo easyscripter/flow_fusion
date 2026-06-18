@@ -33,7 +33,8 @@ class AppSizes {
   static const double iconSizeSmall = 18;
 
   // Радиусы скругления
-  static const double borderRadiusLarge = 12;
-  static const double borderRadiusMedium = 8;
-  static const double borderRadiusSmall = 4;
+  static const double borderRadiusXL = 18;
+  static const double borderRadiusLarge = 14;
+  static const double borderRadiusMedium = 11;
+  static const double borderRadiusSmall = 9;
 }

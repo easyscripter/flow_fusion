@@ -1,9 +1,10 @@
 import 'package:flow_fusion/enums/phase_type.dart';
+import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/widgets/phase_type_badge.dart';
 import 'package:flutter/material.dart';
 
 class PhaseWidget extends StatelessWidget {
   final int number;
-  final Color color;
   final String title;
   final PhaseType type;
   final Duration duration;
@@ -13,7 +14,6 @@ class PhaseWidget extends StatelessWidget {
     super.key,
     this.width = 300.0,
     required this.number,
-    required this.color,
     required this.title,
     required this.type,
     required this.duration,
@@ -21,16 +21,22 @@ class PhaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.fusionColors;
+    final isWork = type == PhaseType.work;
+    final color = isWork ? colors.workColor : colors.chillColor;
+
     return Container(
       width: width,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(color: color, width: 1.0),
+        color: colors.cardBackground,
+        borderRadius: BorderRadius.circular(14.0),
+        border: Border.all(color: colors.cardBorder, width: 1.0),
       ),
       child: Row(
         children: <Widget>[
           CircleAvatar(
+            radius: 16,
             backgroundColor: color,
             child: Text(
               number.toString(),
@@ -40,20 +46,26 @@ class PhaseWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8.0),
-          Icon(
-            type == PhaseType.work ? Icons.work : Icons.coffee,
-            color: color,
-          ),
           const SizedBox(width: 12.0),
-          Text(
-            title,
-            style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          Expanded(
+            child: Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+            ),
           ),
-          const SizedBox(width: 16.0),
+          const SizedBox(width: 8.0),
+          PhaseTypeBadge(type: type),
+          const SizedBox(width: 10.0),
           Text(
-            '${duration.inMinutes} min',
-            style: TextStyle(color: color, fontWeight: FontWeight.bold),
+            '${duration.inMinutes} мин',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: colors.mutedForeground,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
