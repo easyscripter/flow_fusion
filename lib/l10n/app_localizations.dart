@@ -326,6 +326,12 @@ abstract class AppLocalizations {
   /// **'Русский'**
   String get languageRussian;
 
+  /// No description provided for @settingsLanguageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred language'**
+  String get settingsLanguageDescription;
+
   /// No description provided for @phaseAdd.
   ///
   /// In en, this message translates to:

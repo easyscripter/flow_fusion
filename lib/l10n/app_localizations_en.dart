@@ -135,6 +135,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageRussian => 'Русский';
 
   @override
+  String get settingsLanguageDescription => 'Choose your preferred language';
+
+  @override
   String get phaseAdd => 'Add Phase';
 
   @override

@@ -42,6 +42,7 @@
   "languageSystem": "Системный",
   "languageEnglish": "English",
   "languageRussian": "Русский",
+  "settingsLanguageDescription": "Выберите предпочитаемый язык",
 
   "phaseAdd": "Добавить фазу",
   "phaseStartTimer": "Запустить таймер",

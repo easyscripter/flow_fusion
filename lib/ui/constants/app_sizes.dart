@@ -2,14 +2,14 @@
 class AppSizes {
   // Размеры окна
   static const double windowDefaultWidth = 1280;
-  static const double windowDefaultHeight = 720;
+  static const double windowDefaultHeight = 900;
   static const double windowMinWidth = 1280;
-  static const double windowMinHeight = 720;
+  static const double windowMinHeight = 900;
 
   // Размеры сайдбара
-  static const double sidebarWidth = 280;
+  static const double sidebarWidth = 290;
   static const double sidebarMinWidth = 250;
-  static const double sidebarMaxWidth = 320;
+  static const double sidebarMaxWidth = 350;
 
   // Размеры карточек
   static const double cardMaxHeight = 200;
