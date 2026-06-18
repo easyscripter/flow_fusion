@@ -7,7 +7,6 @@ import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Описание одного пункта навигации сайдбара.
 class _NavItem {
   final Routes route;
   final IconData icon;
