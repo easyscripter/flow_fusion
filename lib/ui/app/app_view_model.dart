@@ -12,7 +12,7 @@ class AppViewModel = _AppViewModelBase with _$AppViewModel;
 
 abstract class _AppViewModelBase with Store {
   final prefs = GetIt.I.get<Prefs>();
-  static const _defaultThemeMode = ThemeMode.dark;
+  static const _defaultThemeMode = ThemeMode.system;
 
   @observable
   ThemeMode themeMode = _defaultThemeMode;
@@ -22,12 +22,7 @@ abstract class _AppViewModelBase with Store {
 
   @action
   void init() {
-    final savedThemeIndex = prefs.themeMode;
-    themeMode = switch (savedThemeIndex) {
-      1 => ThemeMode.light,
-      2 => ThemeMode.dark,
-      _ => _defaultThemeMode,
-    };
+    themeMode = ThemeMode.values[prefs.themeMode ?? 0];
     _packageInfo = GetIt.I.get<PackageInfo>();
   }
 

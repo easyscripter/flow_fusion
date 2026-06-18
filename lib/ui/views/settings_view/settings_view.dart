@@ -29,8 +29,7 @@ class _SettingsViewState extends State<SettingsView> {
           children: [
             AppPageHeader(
               title: 'Настройки',
-              subtitle:
-                  'Базовый набор теперь ближе к shadcn: нейтральные поверхности, четкие границы и спокойный контраст.',
+              subtitle: 'Настройки приложения',
               trailing: const AppBadge(
                 label: 'Theme',
                 icon: Icons.palette_outlined,
@@ -68,9 +67,9 @@ class _SettingsViewState extends State<SettingsView> {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 12),
         AppPanel(child: Column(children: children)),
@@ -102,7 +101,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           const SizedBox(height: AppSizes.paddingSmall),
           Text(
-            'Темная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.',
+            'Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: context.fusionColors.mutedForeground,
             ),
@@ -121,6 +120,11 @@ class _SettingsViewState extends State<SettingsView> {
           SegmentedButton<ThemeMode>(
             showSelectedIcon: false,
             segments: const [
+              ButtonSegment<ThemeMode>(
+                value: ThemeMode.system,
+                icon: Icon(Icons.brightness_auto_outlined),
+                label: Text('Системная'),
+              ),
               ButtonSegment<ThemeMode>(
                 value: ThemeMode.dark,
                 icon: Icon(Icons.dark_mode_outlined),
@@ -145,6 +149,6 @@ class _SettingsViewState extends State<SettingsView> {
   IconData _getThemeIcon() => switch (_appViewModel.themeMode) {
     ThemeMode.light => Icons.light_mode,
     ThemeMode.dark => Icons.dark_mode,
-    ThemeMode.system => Icons.dark_mode,
+    ThemeMode.system => Icons.brightness_auto_outlined,
   };
 }
