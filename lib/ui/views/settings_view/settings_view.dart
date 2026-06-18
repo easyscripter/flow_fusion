@@ -107,21 +107,17 @@ class _SettingsViewState extends State<SettingsView> {
   }
 
   Widget _buildLanguageTile(BuildContext context) {
-    final currentCode = _appViewModel.locale?.languageCode;
-
     return SettingRow(
       title: context.l10n.settingsSectionLanguage,
       description: context.l10n.settingsLanguageDescription,
-      control: AppDropdown<String?>(
-        value: currentCode,
+      control: AppDropdown<String>(
+        value: _appViewModel.locale?.languageCode ?? 'en',
         onChanged: (code) {
-          _appViewModel.setLocale(code == null ? null : Locale(code));
+          if (code != null) {
+            _appViewModel.setLocale(Locale(code));
+          }
         },
         items: [
-          DropdownMenuItem(
-            value: null,
-            child: Text(context.l10n.languageSystem),
-          ),
           DropdownMenuItem(
             value: 'en',
             child: Text(context.l10n.languageEnglish),

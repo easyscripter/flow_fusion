@@ -126,9 +126,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsSectionLanguage => 'Язык';
 
   @override
-  String get languageSystem => 'Системный';
-
-  @override
   String get languageEnglish => 'English';
 
   @override

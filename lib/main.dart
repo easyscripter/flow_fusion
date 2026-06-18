@@ -13,7 +13,9 @@ Future<void> main() async {
     minimumSize: Size(AppSizes.windowMinWidth, AppSizes.windowMinHeight),
     center: true,
     skipTaskbar: false,
+    backgroundColor: Colors.transparent,
     title: 'Flow Fusion',
+    titleBarStyle: TitleBarStyle.normal,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
