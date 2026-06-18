@@ -1,0 +1,52 @@
+{
+  "@@locale": "ru",
+
+  "brandSubtitle": "Focus workspace",
+  "navOverview": "Обзор",
+  "navSessions": "Сессии",
+  "navSettings": "Настройки",
+  "sidebarSectionApp": "Приложение",
+  "versionLabel": "v{version}",
+
+  "homeTitle": "Рабочее пространство",
+  "homeSubtitle": "Спокойный фокус-таймер для рабочих сессий и пауз: открывайте сценарии, следите за фазами и держите ритм.",
+  "badgePomodoro": "Pomodoro",
+  "homeOpenSessions": "Открыть сессии",
+  "homeThemeSettings": "Настройки темы",
+  "homeCardSessionsTitle": "Сессии фокуса",
+  "homeCardSessionsSubtitle": "Откройте сценарии, просмотрите фазы и переходите к следующему циклу без лишнего шума.",
+  "homeCardThemeTitle": "Тема и поведение",
+  "homeCardThemeSubtitle": "Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.",
+
+  "sessionsTitle": "Сессии",
+  "sessionsSubtitle": "Соберите библиотеку сценариев для глубокого фокуса, коротких спринтов и размеренных перерывов.",
+  "sessionsNew": "Новая сессия",
+  "sessionsNewCardSubtitle": "Добавить новый сценарий фокусировки в библиотеку.",
+  "sessionsOpenCardSubtitle": "Открыть состав фаз, проверить ритм и подготовить запуск.",
+  "sessionsCreateNotConnected": "Создание новой сессии пока не подключено.",
+  "sessionsOpening": "Открытие сессии: {name}",
+
+  "settingsTitle": "Настройки",
+  "settingsSubtitle": "Настройки приложения",
+  "badgeTheme": "Theme",
+  "settingsSectionAppearance": "Оформление",
+  "settingsTheme": "Тема",
+  "settingsThemeDescription": "Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.",
+  "badgeNeutralSurfaces": "Neutral surfaces",
+  "badgeSubtleBorders": "Subtle borders",
+  "badgeRoundedCorners": "Rounded corners",
+  "themeSystem": "Системная",
+  "themeDark": "Темная",
+  "themeLight": "Светлая",
+  "settingsSectionLanguage": "Язык",
+  "languageSystem": "Системный",
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+
+  "phaseAdd": "Добавить фазу",
+  "phaseStartTimer": "Запустить таймер",
+  "phaseDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+
+  "phaseWork": "Работа",
+  "phaseChill": "Отдых"
+}

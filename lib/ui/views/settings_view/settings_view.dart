@@ -1,5 +1,6 @@
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
@@ -28,10 +29,10 @@ class _SettingsViewState extends State<SettingsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppPageHeader(
-              title: 'Настройки',
-              subtitle: 'Настройки приложения',
-              trailing: const AppBadge(
-                label: 'Theme',
+              title: context.l10n.settingsTitle,
+              subtitle: context.l10n.settingsSubtitle,
+              trailing: AppBadge(
+                label: context.l10n.badgeTheme,
                 icon: Icons.palette_outlined,
               ),
             ),
@@ -42,9 +43,17 @@ class _SettingsViewState extends State<SettingsView> {
                   children: [
                     _buildSettingsSection(
                       context,
-                      title: 'Оформление',
+                      title: context.l10n.settingsSectionAppearance,
                       children: [
                         Observer(builder: (_) => _buildThemeTile(context)),
+                      ],
+                    ),
+                    const SizedBox(height: AppSizes.paddingLarge),
+                    _buildSettingsSection(
+                      context,
+                      title: context.l10n.settingsSectionLanguage,
+                      children: [
+                        Observer(builder: (_) => _buildLanguageTile(context)),
                       ],
                     ),
                   ],
@@ -92,7 +101,7 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Тема',
+                context.l10n.settingsTheme,
                 style: Theme.of(
                   context,
                 ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
@@ -101,7 +110,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           const SizedBox(height: AppSizes.paddingSmall),
           Text(
-            'Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.',
+            context.l10n.settingsThemeDescription,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: context.fusionColors.mutedForeground,
             ),
@@ -110,30 +119,30 @@ class _SettingsViewState extends State<SettingsView> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: const [
-              AppBadge(label: 'Neutral surfaces'),
-              AppBadge(label: 'Subtle borders'),
-              AppBadge(label: 'Rounded corners'),
+            children: [
+              AppBadge(label: context.l10n.badgeNeutralSurfaces),
+              AppBadge(label: context.l10n.badgeSubtleBorders),
+              AppBadge(label: context.l10n.badgeRoundedCorners),
             ],
           ),
           const SizedBox(height: AppSizes.paddingMedium),
           SegmentedButton<ThemeMode>(
             showSelectedIcon: false,
-            segments: const [
+            segments: [
               ButtonSegment<ThemeMode>(
                 value: ThemeMode.system,
-                icon: Icon(Icons.brightness_auto_outlined),
-                label: Text('Системная'),
+                icon: const Icon(Icons.brightness_auto_outlined),
+                label: Text(context.l10n.themeSystem),
               ),
               ButtonSegment<ThemeMode>(
                 value: ThemeMode.dark,
-                icon: Icon(Icons.dark_mode_outlined),
-                label: Text('Темная'),
+                icon: const Icon(Icons.dark_mode_outlined),
+                label: Text(context.l10n.themeDark),
               ),
               ButtonSegment<ThemeMode>(
                 value: ThemeMode.light,
-                icon: Icon(Icons.light_mode_outlined),
-                label: Text('Светлая'),
+                icon: const Icon(Icons.light_mode_outlined),
+                label: Text(context.l10n.themeLight),
               ),
             ],
             selected: {_appViewModel.themeMode},
@@ -151,4 +160,58 @@ class _SettingsViewState extends State<SettingsView> {
     ThemeMode.dark => Icons.dark_mode,
     ThemeMode.system => Icons.brightness_auto_outlined,
   };
+
+  Widget _buildLanguageTile(BuildContext context) {
+    // `null` — следовать языку системы; иначе код локали.
+    final currentCode = _appViewModel.locale?.languageCode;
+
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.translate_outlined,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                context.l10n.settingsSectionLanguage,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSizes.paddingMedium),
+          SegmentedButton<String?>(
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment<String?>(
+                value: null,
+                icon: const Icon(Icons.brightness_auto_outlined),
+                label: Text(context.l10n.languageSystem),
+              ),
+              ButtonSegment<String?>(
+                value: 'en',
+                label: Text(context.l10n.languageEnglish),
+              ),
+              ButtonSegment<String?>(
+                value: 'ru',
+                label: Text(context.l10n.languageRussian),
+              ),
+            ],
+            selected: {currentCode},
+            onSelectionChanged: (selection) {
+              final code = selection.first;
+              _appViewModel.setLocale(code == null ? null : Locale(code));
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }

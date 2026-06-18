@@ -1,0 +1,73 @@
+{
+  "@@locale": "en",
+
+  "brandSubtitle": "Focus workspace",
+  "navOverview": "Overview",
+  "navSessions": "Sessions",
+  "navSettings": "Settings",
+  "sidebarSectionApp": "App",
+  "versionLabel": "v{version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeTitle": "Workspace",
+  "homeSubtitle": "A calm focus timer for work sessions and breaks: open scenarios, track phases, and keep your rhythm.",
+  "badgePomodoro": "Pomodoro",
+  "homeOpenSessions": "Open sessions",
+  "homeThemeSettings": "Theme settings",
+  "homeCardSessionsTitle": "Focus sessions",
+  "homeCardSessionsSubtitle": "Open scenarios, review phases, and move to the next cycle without any noise.",
+  "homeCardThemeTitle": "Theme & behavior",
+  "homeCardThemeSubtitle": "Switch between light and dark themes while keeping the same strict, calm visual language.",
+
+  "sessionsTitle": "Sessions",
+  "sessionsSubtitle": "Build a library of scenarios for deep focus, short sprints, and steady breaks.",
+  "sessionsNew": "New session",
+  "sessionsNewCardSubtitle": "Add a new focus scenario to the library.",
+  "sessionsOpenCardSubtitle": "Open the phase layout, check the rhythm, and prepare to launch.",
+  "sessionsCreateNotConnected": "Creating a new session is not wired up yet.",
+  "sessionsOpening": "Opening session: {name}",
+  "@sessionsOpening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+
+  "settingsTitle": "Settings",
+  "settingsSubtitle": "Application settings",
+  "badgeTheme": "Theme",
+  "settingsSectionAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeDescription": "The system theme is active by default. The light theme keeps the same strict component style without bright accents.",
+  "badgeNeutralSurfaces": "Neutral surfaces",
+  "badgeSubtleBorders": "Subtle borders",
+  "badgeRoundedCorners": "Rounded corners",
+  "themeSystem": "System",
+  "themeDark": "Dark",
+  "themeLight": "Light",
+  "settingsSectionLanguage": "Language",
+  "languageSystem": "System",
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+
+  "phaseAdd": "Add Phase",
+  "phaseStartTimer": "Start Timer",
+  "phaseDurationMinutes": "{minutes,plural, =1{{minutes} min} other{{minutes} min}}",
+  "@phaseDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "phaseWork": "Work",
+  "phaseChill": "Chill"
+}

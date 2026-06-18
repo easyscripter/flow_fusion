@@ -1,4 +1,5 @@
 import 'package:flow_fusion/enums/phase_type.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/widgets/phase_type_badge.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class PhaseWidget extends StatelessWidget {
           PhaseTypeBadge(type: type),
           const SizedBox(width: 10.0),
           Text(
-            '${duration.inMinutes} мин',
+            context.l10n.phaseDurationMinutes(duration.inMinutes),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: colors.mutedForeground,
               fontWeight: FontWeight.w700,

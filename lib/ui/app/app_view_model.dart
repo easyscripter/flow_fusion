@@ -18,11 +18,16 @@ abstract class _AppViewModelBase with Store {
   ThemeMode themeMode = _defaultThemeMode;
 
   @observable
+  Locale? locale;
+
+  @observable
   PackageInfo? _packageInfo;
 
   @action
   void init() {
     themeMode = ThemeMode.values[prefs.themeMode ?? 0];
+    final languageCode = prefs.language;
+    locale = languageCode != null ? Locale(languageCode) : null;
     _packageInfo = GetIt.I.get<PackageInfo>();
   }
 
@@ -30,6 +35,12 @@ abstract class _AppViewModelBase with Store {
   void setThemeMode(ThemeMode themeMode) {
     prefs.themeMode = themeMode.index;
     this.themeMode = themeMode;
+  }
+
+  @action
+  void setLocale(Locale? locale) {
+    prefs.language = locale?.languageCode;
+    this.locale = locale;
   }
 
   String get packageVersion => _packageInfo?.version ?? '';

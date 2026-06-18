@@ -25,4 +25,14 @@ class Prefs {
       _prefs.remove(_themeModeKey);
     }
   }
+
+  static const String _languageKey = 'language';
+  String? get language => _prefs.getString(_languageKey);
+  set language(String? value) {
+    if (value != null) {
+      _prefs.setString(_languageKey, value);
+    } else {
+      _prefs.remove(_languageKey);
+    }
+  }
 }

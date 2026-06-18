@@ -1,4 +1,5 @@
 import 'package:flow_fusion/enums/phase_type.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class PhaseTypeBadge extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Text(
-            isWork ? 'Работа' : 'Отдых',
+            isWork ? context.l10n.phaseWork : context.l10n.phaseChill,
             style: TextStyle(
               color: foreground,
               fontSize: 12,

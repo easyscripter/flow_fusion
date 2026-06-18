@@ -1,5 +1,6 @@
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/app_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
@@ -38,11 +39,10 @@ class _SessionsViewState extends State<SessionsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppPageHeader(
-                  title: 'Сессии',
-                  subtitle:
-                      'Соберите библиотеку сценариев для глубокого фокуса, коротких спринтов и размеренных перерывов.',
+                  title: context.l10n.sessionsTitle,
+                  subtitle: context.l10n.sessionsSubtitle,
                   trailing: AppButton(
-                    label: 'Новая сессия',
+                    label: context.l10n.sessionsNew,
                     icon: Icons.add,
                     onPressed: _createNewSession,
                   ),
@@ -71,8 +71,8 @@ class _SessionsViewState extends State<SessionsView> {
                           if (index == _viewModel.sessions.length) {
                             return QuickActionCard(
                               icon: const Icon(Icons.add_circle_outline_rounded),
-                              title: 'Новая сессия',
-                              subtitle: 'Добавить новый сценарий фокусировки в библиотеку.',
+                              title: context.l10n.sessionsNew,
+                              subtitle: context.l10n.sessionsNewCardSubtitle,
                               onTap: _createNewSession,
                             );
                           }
@@ -80,7 +80,7 @@ class _SessionsViewState extends State<SessionsView> {
                           final session = _viewModel.sessions[index];
                           return QuickActionCard(
                             title: session.name,
-                            subtitle: 'Открыть состав фаз, проверить ритм и подготовить запуск.',
+                            subtitle: context.l10n.sessionsOpenCardSubtitle,
                             onTap: () => _openSession(session),
                           );
                         },
@@ -97,14 +97,14 @@ class _SessionsViewState extends State<SessionsView> {
   }
 
   void _createNewSession() {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Создание новой сессии пока не подключено.')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.sessionsCreateNotConnected)),
+    );
   }
 
   void _openSession(Session session) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Открытие сессии: ${session.name}')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.sessionsOpening(session.name))),
+    );
   }
 }

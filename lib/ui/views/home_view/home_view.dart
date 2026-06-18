@@ -1,5 +1,6 @@
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flow_fusion/ui/widgets/app_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
@@ -33,11 +34,10 @@ class HomeView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppPageHeader(
-              title: 'Рабочее пространство',
-              subtitle:
-                  'Спокойный фокус-таймер для рабочих сессий и пауз: открывайте сценарии, следите за фазами и держите ритм.',
-              trailing: const AppBadge(
-                label: 'Pomodoro',
+              title: context.l10n.homeTitle,
+              subtitle: context.l10n.homeSubtitle,
+              trailing: AppBadge(
+                label: context.l10n.badgePomodoro,
                 icon: Icons.timer_outlined,
               ),
             ),
@@ -47,12 +47,12 @@ class HomeView extends StatelessWidget {
               runSpacing: AppSizes.paddingMedium,
               children: [
                 AppButton(
-                  label: 'Открыть сессии',
+                  label: context.l10n.homeOpenSessions,
                   icon: Icons.schedule_rounded,
                   onPressed: () => context.go(Routes.sessions.path),
                 ),
                 AppButton(
-                  label: 'Настройки темы',
+                  label: context.l10n.homeThemeSettings,
                   icon: Icons.tune_rounded,
                   variant: AppButtonVariant.secondary,
                   onPressed: () => context.go(Routes.settings.path),
@@ -81,18 +81,16 @@ class HomeView extends StatelessWidget {
                     children: [
                       QuickActionCard(
                         icon: const Icon(Icons.schedule_rounded),
-                        title: 'Сессии фокуса',
-                        subtitle:
-                            'Откройте сценарии, просмотрите фазы и переходите к следующему циклу без лишнего шума.',
+                        title: context.l10n.homeCardSessionsTitle,
+                        subtitle: context.l10n.homeCardSessionsSubtitle,
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
                         onTap: () => context.go(Routes.sessions.path),
                       ),
                       QuickActionCard(
                         icon: const Icon(Icons.tune_rounded),
-                        title: 'Тема и поведение',
-                        subtitle:
-                            'Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.',
+                        title: context.l10n.homeCardThemeTitle,
+                        subtitle: context.l10n.homeCardThemeSubtitle,
                         maxHeight: cardMaxHeight,
                         minHeight: cardMinHeight,
                         onTap: () => context.go(Routes.settings.path),

@@ -1,5 +1,6 @@
 import 'package:flow_fusion/enums/phase_type.dart';
 import 'package:flow_fusion/model/entity/database/phase.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/phases_view/phases_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/phase_widget.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _PhasesViewState extends State<PhasesView> {
                           },
                       },
                       icon: const Icon(Icons.add),
-                      label: const Text('Add Phase'),
+                      label: Text(context.l10n.phaseAdd),
                     ),
                     const SizedBox(width: 12.0),
                     ElevatedButton.icon(
@@ -94,7 +95,7 @@ class _PhasesViewState extends State<PhasesView> {
                               //TODO: Add navigate to timer screen
                             },
                       icon: const Icon(Icons.timer),
-                      label: const Text('Start Timer'),
+                      label: Text(context.l10n.phaseStartTimer),
                     ),
                   ],
                 ),

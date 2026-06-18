@@ -1,3 +1,4 @@
+import 'package:flow_fusion/l10n/app_localizations.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/router.dart';
 import 'package:flow_fusion/ui/theme/app_theme.dart';
@@ -31,6 +32,9 @@ class _AppState extends State<App> {
           themeMode: _appViewModel.themeMode,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
+          locale: _appViewModel.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: router,
         );
       },

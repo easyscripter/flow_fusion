@@ -1,5 +1,6 @@
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/widgets/brand_logo.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
@@ -7,17 +8,17 @@ import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+/// Хранит только маршрут и иконки — подпись локализуется в `build`
+/// через `context.l10n`, поэтому текста в списке нет.
 class _NavItem {
   final Routes route;
   final IconData icon;
   final IconData selectedIcon;
-  final String label;
 
   const _NavItem({
     required this.route,
     required this.icon,
     required this.selectedIcon,
-    required this.label,
   });
 }
 
@@ -31,21 +32,25 @@ class SidebarWidget extends StatelessWidget {
       route: Routes.home,
       icon: Icons.dashboard_outlined,
       selectedIcon: Icons.dashboard_rounded,
-      label: 'Обзор',
     ),
     _NavItem(
       route: Routes.sessions,
       icon: Icons.schedule_outlined,
       selectedIcon: Icons.schedule_rounded,
-      label: 'Сессии',
     ),
     _NavItem(
       route: Routes.settings,
       icon: Icons.tune_outlined,
       selectedIcon: Icons.tune_rounded,
-      label: 'Настройки',
     ),
   ];
+
+  /// Локализованная подпись пункта по его маршруту.
+  String _labelFor(BuildContext context, Routes route) => switch (route) {
+    Routes.home => context.l10n.navOverview,
+    Routes.sessions => context.l10n.navSessions,
+    Routes.settings => context.l10n.navSettings,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -72,14 +77,14 @@ class SidebarWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SidebarSectionLabel(label: 'Приложение'),
+                  SidebarSectionLabel(label: context.l10n.sidebarSectionApp),
                   for (final item in _items)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 3),
                       child: SidebarNavButton(
                         icon: item.icon,
                         selectedIcon: item.selectedIcon,
-                        label: item.label,
+                        label: _labelFor(context, item.route),
                         selected: location == item.route.path,
                         onTap: () => context.go(item.route.path),
                       ),
@@ -92,7 +97,8 @@ class SidebarWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(AppSizes.paddingMedium),
             child: Text(
-              'v$packageVersion',
+              context.l10n.versionLabel(packageVersion),
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: colors.mutedForeground,
                 fontWeight: FontWeight.w600,
@@ -128,7 +134,7 @@ class SidebarWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Focus workspace',
+                  context.l10n.brandSubtitle,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: context.fusionColors.mutedForeground,
                     fontWeight: FontWeight.w600,
