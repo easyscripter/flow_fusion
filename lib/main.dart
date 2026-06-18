@@ -15,7 +15,7 @@ Future<void> main() async {
     skipTaskbar: false,
     backgroundColor: Colors.transparent,
     title: 'Flow Fusion',
-    titleBarStyle: TitleBarStyle.normal,
+    titleBarStyle: TitleBarStyle.hidden,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();

@@ -2,6 +2,7 @@ import 'package:flow_fusion/l10n/app_localizations.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/router.dart';
 import 'package:flow_fusion/ui/theme/app_theme.dart';
+import 'package:flow_fusion/ui/widgets/title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -36,6 +37,15 @@ class _AppState extends State<App> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: router,
+          debugShowCheckedModeBanner: false,
+          builder: (context, child) {
+            return Column(
+              children: [
+                const TitleBar(),
+                Expanded(child: child ?? const SizedBox.shrink()),
+              ],
+            );
+          },
         );
       },
     );
