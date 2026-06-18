@@ -14,6 +14,13 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
       onPanStart: (details) {
         windowManager.startDragging();
       },
+      onDoubleTap: () async {
+        if (await windowManager.isMaximized()) {
+          windowManager.unmaximize();
+        } else {
+          windowManager.maximize();
+        }
+      },
       child: Container(
         height: preferredSize.height,
         decoration: BoxDecoration(
@@ -24,7 +31,8 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Row(
           children: [
-            const SizedBox(width: 16),
+            if (Theme.of(context).platform == TargetPlatform.windows)
+              const SizedBox(width: 16),
             const BrandLogo(size: 20),
             const SizedBox(width: 8),
             Text(
@@ -36,41 +44,40 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             const Spacer(),
-            if (Theme.of(context).platform == TargetPlatform.windows)
-              Row(
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.minimize,
-                      color: colors.mutedForeground,
-                      size: 16,
-                    ),
-                    onPressed: () => windowManager.minimize(),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.minimize,
+                    color: colors.mutedForeground,
+                    size: 16,
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.crop_square,
-                      color: colors.mutedForeground,
-                      size: 16,
-                    ),
-                    onPressed: () async {
-                      if (await windowManager.isMaximized()) {
-                        windowManager.unmaximize();
-                      } else {
-                        windowManager.maximize();
-                      }
-                    },
+                  onPressed: () => windowManager.minimize(),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.crop_square,
+                    color: colors.mutedForeground,
+                    size: 16,
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: colors.mutedForeground,
-                      size: 16,
-                    ),
-                    onPressed: () => windowManager.close(),
+                  onPressed: () async {
+                    if (await windowManager.isMaximized()) {
+                      windowManager.unmaximize();
+                    } else {
+                      windowManager.maximize();
+                    }
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: colors.mutedForeground,
+                    size: 16,
                   ),
-                ],
-              ),
+                  onPressed: () => windowManager.close(),
+                ),
+              ],
+            ),
           ],
         ),
       ),
