@@ -39,11 +39,13 @@ class _AppState extends State<App> {
           routerConfig: router,
           debugShowCheckedModeBanner: false,
           builder: (context, child) {
-            return Column(
-              children: [
-                const TitleBar(),
-                Expanded(child: child ?? const SizedBox.shrink()),
-              ],
+            return Scaffold(
+              body: Column(
+                children: [
+                  const TitleBar(),
+                  Expanded(child: child ?? const SizedBox.shrink()),
+                ],
+              )
             );
           },
         );

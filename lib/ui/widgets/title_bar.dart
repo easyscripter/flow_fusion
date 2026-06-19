@@ -37,11 +37,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
             const SizedBox(width: 8),
             Text(
               'Flow Fusion',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: colors.mutedForeground,
-                fontSize: 14,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
             const Spacer(),
             Row(
