@@ -29,11 +29,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get homeTitle => 'Рабочее пространство';
+  String get homeTitle => 'Аналитика';
 
   @override
-  String get homeSubtitle =>
-      'Спокойный фокус-таймер для рабочих сессий и пауз: открывайте сценарии, следите за фазами и держите ритм.';
+  String get homeSubtitle => 'Аналитика вашей активности и фокусировки';
 
   @override
   String get badgePomodoro => 'Pomodoro';
@@ -57,6 +56,42 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get homeCardThemeSubtitle =>
       'Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.';
+
+  @override
+  String get homeStatTotalSessions => 'Всего сессий';
+
+  @override
+  String get homeStatTotalFocus => 'Всего фокуса';
+
+  @override
+  String get homeStatTodayFocus => 'Фокус сегодня';
+
+  @override
+  String get homeStatAvgSession => 'Средняя сессия';
+
+  @override
+  String get homeStatTotalSessionsCaption => 'Завершённых блоков фокуса';
+
+  @override
+  String get homeStatTotalFocusCaption => 'За все сессии';
+
+  @override
+  String get homeStatTodayFocusCaption => 'Не теряйте темп';
+
+  @override
+  String get homeStatAvgSessionCaption => 'На один блок фокуса';
+
+  @override
+  String get homeActivityTitle => 'Карта фокуса';
+
+  @override
+  String get homeActivitySubtitle => 'Минуты фокуса за последний год.';
+
+  @override
+  String get homeActivityLess => 'Меньше';
+
+  @override
+  String get homeActivityMore => 'Больше';
 
   @override
   String get sessionsTitle => 'Сессии';

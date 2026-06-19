@@ -29,11 +29,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get homeTitle => 'Workspace';
+  String get homeTitle => 'Analytics';
 
   @override
-  String get homeSubtitle =>
-      'A calm focus timer for work sessions and breaks: open scenarios, track phases, and keep your rhythm.';
+  String get homeSubtitle => 'Your personal activity and focus';
 
   @override
   String get badgePomodoro => 'Pomodoro';
@@ -57,6 +56,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeCardThemeSubtitle =>
       'Switch between light and dark themes while keeping the same strict, calm visual language.';
+
+  @override
+  String get homeStatTotalSessions => 'Total sessions';
+
+  @override
+  String get homeStatTotalFocus => 'Total focus time';
+
+  @override
+  String get homeStatTodayFocus => 'Today\'s focus';
+
+  @override
+  String get homeStatAvgSession => 'Avg session';
+
+  @override
+  String get homeStatTotalSessionsCaption => 'Completed focus blocks';
+
+  @override
+  String get homeStatTotalFocusCaption => 'Across all sessions';
+
+  @override
+  String get homeStatTodayFocusCaption => 'Keep your streak going';
+
+  @override
+  String get homeStatAvgSessionCaption => 'Per focus block';
+
+  @override
+  String get homeActivityTitle => 'Focus Map';
+
+  @override
+  String get homeActivitySubtitle => 'Focus minutes over the last year.';
+
+  @override
+  String get homeActivityLess => 'Less';
+
+  @override
+  String get homeActivityMore => 'More';
 
   @override
   String get sessionsTitle => 'Sessions';

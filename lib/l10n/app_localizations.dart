@@ -137,13 +137,13 @@ abstract class AppLocalizations {
   /// No description provided for @homeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Workspace'**
+  /// **'Analytics'**
   String get homeTitle;
 
   /// No description provided for @homeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'A calm focus timer for work sessions and breaks: open scenarios, track phases, and keep your rhythm.'**
+  /// **'Your personal activity and focus'**
   String get homeSubtitle;
 
   /// No description provided for @badgePomodoro.
@@ -187,6 +187,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switch between light and dark themes while keeping the same strict, calm visual language.'**
   String get homeCardThemeSubtitle;
+
+  /// No description provided for @homeStatTotalSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Total sessions'**
+  String get homeStatTotalSessions;
+
+  /// No description provided for @homeStatTotalFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Total focus time'**
+  String get homeStatTotalFocus;
+
+  /// No description provided for @homeStatTodayFocus.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s focus'**
+  String get homeStatTodayFocus;
+
+  /// No description provided for @homeStatAvgSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg session'**
+  String get homeStatAvgSession;
+
+  /// No description provided for @homeStatTotalSessionsCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed focus blocks'**
+  String get homeStatTotalSessionsCaption;
+
+  /// No description provided for @homeStatTotalFocusCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Across all sessions'**
+  String get homeStatTotalFocusCaption;
+
+  /// No description provided for @homeStatTodayFocusCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your streak going'**
+  String get homeStatTodayFocusCaption;
+
+  /// No description provided for @homeStatAvgSessionCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Per focus block'**
+  String get homeStatAvgSessionCaption;
+
+  /// No description provided for @homeActivityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus Map'**
+  String get homeActivityTitle;
+
+  /// No description provided for @homeActivitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Focus minutes over the last year.'**
+  String get homeActivitySubtitle;
+
+  /// No description provided for @homeActivityLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get homeActivityLess;
+
+  /// No description provided for @homeActivityMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get homeActivityMore;
 
   /// No description provided for @sessionsTitle.
   ///
