@@ -52,6 +52,12 @@ class SessionsEmptyState extends StatelessWidget {
                 height: 1.4,
               ),
             ),
+            const SizedBox(height: AppSizes.paddingLarge),
+            AppButton(
+              label: context.l10n.sessionsNew,
+              icon: Icons.add,
+              onPressed: onCreate,
+            ),
           ],
         ),
       ),

@@ -63,15 +63,6 @@ class SessionCard extends StatelessWidget {
                 maxLines: 2,
               ),
               const SizedBox(height: AppSizes.paddingSmall),
-              Text(
-                context.l10n.sessionsOpenCardSubtitle,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colors.mutedForeground,
-                  height: 1.35,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
             ],
           ),
         ),
