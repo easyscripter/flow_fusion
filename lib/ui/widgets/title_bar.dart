@@ -8,6 +8,10 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (Theme.of(context).platform != TargetPlatform.windows) {
+      return const SizedBox(height: 40);
+    }
+
     final colors = context.fusionColors;
 
     return GestureDetector(
@@ -31,8 +35,7 @@ class TitleBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Row(
           children: [
-            if (Theme.of(context).platform == TargetPlatform.windows)
-              const SizedBox(width: 16),
+            const SizedBox(width: 16),
             const BrandLogo(size: 20),
             const SizedBox(width: 8),
             Text(
