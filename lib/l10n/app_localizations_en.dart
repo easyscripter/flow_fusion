@@ -97,19 +97,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsTitle => 'Sessions';
 
   @override
-  String get sessionsSubtitle =>
-      'Build a library of scenarios for deep focus, short sprints, and steady breaks.';
+  String get sessionsSubtitle => 'Your sessions';
 
   @override
   String get sessionsNew => 'New session';
 
   @override
-  String get sessionsNewCardSubtitle =>
-      'Add a new focus scenario to the library.';
-
-  @override
   String get sessionsOpenCardSubtitle =>
       'Open the phase layout, check the rhythm, and prepare to launch.';
+
+  @override
+  String get sessionsEmptyTitle => 'No sessions yet';
+
+  @override
+  String get sessionsEmptyDescription => 'Create your first session';
 
   @override
   String get sessionsCreateNotConnected =>

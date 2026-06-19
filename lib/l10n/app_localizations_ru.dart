@@ -97,19 +97,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sessionsTitle => 'Сессии';
 
   @override
-  String get sessionsSubtitle =>
-      'Соберите библиотеку сценариев для глубокого фокуса, коротких спринтов и размеренных перерывов.';
+  String get sessionsSubtitle => 'Ваши сессии';
 
   @override
   String get sessionsNew => 'Новая сессия';
 
   @override
-  String get sessionsNewCardSubtitle =>
-      'Добавить новый сценарий фокусировки в библиотеку.';
-
-  @override
   String get sessionsOpenCardSubtitle =>
       'Открыть состав фаз, проверить ритм и подготовить запуск.';
+
+  @override
+  String get sessionsEmptyTitle => 'Сессий пока нет';
+
+  @override
+  String get sessionsEmptyDescription =>
+      'Создайте свою первую сессию прямо сейчас';
 
   @override
   String get sessionsCreateNotConnected =>

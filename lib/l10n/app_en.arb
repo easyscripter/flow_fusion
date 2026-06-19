@@ -38,10 +38,11 @@
   "homeActivityMore": "More",
 
   "sessionsTitle": "Sessions",
-  "sessionsSubtitle": "Build a library of scenarios for deep focus, short sprints, and steady breaks.",
+  "sessionsSubtitle": "Your sessions",
   "sessionsNew": "New session",
-  "sessionsNewCardSubtitle": "Add a new focus scenario to the library.",
   "sessionsOpenCardSubtitle": "Open the phase layout, check the rhythm, and prepare to launch.",
+  "sessionsEmptyTitle": "No sessions yet",
+  "sessionsEmptyDescription": "Create your first session",
   "sessionsCreateNotConnected": "Creating a new session is not wired up yet.",
   "sessionsOpening": "Opening session: {name}",
   "@sessionsOpening": {

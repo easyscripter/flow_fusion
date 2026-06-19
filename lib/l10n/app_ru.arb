@@ -31,10 +31,11 @@
   "homeActivityMore": "Больше",
 
   "sessionsTitle": "Сессии",
-  "sessionsSubtitle": "Соберите библиотеку сценариев для глубокого фокуса, коротких спринтов и размеренных перерывов.",
+  "sessionsSubtitle": "Ваши сессии",
   "sessionsNew": "Новая сессия",
-  "sessionsNewCardSubtitle": "Добавить новый сценарий фокусировки в библиотеку.",
   "sessionsOpenCardSubtitle": "Открыть состав фаз, проверить ритм и подготовить запуск.",
+  "sessionsEmptyTitle": "Сессий пока нет",
+  "sessionsEmptyDescription": "Создайте свою первую сессию прямо сейчас",
   "sessionsCreateNotConnected": "Создание новой сессии пока не подключено.",
   "sessionsOpening": "Открытие сессии: {name}",
 

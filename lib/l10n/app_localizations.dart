@@ -269,7 +269,7 @@ abstract class AppLocalizations {
   /// No description provided for @sessionsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Build a library of scenarios for deep focus, short sprints, and steady breaks.'**
+  /// **'Your sessions'**
   String get sessionsSubtitle;
 
   /// No description provided for @sessionsNew.
@@ -278,17 +278,23 @@ abstract class AppLocalizations {
   /// **'New session'**
   String get sessionsNew;
 
-  /// No description provided for @sessionsNewCardSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a new focus scenario to the library.'**
-  String get sessionsNewCardSubtitle;
-
   /// No description provided for @sessionsOpenCardSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Open the phase layout, check the rhythm, and prepare to launch.'**
   String get sessionsOpenCardSubtitle;
+
+  /// No description provided for @sessionsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet'**
+  String get sessionsEmptyTitle;
+
+  /// No description provided for @sessionsEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first session'**
+  String get sessionsEmptyDescription;
 
   /// No description provided for @sessionsCreateNotConnected.
   ///
