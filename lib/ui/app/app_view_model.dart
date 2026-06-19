@@ -26,8 +26,8 @@ abstract class _AppViewModelBase with Store {
   @action
   void init() {
     themeMode = ThemeMode.values[prefs.themeMode ?? 0];
-    final languageCode = prefs.language;
-    locale = languageCode != null ? Locale(languageCode) : null;
+    final languageCode = prefs.language ?? 'en';
+    locale = Locale(languageCode);
     _packageInfo = GetIt.I.get<PackageInfo>();
   }
 
