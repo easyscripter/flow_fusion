@@ -13,7 +13,6 @@ class TimerCard extends StatelessWidget {
   final int index;
 
   final bool editing;
-.
   final VoidCallback? onRemove;
 
   const TimerCard({
