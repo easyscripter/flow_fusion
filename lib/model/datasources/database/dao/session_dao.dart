@@ -6,23 +6,24 @@ import 'package:injectable/injectable.dart';
 @singleton
 @dao
 abstract class SessionDao {
-  @Query('SELECT * FROM Session')
+  @Query('SELECT * FROM sessions ORDER BY updatedAt DESC')
   Future<List<Session>> findAllSession();
 
-  @Query('SELECT name FROM Session')
-  Stream<List<String>> findAllSessionNames();
+  @Query('SELECT * FROM sessions WHERE id = :id')
+  Future<Session?> findSessionById(int id);
 
-  @Query('SELECT * FROM Session WHERE id = :id')
-  Stream<Session?> findSessionById(int id);
+  /// Inserts a session and returns its auto-generated id.
+  @Insert(onConflict: OnConflictStrategy.abort)
+  Future<int> insertSession(Session session);
 
-  @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> insertSession(Session session);
+  @update
+  Future<void> updateSession(Session session);
 
-  @Query('DELETE FROM Session')
+  @delete
+  Future<void> deleteSession(Session session);
+
+  @Query('DELETE FROM sessions')
   Future<void> clear();
-
-  @Query('UPDATE Session SET name = :name WHERE id = :id')
-  Future<void> updateSessionName(String name, int id);
 
   @factoryMethod
   static SessionDao create(AppDatabase appDatabase) => appDatabase.sessionDao;
