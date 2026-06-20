@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeCardSessionsSubtitle =>
-      'Open scenarios, review phases, and move to the next cycle without any noise.';
+      'Open scenarios, review timers, and move to the next cycle without any noise.';
 
   @override
   String get homeCardThemeTitle => 'Theme & behavior';
@@ -104,7 +104,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionsOpenCardSubtitle =>
-      'Open the phase layout, check the rhythm, and prepare to launch.';
+      'Open the timer layout, check the rhythm, and prepare to launch.';
 
   @override
   String get sessionsEmptyTitle => 'No sessions yet';
@@ -171,13 +171,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguageDescription => 'Choose your preferred language';
 
   @override
-  String get phaseAdd => 'Add Phase';
+  String get timerWork => 'Work';
 
   @override
-  String get phaseStartTimer => 'Start Timer';
+  String get timerChill => 'Chill';
 
   @override
-  String phaseDurationMinutes(int minutes) {
+  String get timerTitleHint => 'Timer title';
+
+  @override
+  String get timerDescriptionHint => 'Description (optional)';
+
+  @override
+  String get timerMinutesShort => 'min';
+
+  @override
+  String timerDurationMinutes(int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
@@ -188,8 +197,56 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get phaseWork => 'Work';
+  String get sessionEditorCreateTitle => 'New session';
 
   @override
-  String get phaseChill => 'Chill';
+  String get sessionEditorEditTitle => 'Edit session';
+
+  @override
+  String get sessionEditorCreateSubtitle =>
+      'Add timers and details, then save.';
+
+  @override
+  String get sessionEditorEditSubtitle =>
+      'Update the timers and details of this session.';
+
+  @override
+  String get sessionEditorIconLabel => 'Icon';
+
+  @override
+  String get sessionEditorTitleLabel => 'Title';
+
+  @override
+  String get sessionEditorTitleHint => 'e.g. Deep work';
+
+  @override
+  String get sessionEditorTitleRequired => 'Please enter a title';
+
+  @override
+  String get sessionEditorDescriptionLabel => 'Description';
+
+  @override
+  String get sessionEditorDescriptionHint => 'What is this session about?';
+
+  @override
+  String get sessionEditorTimersTitle => 'Timers';
+
+  @override
+  String get sessionEditorAddWork => 'Add work';
+
+  @override
+  String get sessionEditorAddChill => 'Add chill';
+
+  @override
+  String get sessionEditorNoTimers =>
+      'No timers yet. Add a work or chill block to get started.';
+
+  @override
+  String get sessionEditorRemoveTimer => 'Remove timer';
+
+  @override
+  String get sessionEditorSave => 'Save';
+
+  @override
+  String get sessionEditorCancel => 'Cancel';
 }

@@ -16,7 +16,7 @@ abstract class PrefsModule {
 abstract class DatabaseModule {
   @preResolve
   Future<AppDatabase> get db =>
-      $FroomAppDatabase.databaseBuilder('app_database.db').build();
+      $FroomAppDatabase.databaseBuilder('flow_fusion.db').build();
 }
 
 @module

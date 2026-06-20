@@ -26,16 +26,13 @@ abstract class _HomeViewViewModelBase with Store {
   int get totalSessions =>
       focusByDay.values.fold(0, (sum, m) => sum + (m / 25).round());
 
-  /// Суммарное время фокуса.
   @computed
   Duration get totalFocus =>
       Duration(minutes: focusByDay.values.fold(0, (sum, m) => sum + m));
 
-  /// Фокус за сегодня.
   @computed
   Duration get todayFocus => Duration(minutes: focusByDay[_today] ?? 0);
 
-  /// Средняя длительность одной сессии.
   @computed
   Duration get avgSession {
     final sessions = totalSessions;
@@ -53,8 +50,6 @@ abstract class _HomeViewViewModelBase with Store {
   Future<void> update() async {
     try {
       isLoading = true;
-      // Реальный список сессий пока используется лишь как сигнал наличия данных;
-      // временную карту активности генерируем детерминированно.
       await _sessionDao.findAllSession();
       focusByDay = ObservableMap.of(_generateFocusByDay());
     } finally {
@@ -62,20 +57,17 @@ abstract class _HomeViewViewModelBase with Store {
     }
   }
 
-  /// Детерминированная (фиксированный seed) карта активности за 365 дней,
-  /// чтобы дашборд выглядел осмысленно до появления реального трекинга.
   Map<DateTime, int> _generateFocusByDay() {
     final rng = Random(42);
     final today = _today;
     final result = <DateTime, int>{};
     for (var i = 0; i < 365; i++) {
       final date = today.subtract(Duration(days: i));
-      // ~35% дней без активности, в выходные фокуса меньше.
-      final isWeekend = date.weekday == DateTime.saturday ||
-          date.weekday == DateTime.sunday;
+      final isWeekend =
+          date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
       if (rng.nextDouble() < (isWeekend ? 0.55 : 0.3)) continue;
       final sessions = 1 + rng.nextInt(isWeekend ? 3 : 6);
-      result[date] = sessions * (20 + rng.nextInt(3) * 5); // 20/25/30 мин на сессию
+      result[date] = sessions * (20 + rng.nextInt(3) * 5);
     }
     return result;
   }

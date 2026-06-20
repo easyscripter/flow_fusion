@@ -1,3 +1,4 @@
+import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
@@ -8,6 +9,7 @@ import 'package:flow_fusion/ui/widgets/sessions_empty_state.dart';
 import 'package:flow_fusion/ui/widgets/sessions_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:go_router/go_router.dart';
 
 class SessionsView extends StatefulWidget {
   const SessionsView({super.key});
@@ -71,15 +73,15 @@ class _SessionsViewState extends State<SessionsView> {
     );
   }
 
-  void _createNewSession() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.sessionsCreateNotConnected)),
-    );
+  Future<void> _createNewSession() async {
+    await context.push(Routes.sessionNew.path);
+    await _viewModel.update();
   }
 
-  void _openSession(Session session) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.sessionsOpening(session.name))),
-    );
+  Future<void> _openSession(Session session) async {
+    final id = session.id;
+    if (id == null) return;
+    await context.push(Routes.sessionEditPathFor(id));
+    await _viewModel.update();
   }
 }

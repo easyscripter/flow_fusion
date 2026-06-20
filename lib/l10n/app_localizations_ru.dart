@@ -172,13 +172,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguageDescription => 'Выберите предпочитаемый язык';
 
   @override
-  String get phaseAdd => 'Добавить фазу';
+  String get timerWork => 'Работа';
 
   @override
-  String get phaseStartTimer => 'Запустить таймер';
+  String get timerChill => 'Отдых';
 
   @override
-  String phaseDurationMinutes(int minutes) {
+  String get timerTitleHint => 'Название таймера';
+
+  @override
+  String get timerDescriptionHint => 'Описание (необязательно)';
+
+  @override
+  String get timerMinutesShort => 'мин';
+
+  @override
+  String timerDurationMinutes(int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       minutes,
       locale: localeName,
@@ -191,8 +200,56 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get phaseWork => 'Работа';
+  String get sessionEditorCreateTitle => 'Новая сессия';
 
   @override
-  String get phaseChill => 'Отдых';
+  String get sessionEditorEditTitle => 'Редактирование сессии';
+
+  @override
+  String get sessionEditorCreateSubtitle =>
+      'Добавьте таймеры и детали, затем сохраните.';
+
+  @override
+  String get sessionEditorEditSubtitle =>
+      'Измените таймеры и детали этой сессии.';
+
+  @override
+  String get sessionEditorIconLabel => 'Иконка';
+
+  @override
+  String get sessionEditorTitleLabel => 'Название';
+
+  @override
+  String get sessionEditorTitleHint => 'напр. Глубокая работа';
+
+  @override
+  String get sessionEditorTitleRequired => 'Введите название';
+
+  @override
+  String get sessionEditorDescriptionLabel => 'Описание';
+
+  @override
+  String get sessionEditorDescriptionHint => 'О чём эта сессия?';
+
+  @override
+  String get sessionEditorTimersTitle => 'Таймеры';
+
+  @override
+  String get sessionEditorAddWork => 'Добавить работу';
+
+  @override
+  String get sessionEditorAddChill => 'Добавить отдых';
+
+  @override
+  String get sessionEditorNoTimers =>
+      'Пока нет таймеров. Добавьте блок работы или отдыха.';
+
+  @override
+  String get sessionEditorRemoveTimer => 'Удалить таймер';
+
+  @override
+  String get sessionEditorSave => 'Сохранить';
+
+  @override
+  String get sessionEditorCancel => 'Отмена';
 }

@@ -1,5 +1,5 @@
 import 'package:froom/froom.dart';
-import 'package:flow_fusion/enums/phase_type.dart';
+import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 
@@ -31,7 +31,7 @@ class SessionTimer {
 
   String? icon;
 
-  PhaseType type;
+  TimerType type;
 
   Duration plannedDuration;
 
@@ -48,7 +48,7 @@ class SessionTimer {
     required this.title,
     this.description,
     this.icon,
-    this.type = PhaseType.work,
+    this.type = TimerType.work,
     required this.plannedDuration,
     this.status = TimerStatus.idle,
     required this.createdAt,
@@ -61,7 +61,7 @@ class SessionTimer {
     required String title,
     String? description,
     String? icon,
-    PhaseType type = PhaseType.work,
+    TimerType type = TimerType.work,
     required Duration plannedDuration,
     TimerStatus status = TimerStatus.idle,
   }) {

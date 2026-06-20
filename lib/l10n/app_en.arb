@@ -21,7 +21,7 @@
   "homeOpenSessions": "Open sessions",
   "homeThemeSettings": "Theme settings",
   "homeCardSessionsTitle": "Focus sessions",
-  "homeCardSessionsSubtitle": "Open scenarios, review phases, and move to the next cycle without any noise.",
+  "homeCardSessionsSubtitle": "Open scenarios, review timers, and move to the next cycle without any noise.",
   "homeCardThemeTitle": "Theme & behavior",
   "homeCardThemeSubtitle": "Switch between light and dark themes while keeping the same strict, calm visual language.",
   "homeStatTotalSessions": "Total sessions",
@@ -40,7 +40,7 @@
   "sessionsTitle": "Sessions",
   "sessionsSubtitle": "Your sessions",
   "sessionsNew": "New session",
-  "sessionsOpenCardSubtitle": "Open the phase layout, check the rhythm, and prepare to launch.",
+  "sessionsOpenCardSubtitle": "Open the timer layout, check the rhythm, and prepare to launch.",
   "sessionsEmptyTitle": "No sessions yet",
   "sessionsEmptyDescription": "Create your first session",
   "sessionsCreateNotConnected": "Creating a new session is not wired up yet.",
@@ -71,10 +71,13 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Choose your preferred language",
 
-  "phaseAdd": "Add Phase",
-  "phaseStartTimer": "Start Timer",
-  "phaseDurationMinutes": "{minutes,plural, =1{{minutes} min} other{{minutes} min}}",
-  "@phaseDurationMinutes": {
+  "timerWork": "Work",
+  "timerChill": "Chill",
+  "timerTitleHint": "Timer title",
+  "timerDescriptionHint": "Description (optional)",
+  "timerMinutesShort": "min",
+  "timerDurationMinutes": "{minutes,plural, =1{{minutes} min} other{{minutes} min}}",
+  "@timerDurationMinutes": {
     "placeholders": {
       "minutes": {
         "type": "int"
@@ -82,6 +85,21 @@
     }
   },
 
-  "phaseWork": "Work",
-  "phaseChill": "Chill"
+  "sessionEditorCreateTitle": "New session",
+  "sessionEditorEditTitle": "Edit session",
+  "sessionEditorCreateSubtitle": "Add timers and details, then save.",
+  "sessionEditorEditSubtitle": "Update the timers and details of this session.",
+  "sessionEditorIconLabel": "Icon",
+  "sessionEditorTitleLabel": "Title",
+  "sessionEditorTitleHint": "e.g. Deep work",
+  "sessionEditorTitleRequired": "Please enter a title",
+  "sessionEditorDescriptionLabel": "Description",
+  "sessionEditorDescriptionHint": "What is this session about?",
+  "sessionEditorTimersTitle": "Timers",
+  "sessionEditorAddWork": "Add work",
+  "sessionEditorAddChill": "Add chill",
+  "sessionEditorNoTimers": "No timers yet. Add a work or chill block to get started.",
+  "sessionEditorRemoveTimer": "Remove timer",
+  "sessionEditorSave": "Save",
+  "sessionEditorCancel": "Cancel"
 }

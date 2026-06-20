@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:froom/froom.dart';
-import 'package:flow_fusion/enums/phase_type.dart';
+import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/datasources/database/converter/date_time_converter.dart';

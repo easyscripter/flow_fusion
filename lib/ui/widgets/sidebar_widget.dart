@@ -48,7 +48,7 @@ class SidebarWidget extends StatelessWidget {
   /// Локализованная подпись пункта по его маршруту.
   String _labelFor(BuildContext context, Routes route) => switch (route) {
     Routes.home => context.l10n.navOverview,
-    Routes.sessions => context.l10n.navSessions,
+    Routes.sessions  => context.l10n.navSessions,
     Routes.settings => context.l10n.navSettings,
   };
 

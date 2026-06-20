@@ -57,10 +57,28 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Выберите предпочитаемый язык",
 
-  "phaseAdd": "Добавить фазу",
-  "phaseStartTimer": "Запустить таймер",
-  "phaseDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "timerWork": "Работа",
+  "timerChill": "Отдых",
+  "timerTitleHint": "Название таймера",
+  "timerDescriptionHint": "Описание (необязательно)",
+  "timerMinutesShort": "мин",
+  "timerDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
 
-  "phaseWork": "Работа",
-  "phaseChill": "Отдых"
+  "sessionEditorCreateTitle": "Новая сессия",
+  "sessionEditorEditTitle": "Редактирование сессии",
+  "sessionEditorCreateSubtitle": "Добавьте таймеры и детали, затем сохраните.",
+  "sessionEditorEditSubtitle": "Измените таймеры и детали этой сессии.",
+  "sessionEditorIconLabel": "Иконка",
+  "sessionEditorTitleLabel": "Название",
+  "sessionEditorTitleHint": "напр. Глубокая работа",
+  "sessionEditorTitleRequired": "Введите название",
+  "sessionEditorDescriptionLabel": "Описание",
+  "sessionEditorDescriptionHint": "О чём эта сессия?",
+  "sessionEditorTimersTitle": "Таймеры",
+  "sessionEditorAddWork": "Добавить работу",
+  "sessionEditorAddChill": "Добавить отдых",
+  "sessionEditorNoTimers": "Пока нет таймеров. Добавьте блок работы или отдыха.",
+  "sessionEditorRemoveTimer": "Удалить таймер",
+  "sessionEditorSave": "Сохранить",
+  "sessionEditorCancel": "Отмена"
 }

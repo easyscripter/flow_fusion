@@ -173,7 +173,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeCardSessionsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Open scenarios, review phases, and move to the next cycle without any noise.'**
+  /// **'Open scenarios, review timers, and move to the next cycle without any noise.'**
   String get homeCardSessionsSubtitle;
 
   /// No description provided for @homeCardThemeTitle.
@@ -281,7 +281,7 @@ abstract class AppLocalizations {
   /// No description provided for @sessionsOpenCardSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Open the phase layout, check the rhythm, and prepare to launch.'**
+  /// **'Open the timer layout, check the rhythm, and prepare to launch.'**
   String get sessionsOpenCardSubtitle;
 
   /// No description provided for @sessionsEmptyTitle.
@@ -404,35 +404,143 @@ abstract class AppLocalizations {
   /// **'Choose your preferred language'**
   String get settingsLanguageDescription;
 
-  /// No description provided for @phaseAdd.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Phase'**
-  String get phaseAdd;
-
-  /// No description provided for @phaseStartTimer.
-  ///
-  /// In en, this message translates to:
-  /// **'Start Timer'**
-  String get phaseStartTimer;
-
-  /// No description provided for @phaseDurationMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes,plural, =1{{minutes} min} other{{minutes} min}}'**
-  String phaseDurationMinutes(int minutes);
-
-  /// No description provided for @phaseWork.
+  /// No description provided for @timerWork.
   ///
   /// In en, this message translates to:
   /// **'Work'**
-  String get phaseWork;
+  String get timerWork;
 
-  /// No description provided for @phaseChill.
+  /// No description provided for @timerChill.
   ///
   /// In en, this message translates to:
   /// **'Chill'**
-  String get phaseChill;
+  String get timerChill;
+
+  /// No description provided for @timerTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer title'**
+  String get timerTitleHint;
+
+  /// No description provided for @timerDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get timerDescriptionHint;
+
+  /// No description provided for @timerMinutesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get timerMinutesShort;
+
+  /// No description provided for @timerDurationMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes,plural, =1{{minutes} min} other{{minutes} min}}'**
+  String timerDurationMinutes(int minutes);
+
+  /// No description provided for @sessionEditorCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New session'**
+  String get sessionEditorCreateTitle;
+
+  /// No description provided for @sessionEditorEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit session'**
+  String get sessionEditorEditTitle;
+
+  /// No description provided for @sessionEditorCreateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add timers and details, then save.'**
+  String get sessionEditorCreateSubtitle;
+
+  /// No description provided for @sessionEditorEditSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the timers and details of this session.'**
+  String get sessionEditorEditSubtitle;
+
+  /// No description provided for @sessionEditorIconLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get sessionEditorIconLabel;
+
+  /// No description provided for @sessionEditorTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get sessionEditorTitleLabel;
+
+  /// No description provided for @sessionEditorTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Deep work'**
+  String get sessionEditorTitleHint;
+
+  /// No description provided for @sessionEditorTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a title'**
+  String get sessionEditorTitleRequired;
+
+  /// No description provided for @sessionEditorDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get sessionEditorDescriptionLabel;
+
+  /// No description provided for @sessionEditorDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What is this session about?'**
+  String get sessionEditorDescriptionHint;
+
+  /// No description provided for @sessionEditorTimersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timers'**
+  String get sessionEditorTimersTitle;
+
+  /// No description provided for @sessionEditorAddWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Add work'**
+  String get sessionEditorAddWork;
+
+  /// No description provided for @sessionEditorAddChill.
+  ///
+  /// In en, this message translates to:
+  /// **'Add chill'**
+  String get sessionEditorAddChill;
+
+  /// No description provided for @sessionEditorNoTimers.
+  ///
+  /// In en, this message translates to:
+  /// **'No timers yet. Add a work or chill block to get started.'**
+  String get sessionEditorNoTimers;
+
+  /// No description provided for @sessionEditorRemoveTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove timer'**
+  String get sessionEditorRemoveTimer;
+
+  /// No description provided for @sessionEditorSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get sessionEditorSave;
+
+  /// No description provided for @sessionEditorCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get sessionEditorCancel;
 }
 
 class _AppLocalizationsDelegate

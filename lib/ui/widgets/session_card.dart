@@ -1,6 +1,6 @@
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
-import 'package:flow_fusion/ui/l10n/l10n_context.dart';
+import 'package:flow_fusion/ui/constants/session_icons.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,7 @@ class SessionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.fusionColors;
     final theme = Theme.of(context);
+    final description = session.description;
 
     return Card(
       child: InkWell(
@@ -38,7 +39,7 @@ class SessionCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Icon(
-                        Icons.layers_rounded,
+                        SessionIcons.resolve(session.icon),
                         color: colors.accentForeground,
                         size: AppSizes.iconSizeMedium,
                       ),
@@ -54,7 +55,7 @@ class SessionCard extends StatelessWidget {
               ),
               const Spacer(flex: 2),
               Text(
-                session.name,
+                session.title,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   height: 1.15,
@@ -62,6 +63,17 @@ class SessionCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
+              if (description != null && description.isNotEmpty) ...[
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colors.mutedForeground,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ],
               const SizedBox(height: AppSizes.paddingSmall),
             ],
           ),

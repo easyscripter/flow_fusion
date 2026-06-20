@@ -1,6 +1,7 @@
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view.dart';
 import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
@@ -27,6 +28,25 @@ final router = GoRouter(
                 key: state.pageKey,
                 child: const SessionsView(),
               ),
+              routes: [
+                GoRoute(
+                  path: 'new',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const SessionEditorView(),
+                  ),
+                ),
+                GoRoute(
+                  path: 'edit/:id',
+                  pageBuilder: (context, state) {
+                    final id = int.tryParse(state.pathParameters['id'] ?? '');
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: SessionEditorView(sessionId: id),
+                    );
+                  },
+                ),
+              ],
             ),
             GoRoute(
               path: Routes.settings.path,

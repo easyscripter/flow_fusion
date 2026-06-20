@@ -1,7 +1,6 @@
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
-import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/home_activity_panel.dart';
 import 'package:flow_fusion/ui/widgets/home_stats_row.dart';
