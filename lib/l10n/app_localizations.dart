@@ -488,6 +488,36 @@ abstract class AppLocalizations {
   /// **'Start a session from the sessions list. Active timer will stay available in the sidebar.'**
   String get timerEmptyDescription;
 
+  /// No description provided for @timerFinishedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer finished'**
+  String get timerFinishedTitle;
+
+  /// No description provided for @timerFinishedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{timerTitle}\" is complete.'**
+  String timerFinishedBody(String timerTitle);
+
+  /// No description provided for @timerFinishedNextBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{timerTitle}\" is complete. Up next: \"{nextTimerTitle}\".'**
+  String timerFinishedNextBody(String timerTitle, String nextTimerTitle);
+
+  /// No description provided for @sessionFinishedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session finished'**
+  String get sessionFinishedTitle;
+
+  /// No description provided for @sessionFinishedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{sessionTitle}\" is complete.'**
+  String sessionFinishedBody(String sessionTitle);
+
   /// No description provided for @timerPlannedDuration.
   ///
   /// In en, this message translates to:

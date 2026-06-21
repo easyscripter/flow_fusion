@@ -6,7 +6,7 @@ import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dar
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
@@ -206,14 +206,32 @@ class ActiveTimerController extends ChangeNotifier
     var extra = overshoot;
 
     while (_session != null) {
+      final completedTimer = currentTimer;
       final nextIndex = _currentIndex + 1;
       if (nextIndex >= _timers.length) {
+        if (completedTimer != null) {
+          unawaited(
+            TimerAlertService.instance.notifySessionFinished(
+              sessionTitle: _session?.title ?? completedTimer.title,
+            ),
+          );
+        }
         unawaited(_clearState(notify: notify));
         return;
       }
 
       _currentIndex = nextIndex;
+      final nextTimer = _timers[_currentIndex];
       final nextDuration = _timers[_currentIndex].plannedDuration;
+
+      if (completedTimer != null) {
+        unawaited(
+          TimerAlertService.instance.notifyTimerFinished(
+            timerTitle: completedTimer.title,
+            nextTimerTitle: nextTimer.title,
+          ),
+        );
+      }
 
       if (extra < nextDuration) {
         _remaining = nextDuration - extra;

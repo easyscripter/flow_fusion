@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/active_timer_controller.dart';

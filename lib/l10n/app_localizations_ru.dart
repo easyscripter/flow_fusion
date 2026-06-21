@@ -215,6 +215,27 @@ class AppLocalizationsRu extends AppLocalizations {
       'Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.';
 
   @override
+  String get timerFinishedTitle => 'Таймер завершён';
+
+  @override
+  String timerFinishedBody(String timerTitle) {
+    return '\"$timerTitle\" завершён.';
+  }
+
+  @override
+  String timerFinishedNextBody(String timerTitle, String nextTimerTitle) {
+    return '\"$timerTitle\" завершён. Дальше: \"$nextTimerTitle\".';
+  }
+
+  @override
+  String get sessionFinishedTitle => 'Сессия завершена';
+
+  @override
+  String sessionFinishedBody(String sessionTitle) {
+    return '\"$sessionTitle\" завершена.';
+  }
+
+  @override
   String timerPlannedDuration(int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       minutes,

@@ -1,5 +1,6 @@
 import 'package:flow_fusion/di/di.dart';
 import 'package:flow_fusion/ui/app/app.dart';
+import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
@@ -7,6 +8,7 @@ import 'package:window_manager/window_manager.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+  await TimerAlertService.instance.init();
   await windowManager.ensureInitialized();
   WindowOptions windowOptions = WindowOptions(
     size: Size(AppSizes.windowDefaultWidth, AppSizes.windowDefaultHeight),

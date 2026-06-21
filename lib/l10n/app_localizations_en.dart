@@ -214,6 +214,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Start a session from the sessions list. Active timer will stay available in the sidebar.';
 
   @override
+  String get timerFinishedTitle => 'Timer finished';
+
+  @override
+  String timerFinishedBody(String timerTitle) {
+    return '\"$timerTitle\" is complete.';
+  }
+
+  @override
+  String timerFinishedNextBody(String timerTitle, String nextTimerTitle) {
+    return '\"$timerTitle\" is complete. Up next: \"$nextTimerTitle\".';
+  }
+
+  @override
+  String get sessionFinishedTitle => 'Session finished';
+
+  @override
+  String sessionFinishedBody(String sessionTitle) {
+    return '\"$sessionTitle\" is complete.';
+  }
+
+  @override
   String timerPlannedDuration(int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       minutes,

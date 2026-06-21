@@ -85,6 +85,35 @@
   "timerQueueTitle": "Route",
   "timerEmptyTitle": "No active timer",
   "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
+  "timerFinishedTitle": "Timer finished",
+  "timerFinishedBody": "\"{timerTitle}\" is complete.",
+  "@timerFinishedBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerFinishedNextBody": "\"{timerTitle}\" is complete. Up next: \"{nextTimerTitle}\".",
+  "@timerFinishedNextBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      },
+      "nextTimerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionFinishedTitle": "Session finished",
+  "sessionFinishedBody": "\"{sessionTitle}\" is complete.",
+  "@sessionFinishedBody": {
+    "placeholders": {
+      "sessionTitle": {
+        "type": "String"
+      }
+    }
+  },
   "timerPlannedDuration": "{minutes,plural, =1{1 min} other{{minutes} min}}",
   "@timerPlannedDuration": {
     "placeholders": {

@@ -85,6 +85,35 @@
   "timerQueueTitle": "Очередь",
   "timerEmptyTitle": "Нет активного таймера",
   "timerEmptyDescription": "Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.",
+  "timerFinishedTitle": "Таймер завершён",
+  "timerFinishedBody": "\"{timerTitle}\" завершён.",
+  "@timerFinishedBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerFinishedNextBody": "\"{timerTitle}\" завершён. Дальше: \"{nextTimerTitle}\".",
+  "@timerFinishedNextBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      },
+      "nextTimerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionFinishedTitle": "Сессия завершена",
+  "sessionFinishedBody": "\"{sessionTitle}\" завершена.",
+  "@sessionFinishedBody": {
+    "placeholders": {
+      "sessionTitle": {
+        "type": "String"
+      }
+    }
+  },
   "timerPlannedDuration": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
   "@timerPlannedDuration": {
     "placeholders": {
