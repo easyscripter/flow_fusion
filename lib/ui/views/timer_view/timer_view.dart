@@ -229,10 +229,11 @@ class _TimerViewState extends State<TimerView> {
                                 ),
                                 const SizedBox(height: AppSizes.paddingMedium),
                                 SizedBox(
-                                  height: 86,
+                                  height: 98,
                                   child: SingleChildScrollView(
                                     controller: _routeScrollController,
                                     scrollDirection: Axis.horizontal,
+                                    padding: const EdgeInsets.only(bottom: 8),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
@@ -243,8 +244,10 @@ class _TimerViewState extends State<TimerView> {
                                             timer: _controller.timers[index],
                                             index: index,
                                             total: _controller.timers.length,
-                                            isCurrent: index == _controller.currentIndex,
-                                            isDone: index < _controller.currentIndex,
+                                            isCurrent:
+                                                index == _controller.currentIndex,
+                                            isDone:
+                                                index < _controller.currentIndex,
                                           ),
                                           if (index < _controller.timers.length - 1)
                                             const SizedBox(width: 8),
@@ -401,85 +404,115 @@ class _QueueItem extends StatelessWidget {
     final stationColor = isDone || isCurrent ? typeColor : colors.lineStrong;
     final leftVisible = index > 0;
     final rightVisible = index < total - 1;
+    final pointSize = isCurrent ? 18.0 : 14.0;
+    final pointBorder = isCurrent ? 4.0 : 3.0;
+    final labelColor = isCurrent ? stationColor : colors.mutedForeground;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 128,
-            height: 24,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                if (leftVisible)
-                  Positioned(
-                    left: 0,
-                    child: Container(
-                      width: 52,
-                      height: 3,
-                      color: stationColor.withValues(alpha: 0.7),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeOutCubic,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 128,
+              height: 24,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (leftVisible)
+                    Positioned(
+                      left: 0,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 280),
+                        curve: Curves.easeOutCubic,
+                        width: 52,
+                        height: 3,
+                        color: stationColor.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  if (rightVisible)
+                    Positioned(
+                      right: 0,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 280),
+                        curve: Curves.easeOutCubic,
+                        width: 52,
+                        height: 3,
+                        color: stationColor.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 280),
+                    curve: Curves.easeOutCubic,
+                    width: pointSize,
+                    height: pointSize,
+                    decoration: BoxDecoration(
+                      color: isDone
+                          ? stationColor
+                          : isCurrent
+                          ? colors.cardBackground
+                          : colors.panelMuted,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: stationColor,
+                        width: pointBorder,
+                      ),
+                      boxShadow: isCurrent
+                          ? [
+                              BoxShadow(
+                                color: stationColor.withValues(alpha: 0.22),
+                                blurRadius: 14,
+                                spreadRadius: 1,
+                              ),
+                            ]
+                          : null,
                     ),
                   ),
-                if (rightVisible)
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      width: 52,
-                      height: 3,
-                      color: stationColor.withValues(alpha: 0.7),
-                    ),
-                  ),
-                Container(
-                  width: isCurrent ? 18 : 14,
-                  height: isCurrent ? 18 : 14,
-                  decoration: BoxDecoration(
-                    color: isDone
-                        ? stationColor
-                        : isCurrent
-                        ? colors.cardBackground
-                        : colors.panelMuted,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: stationColor,
-                      width: isCurrent ? 4 : 3,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: 128,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  timer.title,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: isCurrent ? stationColor : null,
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 128,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 280),
+                    curve: Curves.easeOutCubic,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: labelColor,
+                    ),
+                    child: Text(
+                      timer.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  context.l10n.timerPlannedDuration(
-                    math.max(1, timer.plannedDuration.inMinutes).toInt(),
+                  const SizedBox(height: 2),
+                  AnimatedDefaultTextStyle(
+                    duration: const Duration(milliseconds: 280),
+                    curve: Curves.easeOutCubic,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: labelColor,
+                    ),
+                    child: Text(
+                      context.l10n.timerPlannedDuration(
+                        math.max(1, timer.plannedDuration.inMinutes).toInt(),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isCurrent ? stationColor : colors.mutedForeground,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
