@@ -63,6 +63,25 @@
   "timerDescriptionHint": "Описание (необязательно)",
   "timerMinutesShort": "мин",
   "timerDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "timerDurationHoursOnly": "{hours,plural, =1{1 час} few{{hours} часа} many{{hours} часов} other{{hours} часа}}",
+  "@timerDurationHoursOnly": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursMinutes": "{hours,plural, =1{1 час} few{{hours} часа} many{{hours} часов} other{{hours} часа}} {minutes} мин",
+  "@timerDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
 
   "sessionEditorCreateTitle": "Новая сессия",
   "sessionEditorEditTitle": "Редактирование сессии",

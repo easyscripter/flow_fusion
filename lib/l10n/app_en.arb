@@ -84,6 +84,25 @@
       }
     }
   },
+  "timerDurationHoursOnly": "{hours,plural, =1{1 hour} other{{hours} hours}}",
+  "@timerDurationHoursOnly": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursMinutes": "{hours,plural, =1{1 hour} other{{hours} hours}} {minutes} min",
+  "@timerDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
 
   "sessionEditorCreateTitle": "New session",
   "sessionEditorEditTitle": "Edit session",

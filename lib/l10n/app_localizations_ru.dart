@@ -200,6 +200,32 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String timerDurationHoursOnly(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours часа',
+      many: '$hours часов',
+      few: '$hours часа',
+      one: '1 час',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timerDurationHoursMinutes(int hours, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours часа',
+      many: '$hours часов',
+      few: '$hours часа',
+      one: '1 час',
+    );
+    return '$_temp0 $minutes мин';
+  }
+
+  @override
   String get sessionEditorCreateTitle => 'Новая сессия';
 
   @override

@@ -440,6 +440,18 @@ abstract class AppLocalizations {
   /// **'{minutes,plural, =1{{minutes} min} other{{minutes} min}}'**
   String timerDurationMinutes(int minutes);
 
+  /// No description provided for @timerDurationHoursOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours,plural, =1{1 hour} other{{hours} hours}}'**
+  String timerDurationHoursOnly(int hours);
+
+  /// No description provided for @timerDurationHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours,plural, =1{1 hour} other{{hours} hours}} {minutes} min'**
+  String timerDurationHoursMinutes(int hours, int minutes);
+
   /// No description provided for @sessionEditorCreateTitle.
   ///
   /// In en, this message translates to:

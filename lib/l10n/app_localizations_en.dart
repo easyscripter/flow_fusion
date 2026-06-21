@@ -197,6 +197,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String timerDurationHoursOnly(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours hours',
+      one: '1 hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timerDurationHoursMinutes(int hours, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours hours',
+      one: '1 hour',
+    );
+    return '$_temp0 $minutes min';
+  }
+
+  @override
   String get sessionEditorCreateTitle => 'New session';
 
   @override
