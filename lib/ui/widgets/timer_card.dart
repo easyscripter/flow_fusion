@@ -1,3 +1,4 @@
+import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
@@ -26,13 +27,16 @@ class TimerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.fusionColors;
+    final isWork = draft.type == TimerType.work;
+    final background = isWork ? colors.workSurface : colors.chillSurface;
+    final borderColor = isWork ? colors.workColor : colors.chillColor;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: colors.cardBackground,
+        color: background,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: colors.cardBorder),
+        border: Border.all(color: borderColor),
       ),
       child: Row(
         children: [
@@ -66,6 +70,7 @@ class TimerCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TimerTitleField(draft: draft, editing: editing),
+                const SizedBox(height: 4),
                 TimerDescriptionField(draft: draft, editing: editing),
               ],
             ),

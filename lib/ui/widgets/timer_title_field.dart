@@ -1,4 +1,6 @@
+import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
+import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,6 +32,10 @@ class _TimerTitleFieldState extends State<TimerTitleField> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.fusionColors;
+    final fill = widget.draft.type == TimerType.work
+        ? colors.workSurface
+        : colors.chillSurface;
     final style = Theme.of(
       context,
     ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700);
@@ -52,8 +58,10 @@ class _TimerTitleFieldState extends State<TimerTitleField> {
       style: style,
       decoration: InputDecoration(
         isDense: true,
+        filled: true,
+        fillColor: fill,
         border: InputBorder.none,
-        contentPadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         hintText: context.l10n.timerTitleHint,
       ),
     );

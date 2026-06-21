@@ -51,9 +51,13 @@ class FlowFusionColors extends ThemeExtension<FlowFusionColors> {
     required this.dangerSoft,
   });
 
-  /// Цвет фазы по её типу: work — синий акцент, chill — зелёный.
-  Color get workColor => accent;
+  /// Цвет фазы по её типу: work — красный, chill — зелёный.
+  Color get workColor => danger;
   Color get chillColor => success;
+
+  /// Мягкий фон фазы (карточка таймера и её поля).
+  Color get workSurface => dangerSoft;
+  Color get chillSurface => successSoft;
 
   /// Градиент логотипа: 135°, синий → зелёный (см. `.logo` в мокапе).
   Gradient get logoGradient => LinearGradient(

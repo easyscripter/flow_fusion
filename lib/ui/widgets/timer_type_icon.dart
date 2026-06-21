@@ -12,7 +12,7 @@ class TimerTypeIcon extends StatelessWidget {
     final colors = context.fusionColors;
     final isWork = type == TimerType.work;
     final color = isWork ? colors.workColor : colors.chillColor;
-    final background = isWork ? colors.accentSoft : colors.successSoft;
+    final background = isWork ? colors.dangerSoft : colors.successSoft;
 
     return Container(
       padding: const EdgeInsets.all(8),
