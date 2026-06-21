@@ -28,15 +28,21 @@ class TimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.fusionColors;
     final isWork = draft.type == TimerType.work;
-    final background = isWork ? colors.workSurface : colors.chillSurface;
-    final borderColor = isWork ? colors.workColor : colors.chillColor;
+    final accentColor = isWork ? colors.workColor : colors.chillColor;
+    final gradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        isWork ? colors.workSurface : colors.chillSurface,
+        accentColor.withValues(alpha: 0.22),
+      ],
+    );
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: background,
+        gradient: gradient,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: borderColor),
       ),
       child: Row(
         children: [

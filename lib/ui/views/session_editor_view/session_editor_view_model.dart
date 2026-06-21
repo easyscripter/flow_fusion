@@ -170,7 +170,7 @@ abstract class _SessionEditorViewModelBase with Store {
     return TimerDraft(
       localId: _nextLocalId++,
       type: type,
-      title: '',
+      title: type == TimerType.work ? 'Work' : 'Chill',
       description: '',
       plannedDuration: Duration(minutes: type == TimerType.work ? 25 : 5),
     );

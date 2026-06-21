@@ -144,6 +144,15 @@ class _NumberStepperFieldState extends State<NumberStepperField> {
                 ? BorderSide(color: colors.cardBorder)
                 : BorderSide.none,
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(999),
+            borderSide: widget.showBorder
+                ? BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 1.2,
+                  )
+                : BorderSide.none,
+          ),
         ),
       ),
     );

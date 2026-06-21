@@ -12,14 +12,19 @@ class TimerTypeIcon extends StatelessWidget {
     final colors = context.fusionColors;
     final isWork = type == TimerType.work;
     final color = isWork ? colors.workColor : colors.chillColor;
-    final background = isWork ? colors.dangerSoft : colors.successSoft;
-
     return Container(
       padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(color: background, shape: BoxShape.circle),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.18),
+        shape: BoxShape.circle,
+        border: Border.all(color: color.withValues(alpha: 0.45), width: 1.5),
+        boxShadow: [
+          BoxShadow(color: color.withValues(alpha: 0.25), blurRadius: 8, spreadRadius: 0),
+        ],
+      ),
       child: Icon(
         isWork ? Icons.bolt_rounded : Icons.coffee_rounded,
-        size: 18,
+        size: 20,
         color: color,
       ),
     );
