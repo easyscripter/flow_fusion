@@ -2,23 +2,23 @@ import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
-import 'package:flow_fusion/ui/widgets/brand_logo.dart';
+import 'package:flow_fusion/ui/widgets/sidebar_brand.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Хранит только маршрут и иконки — подпись локализуется в `build`
-/// через `context.l10n`, поэтому текста в списке нет.
 class _NavItem {
   final Routes route;
   final IconData icon;
   final IconData selectedIcon;
+  final String Function(BuildContext context) label;
 
   const _NavItem({
     required this.route,
     required this.icon,
     required this.selectedIcon,
+    required this.label,
   });
 }
 
@@ -32,28 +32,28 @@ class SidebarWidget extends StatelessWidget {
       route: Routes.home,
       icon: Icons.dashboard_outlined,
       selectedIcon: Icons.dashboard_rounded,
+      label: _overviewLabel,
     ),
     _NavItem(
       route: Routes.sessions,
       icon: Icons.schedule_outlined,
       selectedIcon: Icons.schedule_rounded,
+      label: _sessionsLabel,
     ),
     _NavItem(
       route: Routes.settings,
       icon: Icons.tune_outlined,
       selectedIcon: Icons.tune_rounded,
+      label: _settingsLabel,
     ),
   ];
 
-  /// Локализованная подпись пункта по его маршруту.
-  /// TODO: edit this logic , cause we dont need sessions edit or new in sideabr
-  String _labelFor(BuildContext context, Routes route) => switch (route) {
-    Routes.home => context.l10n.navOverview,
-    Routes.sessions ||
-    Routes.sessionEdit ||
-    Routes.sessionNew => context.l10n.navSessions,
-    Routes.settings => context.l10n.navSettings,
-  };
+  static String _overviewLabel(BuildContext context) =>
+      context.l10n.navOverview;
+  static String _sessionsLabel(BuildContext context) =>
+      context.l10n.navSessions;
+  static String _settingsLabel(BuildContext context) =>
+      context.l10n.navSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class SidebarWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _buildBrand(context),
+          const SidebarBrand(),
           Divider(height: 1, thickness: 1, color: colors.sidebarBorder),
           Expanded(
             child: SingleChildScrollView(
@@ -87,7 +87,7 @@ class SidebarWidget extends StatelessWidget {
                       child: SidebarNavButton(
                         icon: item.icon,
                         selectedIcon: item.selectedIcon,
-                        label: _labelFor(context, item.route),
+                        label: item.label(context),
                         selected: location == item.route.path,
                         onTap: () => context.go(item.route.path),
                       ),
@@ -106,44 +106,6 @@ class SidebarWidget extends StatelessWidget {
                 color: colors.mutedForeground,
                 fontWeight: FontWeight.w600,
               ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBrand(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSizes.paddingLarge,
-        28,
-        AppSizes.paddingLarge,
-        20,
-      ),
-      child: Row(
-        children: [
-          const BrandLogo(),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Flow Fusion',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.4,
-                  ),
-                ),
-                Text(
-                  context.l10n.brandSubtitle,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: context.fusionColors.mutedForeground,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
             ),
           ),
         ],
