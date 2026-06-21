@@ -2,9 +2,9 @@
 class AppSizes {
   // Размеры окна
   static const double windowDefaultWidth = 1180;
-  static const double windowDefaultHeight = 720;
+  static const double windowDefaultHeight = 800;
   static const double windowMinWidth = 1180;
-  static const double windowMinHeight = 720;
+  static const double windowMinHeight = 800;
 
   // Размеры сайдбара
   static const double sidebarWidth = 290;

@@ -3,6 +3,7 @@ enum Routes {
   sessions('/sessions'),
   sessionNew('/sessions/new'),
   sessionEdit('/sessions/edit/:id'),
+  timer('/timer'),
   settings('/settings');
 
   const Routes(this.path);

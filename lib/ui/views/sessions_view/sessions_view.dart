@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view_view_model.dart';
@@ -20,6 +23,7 @@ class SessionsView extends StatefulWidget {
 
 class _SessionsViewState extends State<SessionsView> {
   final _viewModel = SessionsViewViewModel();
+  final _timerController = ActiveTimerController.instance;
 
   @override
   void initState() {
@@ -63,6 +67,9 @@ class _SessionsViewState extends State<SessionsView> {
                   child: SessionsGrid(
                     sessions: _viewModel.sessions,
                     onOpen: _openSession,
+                    onStart: (session) {
+                      unawaited(_startSession(session));
+                    },
                   ),
                 ),
               ],
@@ -83,5 +90,17 @@ class _SessionsViewState extends State<SessionsView> {
     if (id == null) return;
     await context.push(Routes.sessionEditPathFor(id));
     await _viewModel.update();
+  }
+
+  Future<void> _startSession(Session session) async {
+    final sessionId = session.id;
+    if (sessionId == null) return;
+
+    if (_timerController.currentSessionId != sessionId) {
+      await _timerController.startSession(session);
+    }
+
+    if (!mounted || !_timerController.hasActiveSession) return;
+    context.go(Routes.timer.path);
   }
 }

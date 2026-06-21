@@ -116,6 +116,12 @@ abstract class AppLocalizations {
   /// **'Sessions'**
   String get navSessions;
 
+  /// No description provided for @navTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get navTimer;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
@@ -127,6 +133,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App'**
   String get sidebarSectionApp;
+
+  /// No description provided for @sidebarSectionActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get sidebarSectionActive;
 
   /// No description provided for @versionLabel.
   ///
@@ -278,6 +290,24 @@ abstract class AppLocalizations {
   /// **'New session'**
   String get sessionsNew;
 
+  /// No description provided for @sessionsStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start session'**
+  String get sessionsStart;
+
+  /// No description provided for @sessionsOpenTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Open timer'**
+  String get sessionsOpenTimer;
+
+  /// No description provided for @sessionsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit session'**
+  String get sessionsEdit;
+
   /// No description provided for @sessionsOpenCardSubtitle.
   ///
   /// In en, this message translates to:
@@ -415,6 +445,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chill'**
   String get timerChill;
+
+  /// No description provided for @timerScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get timerScreenTitle;
+
+  /// No description provided for @timerPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get timerPause;
+
+  /// No description provided for @timerResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get timerResume;
+
+  /// No description provided for @timerSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get timerSkip;
+
+  /// No description provided for @timerQueueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get timerQueueTitle;
+
+  /// No description provided for @timerEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No active timer'**
+  String get timerEmptyTitle;
+
+  /// No description provided for @timerEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a session from the sessions list. Active timer will stay available in the sidebar.'**
+  String get timerEmptyDescription;
+
+  /// No description provided for @timerPlannedDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes,plural, =1{1 min} other{{minutes} min}}'**
+  String timerPlannedDuration(int minutes);
 
   /// No description provided for @timerTitleHint.
   ///

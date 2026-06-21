@@ -35,4 +35,14 @@ class Prefs {
       _prefs.remove(_languageKey);
     }
   }
+
+  static const String _activeTimerStateKey = 'active_timer_state';
+  String? get activeTimerState => _prefs.getString(_activeTimerStateKey);
+  set activeTimerState(String? value) {
+    if (value != null) {
+      _prefs.setString(_activeTimerStateKey, value);
+    } else {
+      _prefs.remove(_activeTimerStateKey);
+    }
+  }
 }

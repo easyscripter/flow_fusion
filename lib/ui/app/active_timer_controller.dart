@@ -1,0 +1,280 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
+import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
+import 'package:flow_fusion/model/datasources/local/prefs.dart';
+import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/model/entity/database/session_timer.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
+
+class ActiveTimerController extends ChangeNotifier
+    with WidgetsBindingObserver {
+  ActiveTimerController._();
+
+  static final ActiveTimerController instance = ActiveTimerController._();
+
+  static const _tickInterval = Duration(seconds: 1);
+
+  final SessionDao _sessionDao = GetIt.I.get<SessionDao>();
+  final SessionTimerDao _timerDao = GetIt.I.get<SessionTimerDao>();
+  final Prefs _prefs = GetIt.I.get<Prefs>();
+
+  Timer? _ticker;
+  bool _initialized = false;
+
+  Session? _session;
+  List<SessionTimer> _timers = const [];
+  int _currentIndex = -1;
+  Duration _remaining = Duration.zero;
+  DateTime? _endsAt;
+  bool _isPaused = false;
+
+  Session? get session => _session;
+  List<SessionTimer> get timers => List.unmodifiable(_timers);
+  int get currentIndex => _currentIndex;
+  Duration get remaining => _remaining;
+  bool get isPaused => _isPaused;
+  bool get hasActiveSession => _session != null && currentTimer != null;
+  int? get currentSessionId => _session?.id;
+
+  SessionTimer? get currentTimer {
+    if (_currentIndex < 0 || _currentIndex >= _timers.length) return null;
+    return _timers[_currentIndex];
+  }
+
+  double get progress {
+    final timer = currentTimer;
+    if (timer == null) return 0;
+    final totalMs = timer.plannedDuration.inMilliseconds;
+    if (totalMs <= 0) return 1;
+    final doneMs = totalMs - _remaining.inMilliseconds;
+    return (doneMs / totalMs).clamp(0, 1).toDouble();
+  }
+
+  String get formattedRemaining {
+    final totalSeconds = _remaining.inSeconds.clamp(0, 599999);
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  Future<void> init() async {
+    if (_initialized) return;
+    _initialized = true;
+    WidgetsBinding.instance.addObserver(this);
+    await _restore();
+  }
+
+  Future<void> startSession(Session session) async {
+    final sessionId = session.id;
+    if (sessionId == null) return;
+
+    final timers = await _timerDao.findTimersBySessionId(sessionId);
+    if (timers.isEmpty) return;
+
+    _session = session;
+    _timers = timers;
+    _currentIndex = 0;
+    _remaining = timers.first.plannedDuration;
+    _isPaused = false;
+    _endsAt = DateTime.now().add(_remaining);
+    _startTicker();
+    await _persist();
+    notifyListeners();
+  }
+
+  Future<void> pause() async {
+    if (!hasActiveSession || _isPaused) return;
+    _syncRunningState();
+    _isPaused = true;
+    _endsAt = null;
+    _stopTicker();
+    await _persist();
+    notifyListeners();
+  }
+
+  Future<void> resume() async {
+    if (!hasActiveSession || !_isPaused) return;
+    _isPaused = false;
+    _endsAt = DateTime.now().add(_remaining);
+    _startTicker();
+    await _persist();
+    notifyListeners();
+  }
+
+  Future<void> skipCurrentTimer() async {
+    if (!hasActiveSession) return;
+    await _advanceToNextTimer();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _syncRunningState(notify: true);
+      unawaited(_persist());
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.paused) {
+      _syncRunningState();
+      unawaited(_persist());
+    }
+  }
+
+  Future<void> _restore() async {
+    final raw = _prefs.activeTimerState;
+    if (raw == null || raw.isEmpty) return;
+
+    try {
+      final json = jsonDecode(raw) as Map<String, dynamic>;
+      final sessionId = json['sessionId'] as int?;
+      final currentIndex = json['currentIndex'] as int?;
+      if (sessionId == null || currentIndex == null) {
+        await _clearState();
+        return;
+      }
+
+      final session = await _sessionDao.findSessionById(sessionId);
+      final timers = await _timerDao.findTimersBySessionId(sessionId);
+      if (session == null || timers.isEmpty || currentIndex >= timers.length) {
+        await _clearState();
+        return;
+      }
+
+      _session = session;
+      _timers = timers;
+      _currentIndex = currentIndex;
+      _isPaused = json['isPaused'] as bool? ?? false;
+
+      if (_isPaused) {
+        final remainingMs = json['remainingMs'] as int? ?? 0;
+        _remaining = _durationFromMs(remainingMs, timers[currentIndex]);
+        _endsAt = null;
+      } else {
+        final endsAtMs = json['endsAtMs'] as int?;
+        if (endsAtMs == null) {
+          await _clearState();
+          return;
+        }
+        _remaining = timers[currentIndex].plannedDuration;
+        _endsAt = DateTime.fromMillisecondsSinceEpoch(endsAtMs);
+        _syncRunningState();
+        if (hasActiveSession && !_isPaused) {
+          _startTicker();
+        }
+      }
+
+      notifyListeners();
+    } catch (_) {
+      await _clearState();
+    }
+  }
+
+  void _startTicker() {
+    _stopTicker();
+    _ticker = Timer.periodic(_tickInterval, (_) {
+      _syncRunningState(notify: true);
+      unawaited(_persist());
+    });
+  }
+
+  void _stopTicker() {
+    _ticker?.cancel();
+    _ticker = null;
+  }
+
+  void _syncRunningState({bool notify = false}) {
+    if (!hasActiveSession || _isPaused || _endsAt == null) return;
+
+    final now = DateTime.now();
+    final diff = _endsAt!.difference(now);
+    if (diff > Duration.zero) {
+      _remaining = diff;
+      if (notify) notifyListeners();
+      return;
+    }
+
+    _advanceAcrossElapsedTime(now.difference(_endsAt!), notify: notify);
+  }
+
+  void _advanceAcrossElapsedTime(Duration overshoot, {bool notify = false}) {
+    var extra = overshoot;
+
+    while (_session != null) {
+      final nextIndex = _currentIndex + 1;
+      if (nextIndex >= _timers.length) {
+        unawaited(_clearState(notify: notify));
+        return;
+      }
+
+      _currentIndex = nextIndex;
+      final nextDuration = _timers[_currentIndex].plannedDuration;
+
+      if (extra < nextDuration) {
+        _remaining = nextDuration - extra;
+        _endsAt = DateTime.now().add(_remaining);
+        if (notify) notifyListeners();
+        return;
+      }
+
+      extra -= nextDuration;
+    }
+  }
+
+  Future<void> _advanceToNextTimer() async {
+    final nextIndex = _currentIndex + 1;
+    if (nextIndex >= _timers.length) {
+      await _clearState();
+      return;
+    }
+
+    _currentIndex = nextIndex;
+    _remaining = _timers[nextIndex].plannedDuration;
+    _isPaused = false;
+    _endsAt = DateTime.now().add(_remaining);
+    _startTicker();
+    await _persist();
+    notifyListeners();
+  }
+
+  Future<void> _persist() async {
+    if (!hasActiveSession) {
+      _prefs.activeTimerState = null;
+      return;
+    }
+
+    final payload = <String, dynamic>{
+      'sessionId': _session!.id,
+      'currentIndex': _currentIndex,
+      'isPaused': _isPaused,
+      if (_isPaused) 'remainingMs': _remaining.inMilliseconds,
+      if (!_isPaused && _endsAt != null)
+        'endsAtMs': _endsAt!.millisecondsSinceEpoch,
+    };
+    _prefs.activeTimerState = jsonEncode(payload);
+  }
+
+  Future<void> _clearState({bool notify = true}) async {
+    _stopTicker();
+    _session = null;
+    _timers = const [];
+    _currentIndex = -1;
+    _remaining = Duration.zero;
+    _endsAt = null;
+    _isPaused = false;
+    _prefs.activeTimerState = null;
+    if (notify) notifyListeners();
+  }
+
+  Duration _durationFromMs(int value, SessionTimer timer) {
+    final clamped = value
+        .clamp(0, timer.plannedDuration.inMilliseconds)
+        .toInt();
+    return Duration(milliseconds: clamped);
+  }
+}

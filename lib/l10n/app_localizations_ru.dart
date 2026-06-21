@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get brandSubtitle => 'Focus workspace';
+  String get brandSubtitle => 'Пространство фокуса';
 
   @override
   String get navOverview => 'Обзор';
@@ -18,10 +18,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get navSessions => 'Сессии';
 
   @override
+  String get navTimer => 'Таймер';
+
+  @override
   String get navSettings => 'Настройки';
 
   @override
   String get sidebarSectionApp => 'Приложение';
+
+  @override
+  String get sidebarSectionActive => 'Активно';
 
   @override
   String versionLabel(String version) {
@@ -32,7 +38,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeTitle => 'Аналитика';
 
   @override
-  String get homeSubtitle => 'Аналитика вашей активности и фокусировки';
+  String get homeSubtitle => 'Ваша активность и фокус';
 
   @override
   String get badgePomodoro => 'Pomodoro';
@@ -48,14 +54,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get homeCardSessionsSubtitle =>
-      'Откройте сценарии, просмотрите фазы и переходите к следующему циклу без лишнего шума.';
+      'Откройте сценарии, проверьте таймеры и переходите к следующему циклу без лишнего шума.';
 
   @override
   String get homeCardThemeTitle => 'Тема и поведение';
 
   @override
   String get homeCardThemeSubtitle =>
-      'Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.';
+      'Переключайте светлую и тёмную тему, сохраняя тот же строгий и спокойный визуальный язык.';
 
   @override
   String get homeStatTotalSessions => 'Всего сессий';
@@ -103,8 +109,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sessionsNew => 'Новая сессия';
 
   @override
+  String get sessionsStart => 'Запустить сессию';
+
+  @override
+  String get sessionsOpenTimer => 'Открыть таймер';
+
+  @override
+  String get sessionsEdit => 'Редактировать сессию';
+
+  @override
   String get sessionsOpenCardSubtitle =>
-      'Открыть состав фаз, проверить ритм и подготовить запуск.';
+      'Откройте состав фаз, проверьте ритм и подготовьте запуск.';
 
   @override
   String get sessionsEmptyTitle => 'Сессий пока нет';
@@ -129,7 +144,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsSubtitle => 'Настройки приложения';
 
   @override
-  String get badgeTheme => 'Theme';
+  String get badgeTheme => 'Тема';
 
   @override
   String get settingsSectionAppearance => 'Оформление';
@@ -142,19 +157,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.';
 
   @override
-  String get badgeNeutralSurfaces => 'Neutral surfaces';
+  String get badgeNeutralSurfaces => 'Нейтральные поверхности';
 
   @override
-  String get badgeSubtleBorders => 'Subtle borders';
+  String get badgeSubtleBorders => 'Мягкие границы';
 
   @override
-  String get badgeRoundedCorners => 'Rounded corners';
+  String get badgeRoundedCorners => 'Скруглённые углы';
 
   @override
   String get themeSystem => 'Системная';
 
   @override
-  String get themeDark => 'Темная';
+  String get themeDark => 'Тёмная';
 
   @override
   String get themeLight => 'Светлая';
@@ -176,6 +191,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get timerChill => 'Отдых';
+
+  @override
+  String get timerScreenTitle => 'Таймер';
+
+  @override
+  String get timerPause => 'Пауза';
+
+  @override
+  String get timerResume => 'Продолжить';
+
+  @override
+  String get timerSkip => 'Пропустить';
+
+  @override
+  String get timerQueueTitle => 'Очередь';
+
+  @override
+  String get timerEmptyTitle => 'Нет активного таймера';
+
+  @override
+  String get timerEmptyDescription =>
+      'Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.';
+
+  @override
+  String timerPlannedDuration(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes мин',
+      many: '$minutes мин',
+      few: '$minutes мин',
+      one: '$minutes мин',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get timerTitleHint => 'Название таймера';

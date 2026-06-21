@@ -1,4 +1,5 @@
 import 'package:flow_fusion/enums/routes.dart';
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
@@ -59,6 +60,7 @@ class SidebarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.fusionColors;
     final location = GoRouterState.of(context).uri.path;
+    final timerController = ActiveTimerController.instance;
 
     return Container(
       width: AppSizes.sidebarWidth,
@@ -92,6 +94,35 @@ class SidebarWidget extends StatelessWidget {
                         onTap: () => context.go(item.route.path),
                       ),
                     ),
+                  AnimatedBuilder(
+                    animation: timerController,
+                    builder: (context, _) {
+                      if (!timerController.hasActiveSession) {
+                        return const SizedBox.shrink();
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: AppSizes.paddingMedium),
+                          SidebarSectionLabel(
+                            label: context.l10n.sidebarSectionActive,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            child: SidebarNavButton(
+                              icon: Icons.timer_outlined,
+                              selectedIcon: Icons.timer_rounded,
+                              label:
+                                  '${context.l10n.navTimer} (${timerController.formattedRemaining})',
+                              selected: location == Routes.timer.path,
+                              onTap: () => context.go(Routes.timer.path),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

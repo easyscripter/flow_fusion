@@ -1,22 +1,31 @@
 {
   "@@locale": "ru",
 
-  "brandSubtitle": "Focus workspace",
+  "brandSubtitle": "Пространство фокуса",
   "navOverview": "Обзор",
   "navSessions": "Сессии",
+  "navTimer": "Таймер",
   "navSettings": "Настройки",
   "sidebarSectionApp": "Приложение",
+  "sidebarSectionActive": "Активно",
   "versionLabel": "v{version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
 
   "homeTitle": "Аналитика",
-  "homeSubtitle": "Аналитика вашей активности и фокусировки",
+  "homeSubtitle": "Ваша активность и фокус",
   "badgePomodoro": "Pomodoro",
   "homeOpenSessions": "Открыть сессии",
   "homeThemeSettings": "Настройки темы",
   "homeCardSessionsTitle": "Сессии фокуса",
-  "homeCardSessionsSubtitle": "Откройте сценарии, просмотрите фазы и переходите к следующему циклу без лишнего шума.",
+  "homeCardSessionsSubtitle": "Откройте сценарии, проверьте таймеры и переходите к следующему циклу без лишнего шума.",
   "homeCardThemeTitle": "Тема и поведение",
-  "homeCardThemeSubtitle": "Меняйте светлую и темную тему, сохраняя тот же строгий и спокойный визуальный язык.",
+  "homeCardThemeSubtitle": "Переключайте светлую и тёмную тему, сохраняя тот же строгий и спокойный визуальный язык.",
   "homeStatTotalSessions": "Всего сессий",
   "homeStatTotalFocus": "Всего фокуса",
   "homeStatTodayFocus": "Фокус сегодня",
@@ -33,23 +42,33 @@
   "sessionsTitle": "Сессии",
   "sessionsSubtitle": "Ваши сессии",
   "sessionsNew": "Новая сессия",
-  "sessionsOpenCardSubtitle": "Открыть состав фаз, проверить ритм и подготовить запуск.",
+  "sessionsStart": "Запустить сессию",
+  "sessionsOpenTimer": "Открыть таймер",
+  "sessionsEdit": "Редактировать сессию",
+  "sessionsOpenCardSubtitle": "Откройте состав фаз, проверьте ритм и подготовьте запуск.",
   "sessionsEmptyTitle": "Сессий пока нет",
   "sessionsEmptyDescription": "Создайте свою первую сессию прямо сейчас",
   "sessionsCreateNotConnected": "Создание новой сессии пока не подключено.",
   "sessionsOpening": "Открытие сессии: {name}",
+  "@sessionsOpening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
 
   "settingsTitle": "Настройки",
   "settingsSubtitle": "Настройки приложения",
-  "badgeTheme": "Theme",
+  "badgeTheme": "Тема",
   "settingsSectionAppearance": "Оформление",
   "settingsTheme": "Тема",
   "settingsThemeDescription": "Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.",
-  "badgeNeutralSurfaces": "Neutral surfaces",
-  "badgeSubtleBorders": "Subtle borders",
-  "badgeRoundedCorners": "Rounded corners",
+  "badgeNeutralSurfaces": "Нейтральные поверхности",
+  "badgeSubtleBorders": "Мягкие границы",
+  "badgeRoundedCorners": "Скруглённые углы",
   "themeSystem": "Системная",
-  "themeDark": "Темная",
+  "themeDark": "Тёмная",
   "themeLight": "Светлая",
   "settingsSectionLanguage": "Язык",
 
@@ -59,10 +78,32 @@
 
   "timerWork": "Работа",
   "timerChill": "Отдых",
+  "timerScreenTitle": "Таймер",
+  "timerPause": "Пауза",
+  "timerResume": "Продолжить",
+  "timerSkip": "Пропустить",
+  "timerQueueTitle": "Очередь",
+  "timerEmptyTitle": "Нет активного таймера",
+  "timerEmptyDescription": "Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.",
+  "timerPlannedDuration": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "@timerPlannedDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "timerTitleHint": "Название таймера",
   "timerDescriptionHint": "Описание (необязательно)",
   "timerMinutesShort": "мин",
   "timerDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "@timerDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "timerDurationHoursOnly": "{hours,plural, =1{1 час} few{{hours} часа} many{{hours} часов} other{{hours} часа}}",
   "@timerDurationHoursOnly": {
     "placeholders": {

@@ -7,8 +7,14 @@ import 'package:flutter/material.dart';
 class SessionsGrid extends StatelessWidget {
   final List<Session> sessions;
   final ValueChanged<Session> onOpen;
+  final ValueChanged<Session> onStart;
 
-  const SessionsGrid({super.key, required this.sessions, required this.onOpen});
+  const SessionsGrid({
+    super.key,
+    required this.sessions,
+    required this.onOpen,
+    required this.onStart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +42,7 @@ class SessionsGrid extends StatelessWidget {
               key: ValueKey(session.id),
               session: session,
               onTap: () => onOpen(session),
+              onStart: () => onStart(session),
             );
           },
         );

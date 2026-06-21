@@ -4,8 +4,10 @@
   "brandSubtitle": "Focus workspace",
   "navOverview": "Overview",
   "navSessions": "Sessions",
+  "navTimer": "Timer",
   "navSettings": "Settings",
   "sidebarSectionApp": "App",
+  "sidebarSectionActive": "Active",
   "versionLabel": "v{version}",
   "@versionLabel": {
     "placeholders": {
@@ -40,6 +42,9 @@
   "sessionsTitle": "Sessions",
   "sessionsSubtitle": "Your sessions",
   "sessionsNew": "New session",
+  "sessionsStart": "Start session",
+  "sessionsOpenTimer": "Open timer",
+  "sessionsEdit": "Edit session",
   "sessionsOpenCardSubtitle": "Open the timer layout, check the rhythm, and prepare to launch.",
   "sessionsEmptyTitle": "No sessions yet",
   "sessionsEmptyDescription": "Create your first session",
@@ -73,6 +78,21 @@
 
   "timerWork": "Work",
   "timerChill": "Chill",
+  "timerScreenTitle": "Timer",
+  "timerPause": "Pause",
+  "timerResume": "Resume",
+  "timerSkip": "Skip",
+  "timerQueueTitle": "Route",
+  "timerEmptyTitle": "No active timer",
+  "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
+  "timerPlannedDuration": "{minutes,plural, =1{1 min} other{{minutes} min}}",
+  "@timerPlannedDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "timerTitleHint": "Timer title",
   "timerDescriptionHint": "Description (optional)",
   "timerMinutesShort": "min",

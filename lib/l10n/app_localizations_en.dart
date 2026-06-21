@@ -18,10 +18,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSessions => 'Sessions';
 
   @override
+  String get navTimer => 'Timer';
+
+  @override
   String get navSettings => 'Settings';
 
   @override
   String get sidebarSectionApp => 'App';
+
+  @override
+  String get sidebarSectionActive => 'Active';
 
   @override
   String versionLabel(String version) {
@@ -103,6 +109,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsNew => 'New session';
 
   @override
+  String get sessionsStart => 'Start session';
+
+  @override
+  String get sessionsOpenTimer => 'Open timer';
+
+  @override
+  String get sessionsEdit => 'Edit session';
+
+  @override
   String get sessionsOpenCardSubtitle =>
       'Open the timer layout, check the rhythm, and prepare to launch.';
 
@@ -175,6 +190,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timerChill => 'Chill';
+
+  @override
+  String get timerScreenTitle => 'Timer';
+
+  @override
+  String get timerPause => 'Pause';
+
+  @override
+  String get timerResume => 'Resume';
+
+  @override
+  String get timerSkip => 'Skip';
+
+  @override
+  String get timerQueueTitle => 'Route';
+
+  @override
+  String get timerEmptyTitle => 'No active timer';
+
+  @override
+  String get timerEmptyDescription =>
+      'Start a session from the sessions list. Active timer will stay available in the sidebar.';
+
+  @override
+  String timerPlannedDuration(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '1 min',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get timerTitleHint => 'Timer title';
