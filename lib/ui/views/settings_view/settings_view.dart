@@ -1,6 +1,7 @@
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/notifications_setting_tile.dart';
 import 'package:flow_fusion/ui/widgets/app_dropdown.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
@@ -46,6 +47,12 @@ class _SettingsViewState extends State<SettingsView> {
                         const Divider(),
                         Observer(builder: (_) => _buildLanguageTile(context)),
                       ],
+                    ),
+                    const SizedBox(height: 24),
+                    _buildSettingsSection(
+                      context,
+                      title: context.l10n.settingsSectionNotifications,
+                      children: const [NotificationsSettingTile()],
                     ),
                   ],
                 ),

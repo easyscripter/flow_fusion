@@ -434,6 +434,36 @@ abstract class AppLocalizations {
   /// **'Choose your preferred language'**
   String get settingsLanguageDescription;
 
+  /// No description provided for @settingsSectionNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsSectionNotifications;
+
+  /// No description provided for @settingsNotificationsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer notifications'**
+  String get settingsNotificationsEnabled;
+
+  /// No description provided for @settingsNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Show a notification when a timer or session finishes. If notifications don\'t appear, enable them for Flow Fusion in your system settings.'**
+  String get settingsNotificationsDescription;
+
+  /// No description provided for @notificationTestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications enabled'**
+  String get notificationTestTitle;
+
+  /// No description provided for @notificationTestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll be notified when a timer finishes.'**
+  String get notificationTestBody;
+
   /// No description provided for @timerWork.
   ///
   /// In en, this message translates to:

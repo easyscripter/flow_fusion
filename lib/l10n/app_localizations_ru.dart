@@ -187,6 +187,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguageDescription => 'Выберите предпочитаемый язык';
 
   @override
+  String get settingsSectionNotifications => 'Уведомления';
+
+  @override
+  String get settingsNotificationsEnabled => 'Уведомления таймера';
+
+  @override
+  String get settingsNotificationsDescription =>
+      'Показывать уведомление, когда таймер или сессия завершаются. Если уведомления не появляются, включите их для Flow Fusion в системных настройках.';
+
+  @override
+  String get notificationTestTitle => 'Уведомления включены';
+
+  @override
+  String get notificationTestBody =>
+      'Вы получите уведомление, когда таймер завершится.';
+
+  @override
   String get timerWork => 'Работа';
 
   @override

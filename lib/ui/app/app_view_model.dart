@@ -1,4 +1,5 @@
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
+import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -12,6 +13,7 @@ class AppViewModel = _AppViewModelBase with _$AppViewModel;
 
 abstract class _AppViewModelBase with Store {
   final prefs = GetIt.I.get<Prefs>();
+  final _timerAlertService = GetIt.I.get<TimerAlertService>();
   static const _defaultThemeMode = ThemeMode.system;
 
   @observable
@@ -21,6 +23,9 @@ abstract class _AppViewModelBase with Store {
   Locale? locale;
 
   @observable
+  bool notificationsEnabled = true;
+
+  @observable
   PackageInfo? _packageInfo;
 
   @action
@@ -28,6 +33,7 @@ abstract class _AppViewModelBase with Store {
     themeMode = ThemeMode.values[prefs.themeMode ?? 0];
     final languageCode = prefs.language ?? 'en';
     locale = Locale(languageCode);
+    notificationsEnabled = prefs.notificationsEnabled;
     _packageInfo = GetIt.I.get<PackageInfo>();
   }
 
@@ -41,6 +47,16 @@ abstract class _AppViewModelBase with Store {
   void setLocale(Locale? locale) {
     prefs.language = locale?.languageCode;
     this.locale = locale;
+  }
+
+  @action
+  Future<void> setNotificationsEnabled(bool value) async {
+    prefs.notificationsEnabled = value;
+    notificationsEnabled = value;
+    if (value) {
+      await _timerAlertService.requestPermission();
+      await _timerAlertService.sendTestNotification();
+    }
   }
 
   String get packageVersion => _packageInfo?.version ?? '';

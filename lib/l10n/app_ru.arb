@@ -76,6 +76,12 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Выберите предпочитаемый язык",
 
+  "settingsSectionNotifications": "Уведомления",
+  "settingsNotificationsEnabled": "Уведомления таймера",
+  "settingsNotificationsDescription": "Показывать уведомление, когда таймер или сессия завершаются. Если уведомления не появляются, включите их для Flow Fusion в системных настройках.",
+  "notificationTestTitle": "Уведомления включены",
+  "notificationTestBody": "Вы получите уведомление, когда таймер завершится.",
+
   "timerWork": "Работа",
   "timerChill": "Отдых",
   "timerScreenTitle": "Таймер",

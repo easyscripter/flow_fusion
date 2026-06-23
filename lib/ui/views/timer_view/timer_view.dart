@@ -228,7 +228,7 @@ class _TimerViewState extends State<TimerView> {
                                 ),
                                 const SizedBox(height: AppSizes.paddingMedium),
                                 SizedBox(
-                                  height: 98,
+                                  height: 112,
                                   child: SingleChildScrollView(
                                     controller: _routeScrollController,
                                     scrollDirection: Axis.horizontal,
@@ -486,11 +486,14 @@ class _QueueItem extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: labelColor,
                     ),
-                    child: Text(
-                      timer.title,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    child: Tooltip(
+                      message: timer.title,
+                      child: Text(
+                        timer.title,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 2),

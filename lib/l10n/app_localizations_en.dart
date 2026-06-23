@@ -186,6 +186,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguageDescription => 'Choose your preferred language';
 
   @override
+  String get settingsSectionNotifications => 'Notifications';
+
+  @override
+  String get settingsNotificationsEnabled => 'Timer notifications';
+
+  @override
+  String get settingsNotificationsDescription =>
+      'Show a notification when a timer or session finishes. If notifications don\'t appear, enable them for Flow Fusion in your system settings.';
+
+  @override
+  String get notificationTestTitle => 'Notifications enabled';
+
+  @override
+  String get notificationTestBody =>
+      'You\'ll be notified when a timer finishes.';
+
+  @override
   String get timerWork => 'Work';
 
   @override

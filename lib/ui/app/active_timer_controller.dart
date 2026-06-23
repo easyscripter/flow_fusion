@@ -21,6 +21,7 @@ class ActiveTimerController extends ChangeNotifier
   final SessionDao _sessionDao = GetIt.I.get<SessionDao>();
   final SessionTimerDao _timerDao = GetIt.I.get<SessionTimerDao>();
   final Prefs _prefs = GetIt.I.get<Prefs>();
+  final TimerAlertService _timerAlertService = GetIt.I.get<TimerAlertService>();
 
   Timer? _ticker;
   bool _initialized = false;
@@ -211,7 +212,7 @@ class ActiveTimerController extends ChangeNotifier
       if (nextIndex >= _timers.length) {
         if (completedTimer != null) {
           unawaited(
-            TimerAlertService.instance.notifySessionFinished(
+            _timerAlertService.notifySessionFinished(
               sessionTitle: _session?.title ?? completedTimer.title,
             ),
           );
@@ -226,7 +227,7 @@ class ActiveTimerController extends ChangeNotifier
 
       if (completedTimer != null) {
         unawaited(
-          TimerAlertService.instance.notifyTimerFinished(
+          _timerAlertService.notifyTimerFinished(
             timerTitle: completedTimer.title,
             nextTimerTitle: nextTimer.title,
           ),

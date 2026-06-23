@@ -3,17 +3,14 @@ import 'package:flow_fusion/ui/app/app.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:local_notifier/local_notifier.dart';
+import 'package:get_it/get_it.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  await localNotifier.setup(
-    appName: 'Flow Fusion',
-    shortcutPolicy: ShortcutPolicy.requireCreate,
-  );
-  await TimerAlertService.instance.init();
+  final timerAlertService = GetIt.I.get<TimerAlertService>();
+  await timerAlertService.init();
   await windowManager.ensureInitialized();
   WindowOptions windowOptions = WindowOptions(
     size: Size(AppSizes.windowDefaultWidth, AppSizes.windowDefaultHeight),
@@ -27,6 +24,7 @@ Future<void> main() async {
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();
+    await timerAlertService.requestPermission();
   });
   runApp(const App());
 }

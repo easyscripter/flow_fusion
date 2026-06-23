@@ -76,6 +76,12 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Choose your preferred language",
 
+  "settingsSectionNotifications": "Notifications",
+  "settingsNotificationsEnabled": "Timer notifications",
+  "settingsNotificationsDescription": "Show a notification when a timer or session finishes. If notifications don't appear, enable them for Flow Fusion in your system settings.",
+  "notificationTestTitle": "Notifications enabled",
+  "notificationTestBody": "You'll be notified when a timer finishes.",
+
   "timerWork": "Work",
   "timerChill": "Chill",
   "timerScreenTitle": "Timer",
