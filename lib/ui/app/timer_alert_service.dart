@@ -73,7 +73,6 @@ class TimerAlertService {
             MacOSFlutterLocalNotificationsPlugin
           >()
           ?.requestPermissions(alert: true, badge: true, sound: true);
-      print('requestPermission: granted=$granted');
       return granted ?? false;
     }
 
