@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @lazySingleton
 class TimerAlertService {
@@ -77,6 +78,38 @@ class TimerAlertService {
     }
 
     return true;
+  }
+
+  /// Returns whether notifications are currently allowed by the OS.
+  ///
+  /// macOS reports the real authorization status. Windows has no permission
+  /// concept for unpackaged apps, so this returns `true` there.
+  Future<bool> checkPermission() async {
+    await _ensureInitialized();
+    if (!_isSupportedPlatform) return false;
+
+    if (Platform.isMacOS) {
+      final options = await _darwinPlugin
+          .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin
+          >()
+          ?.checkPermissions();
+      return (options?.isEnabled ?? false) ||
+          (options?.isProvisionalEnabled ?? false);
+    }
+
+    return true;
+  }
+
+  Future<void> openSystemNotificationSettings() async {
+    final uri = Platform.isWindows
+        ? Uri.parse('ms-settings:notifications')
+        : Uri.parse(
+            'x-apple.systempreferences:com.apple.Notifications-Settings.extension',
+          );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
   }
 
   Future<void> notifyTimerFinished({

@@ -81,6 +81,10 @@
   "settingsNotificationsDescription": "Show a notification when a timer or session finishes. If notifications don't appear, enable them for Flow Fusion in your system settings.",
   "notificationTestTitle": "Notifications enabled",
   "notificationTestBody": "You'll be notified when a timer finishes.",
+  "notificationPermissionTitle": "Notifications are turned off",
+  "notificationPermissionMessage": "Flow Fusion isn't allowed to send notifications. Open the system settings and enable notifications for Flow Fusion, then come back.",
+  "notificationPermissionOpenSettings": "Open settings",
+  "notificationPermissionCancel": "Not now",
 
   "timerWork": "Work",
   "timerChill": "Chill",

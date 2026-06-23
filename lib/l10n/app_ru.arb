@@ -81,6 +81,10 @@
   "settingsNotificationsDescription": "Показывать уведомление, когда таймер или сессия завершаются. Если уведомления не появляются, включите их для Flow Fusion в системных настройках.",
   "notificationTestTitle": "Уведомления включены",
   "notificationTestBody": "Вы получите уведомление, когда таймер завершится.",
+  "notificationPermissionTitle": "Уведомления выключены",
+  "notificationPermissionMessage": "Flow Fusion не разрешено отправлять уведомления. Откройте системные настройки, включите уведомления для Flow Fusion и вернитесь обратно.",
+  "notificationPermissionOpenSettings": "Открыть настройки",
+  "notificationPermissionCancel": "Не сейчас",
 
   "timerWork": "Работа",
   "timerChill": "Отдых",

@@ -464,6 +464,30 @@ abstract class AppLocalizations {
   /// **'You\'ll be notified when a timer finishes.'**
   String get notificationTestBody;
 
+  /// No description provided for @notificationPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are turned off'**
+  String get notificationPermissionTitle;
+
+  /// No description provided for @notificationPermissionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Flow Fusion isn\'t allowed to send notifications. Open the system settings and enable notifications for Flow Fusion, then come back.'**
+  String get notificationPermissionMessage;
+
+  /// No description provided for @notificationPermissionOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get notificationPermissionOpenSettings;
+
+  /// No description provided for @notificationPermissionCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get notificationPermissionCancel;
+
   /// No description provided for @timerWork.
   ///
   /// In en, this message translates to:

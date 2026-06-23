@@ -204,6 +204,19 @@ class AppLocalizationsRu extends AppLocalizations {
       'Вы получите уведомление, когда таймер завершится.';
 
   @override
+  String get notificationPermissionTitle => 'Уведомления выключены';
+
+  @override
+  String get notificationPermissionMessage =>
+      'Flow Fusion не разрешено отправлять уведомления. Откройте системные настройки, включите уведомления для Flow Fusion и вернитесь обратно.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Открыть настройки';
+
+  @override
+  String get notificationPermissionCancel => 'Не сейчас';
+
+  @override
   String get timerWork => 'Работа';
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flow_fusion/di/di.dart';
 import 'package:flow_fusion/ui/app/app.dart';
+import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
     await windowManager.show();
     await windowManager.focus();
     await timerAlertService.requestPermission();
+    await GetIt.I.get<AppViewModel>().refreshNotificationsPermission();
   });
   runApp(const App());
 }

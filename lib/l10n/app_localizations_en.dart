@@ -203,6 +203,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'You\'ll be notified when a timer finishes.';
 
   @override
+  String get notificationPermissionTitle => 'Notifications are turned off';
+
+  @override
+  String get notificationPermissionMessage =>
+      'Flow Fusion isn\'t allowed to send notifications. Open the system settings and enable notifications for Flow Fusion, then come back.';
+
+  @override
+  String get notificationPermissionOpenSettings => 'Open settings';
+
+  @override
+  String get notificationPermissionCancel => 'Not now';
+
+  @override
   String get timerWork => 'Work';
 
   @override

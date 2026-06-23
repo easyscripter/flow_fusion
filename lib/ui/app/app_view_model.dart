@@ -25,16 +25,35 @@ abstract class _AppViewModelBase with Store {
   @observable
   bool notificationsEnabled = true;
 
+  /// Whether the OS currently allows notifications.
+  @observable
+  bool notificationsGranted = true;
+
+  @computed
+  bool get notificationsActive => notificationsEnabled && notificationsGranted;
+
   @observable
   PackageInfo? _packageInfo;
 
+  AppLifecycleListener? _lifecycleListener;
+
   @action
-  void init() {
+  Future<void> init() async {
     themeMode = ThemeMode.values[prefs.themeMode ?? 0];
     final languageCode = prefs.language ?? 'en';
     locale = Locale(languageCode);
     notificationsEnabled = prefs.notificationsEnabled;
     _packageInfo = GetIt.I.get<PackageInfo>();
+    await refreshNotificationsPermission();
+    _lifecycleListener ??= AppLifecycleListener(
+      onResume: refreshNotificationsPermission,
+    );
+  }
+
+  @action
+  Future<void> refreshNotificationsPermission() async {
+    final granted = await _timerAlertService.checkPermission();
+    runInAction(() => notificationsGranted = granted);
   }
 
   @action
@@ -50,14 +69,22 @@ abstract class _AppViewModelBase with Store {
   }
 
   @action
-  Future<void> setNotificationsEnabled(bool value) async {
+  Future<bool> setNotificationsEnabled(bool value) async {
     prefs.notificationsEnabled = value;
     notificationsEnabled = value;
-    if (value) {
-      await _timerAlertService.requestPermission();
+
+    if (!value) return false;
+
+    final granted = await _timerAlertService.requestPermission();
+    runInAction(() => notificationsGranted = granted);
+    if (granted) {
       await _timerAlertService.sendTestNotification();
     }
+    return granted;
   }
+
+  Future<void> openSystemNotificationSettings() =>
+      _timerAlertService.openSystemNotificationSettings();
 
   String get packageVersion => _packageInfo?.version ?? '';
 }
