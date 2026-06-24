@@ -15,8 +15,10 @@ abstract class PrefsModule {
 @module
 abstract class DatabaseModule {
   @preResolve
-  Future<AppDatabase> get db =>
-      $FroomAppDatabase.databaseBuilder('flow_fusion.db').build();
+  Future<AppDatabase> get db => $FroomAppDatabase
+      .databaseBuilder('flow_fusion.db')
+      .addMigrations([migration1To2])
+      .build();
 }
 
 @module

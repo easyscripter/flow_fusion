@@ -14,8 +14,17 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'app_database.g.dart';
 
+final migration1To2 = Migration(1, 2, (database) async {
+  await database.execute(
+    'ALTER TABLE sessions ADD COLUMN completedAt TEXT',
+  );
+  await database.execute(
+    'ALTER TABLE timers ADD COLUMN actualDuration INTEGER',
+  );
+});
+
 @TypeConverters([DurationConverter, DateTimeConverter])
-@Database(version: 1, entities: [Session, SessionTimer])
+@Database(version: 2, entities: [Session, SessionTimer])
 abstract class AppDatabase extends FroomDatabase {
   SessionDao get sessionDao;
   SessionTimerDao get sessionTimerDao;

@@ -35,6 +35,8 @@ class SessionTimer {
 
   Duration plannedDuration;
 
+  Duration? actualDuration;
+
   TimerStatus status;
 
   DateTime createdAt;
@@ -50,6 +52,7 @@ class SessionTimer {
     this.icon,
     this.type = TimerType.work,
     required this.plannedDuration,
+    this.actualDuration,
     this.status = TimerStatus.idle,
     required this.createdAt,
     required this.updatedAt,

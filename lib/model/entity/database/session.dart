@@ -18,6 +18,8 @@ class Session {
 
   DateTime updatedAt;
 
+  DateTime? completedAt;
+
   Session({
     this.id,
     required this.title,
@@ -26,6 +28,7 @@ class Session {
     this.status = SessionStatus.idle,
     required this.createdAt,
     required this.updatedAt,
+    this.completedAt,
   });
 
   factory Session.create({
@@ -50,6 +53,7 @@ class Session {
     String? description,
     String? icon,
     SessionStatus? status,
+    DateTime? completedAt,
   }) {
     return Session(
       id: id,
@@ -59,6 +63,7 @@ class Session {
       status: status ?? this.status,
       createdAt: createdAt,
       updatedAt: DateTime.now(),
+      completedAt: completedAt ?? this.completedAt,
     );
   }
 }

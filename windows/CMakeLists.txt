@@ -32,6 +32,50 @@ set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
 
+# ---------------------------------------------------------------------------
+# ATL header workaround
+# flutter_local_notifications_windows requires atlbase.h (ATL/COM headers).
+# On machines where only Visual Studio Build Tools are installed (without the
+# full IDE), the ATL component may live in a different VS edition (e.g.,
+# Insiders / Community / Enterprise). Glob across every VS installation and
+# add the first atlmfc/include directory found so the compiler can resolve
+# <atlbase.h> without requiring a full VS Installer re-run.
+# ---------------------------------------------------------------------------
+if(MSVC)
+  file(GLOB _atl_candidate_dirs
+    "C:/Program Files/Microsoft Visual Studio/*/*/VC/Tools/MSVC/*/atlmfc/include"
+    "C:/Program Files (x86)/Microsoft Visual Studio/*/*/VC/Tools/MSVC/*/atlmfc/include"
+  )
+  find_path(ATL_INCLUDE_PATH
+    NAMES atlbase.h
+    HINTS ${_atl_candidate_dirs}
+    NO_DEFAULT_PATH
+  )
+  if(ATL_INCLUDE_PATH)
+    message(STATUS "[flow_fusion] ATL headers found: ${ATL_INCLUDE_PATH}")
+    include_directories(SYSTEM "${ATL_INCLUDE_PATH}")
+
+    # Resolve the atlmfc root (one level up from include/) and add the
+    # matching lib directory so the linker can find atls.lib / atlsd.lib.
+    get_filename_component(_atl_root "${ATL_INCLUDE_PATH}/.." ABSOLUTE)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+      set(_atl_lib_dir "${_atl_root}/lib/x64")
+    else()
+      set(_atl_lib_dir "${_atl_root}/lib/x86")
+    endif()
+    if(EXISTS "${_atl_lib_dir}")
+      message(STATUS "[flow_fusion] ATL libs found: ${_atl_lib_dir}")
+      link_directories("${_atl_lib_dir}")
+    endif()
+  else()
+    message(WARNING
+      "[flow_fusion] ATL headers (atlbase.h) not found in any VS installation.\n"
+      "Install 'C++ ATL for latest build tools (x86 & x64)' via Visual Studio Installer\n"
+      "under the Build Tools 2026 > Individual Components tab."
+    )
+  endif()
+endif()
+
 # Compilation settings that should be applied to most targets.
 #
 # Be cautious about adding new options here, as plugins use this function by
