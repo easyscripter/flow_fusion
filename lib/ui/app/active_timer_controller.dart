@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flow_fusion/enums/session_status.dart';
+import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
@@ -108,6 +110,23 @@ class ActiveTimerController extends ChangeNotifier
 
   Future<void> skipCurrentTimer() async {
     if (!hasActiveSession) return;
+    final skipped = currentTimer;
+    if (skipped != null) {
+      unawaited(_timerDao.updateTimer(SessionTimer(
+        id: skipped.id,
+        sessionId: skipped.sessionId,
+        position: skipped.position,
+        title: skipped.title,
+        description: skipped.description,
+        icon: skipped.icon,
+        type: skipped.type,
+        plannedDuration: skipped.plannedDuration,
+        actualDuration: skipped.plannedDuration - _remaining,
+        status: TimerStatus.skipped,
+        createdAt: skipped.createdAt,
+        updatedAt: DateTime.now(),
+      )));
+    }
     await _advanceToNextTimer();
   }
 
@@ -211,11 +230,38 @@ class ActiveTimerController extends ChangeNotifier
       final nextIndex = _currentIndex + 1;
       if (nextIndex >= _timers.length) {
         if (completedTimer != null) {
+          unawaited(_timerDao.updateTimer(SessionTimer(
+            id: completedTimer.id,
+            sessionId: completedTimer.sessionId,
+            position: completedTimer.position,
+            title: completedTimer.title,
+            description: completedTimer.description,
+            icon: completedTimer.icon,
+            type: completedTimer.type,
+            plannedDuration: completedTimer.plannedDuration,
+            actualDuration: completedTimer.plannedDuration,
+            status: TimerStatus.completed,
+            createdAt: completedTimer.createdAt,
+            updatedAt: DateTime.now(),
+          )));
           unawaited(
             _timerAlertService.notifySessionFinished(
               sessionTitle: _session?.title ?? completedTimer.title,
             ),
           );
+        }
+        if (_session != null) {
+          final finishedSession = _session!;
+          unawaited(_sessionDao.updateSession(Session(
+            id: finishedSession.id,
+            title: finishedSession.title,
+            description: finishedSession.description,
+            icon: finishedSession.icon,
+            status: SessionStatus.completed,
+            createdAt: finishedSession.createdAt,
+            updatedAt: DateTime.now(),
+            completedAt: DateTime.now(),
+          )));
         }
         unawaited(_clearState(notify: notify));
         return;
@@ -226,6 +272,20 @@ class ActiveTimerController extends ChangeNotifier
       final nextDuration = _timers[_currentIndex].plannedDuration;
 
       if (completedTimer != null) {
+        unawaited(_timerDao.updateTimer(SessionTimer(
+          id: completedTimer.id,
+          sessionId: completedTimer.sessionId,
+          position: completedTimer.position,
+          title: completedTimer.title,
+          description: completedTimer.description,
+          icon: completedTimer.icon,
+          type: completedTimer.type,
+          plannedDuration: completedTimer.plannedDuration,
+          actualDuration: completedTimer.plannedDuration,
+          status: TimerStatus.completed,
+          createdAt: completedTimer.createdAt,
+          updatedAt: DateTime.now(),
+        )));
         unawaited(
           _timerAlertService.notifyTimerFinished(
             timerTitle: completedTimer.title,
@@ -248,7 +308,7 @@ class ActiveTimerController extends ChangeNotifier
   Future<void> _advanceToNextTimer() async {
     final nextIndex = _currentIndex + 1;
     if (nextIndex >= _timers.length) {
-      await _clearState();
+      await _clearState(markSessionCompleted: true);
       return;
     }
 
@@ -278,8 +338,24 @@ class ActiveTimerController extends ChangeNotifier
     _prefs.activeTimerState = jsonEncode(payload);
   }
 
-  Future<void> _clearState({bool notify = true}) async {
+  Future<void> _clearState({
+    bool notify = true,
+    bool markSessionCompleted = false,
+  }) async {
     _stopTicker();
+    if (markSessionCompleted && _session != null) {
+      final finishedSession = _session!;
+      await _sessionDao.updateSession(Session(
+        id: finishedSession.id,
+        title: finishedSession.title,
+        description: finishedSession.description,
+        icon: finishedSession.icon,
+        status: SessionStatus.completed,
+        createdAt: finishedSession.createdAt,
+        updatedAt: DateTime.now(),
+        completedAt: DateTime.now(),
+      ));
+    }
     _session = null;
     _timers = const [];
     _currentIndex = -1;
