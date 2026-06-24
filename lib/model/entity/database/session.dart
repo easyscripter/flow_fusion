@@ -18,7 +18,12 @@ class Session {
 
   DateTime updatedAt;
 
-  DateTime? completedAt;
+  /// Raw TEXT column (ISO-8601). Use [completedAtDateTime] for a typed value.
+  String? completedAt;
+
+  @ignore
+  DateTime? get completedAtDateTime =>
+      completedAt == null ? null : DateTime.parse(completedAt!);
 
   Session({
     this.id,
@@ -53,7 +58,7 @@ class Session {
     String? description,
     String? icon,
     SessionStatus? status,
-    DateTime? completedAt,
+    String? completedAt,
   }) {
     return Session(
       id: id,

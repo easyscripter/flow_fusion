@@ -1,3 +1,4 @@
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
@@ -5,6 +6,7 @@ import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/home_activity_panel.dart';
 import 'package:flow_fusion/ui/widgets/home_stats_row.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -15,11 +17,30 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final HomeViewViewModel _viewModel = HomeViewViewModel();
+  late final ActiveTimerController _timerController;
+  bool _wasActive = false;
 
   @override
   void initState() {
     super.initState();
+    _timerController = GetIt.I.get<ActiveTimerController>();
+    _wasActive = _timerController.hasActiveSession;
+    _timerController.addListener(_onTimerControllerChanged);
     _viewModel.init();
+  }
+
+  @override
+  void dispose() {
+    _timerController.removeListener(_onTimerControllerChanged);
+    super.dispose();
+  }
+
+  void _onTimerControllerChanged() {
+    final isActive = _timerController.hasActiveSession;
+    if (_wasActive && !isActive) {
+      _viewModel.update();
+    }
+    _wasActive = isActive;
   }
 
   @override

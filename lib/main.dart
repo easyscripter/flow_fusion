@@ -1,4 +1,5 @@
 import 'package:flow_fusion/di/di.dart';
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/app/app.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
@@ -10,6 +11,7 @@ import 'package:window_manager/window_manager.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+  GetIt.I.registerSingleton<ActiveTimerController>(ActiveTimerController.instance);
   final timerAlertService = GetIt.I.get<TimerAlertService>();
   await timerAlertService.init();
   await windowManager.ensureInitialized();

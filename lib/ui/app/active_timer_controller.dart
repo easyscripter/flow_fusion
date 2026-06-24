@@ -121,7 +121,7 @@ class ActiveTimerController extends ChangeNotifier
         icon: skipped.icon,
         type: skipped.type,
         plannedDuration: skipped.plannedDuration,
-        actualDuration: skipped.plannedDuration - _remaining,
+        actualDurationMs: (skipped.plannedDuration - _remaining).inMilliseconds,
         status: TimerStatus.skipped,
         createdAt: skipped.createdAt,
         updatedAt: DateTime.now(),
@@ -239,7 +239,7 @@ class ActiveTimerController extends ChangeNotifier
             icon: completedTimer.icon,
             type: completedTimer.type,
             plannedDuration: completedTimer.plannedDuration,
-            actualDuration: completedTimer.plannedDuration,
+            actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
             status: TimerStatus.completed,
             createdAt: completedTimer.createdAt,
             updatedAt: DateTime.now(),
@@ -260,7 +260,7 @@ class ActiveTimerController extends ChangeNotifier
             status: SessionStatus.completed,
             createdAt: finishedSession.createdAt,
             updatedAt: DateTime.now(),
-            completedAt: DateTime.now(),
+            completedAt: DateTime.now().toIso8601String(),
           )));
         }
         unawaited(_clearState(notify: notify));
@@ -281,7 +281,7 @@ class ActiveTimerController extends ChangeNotifier
           icon: completedTimer.icon,
           type: completedTimer.type,
           plannedDuration: completedTimer.plannedDuration,
-          actualDuration: completedTimer.plannedDuration,
+          actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
           status: TimerStatus.completed,
           createdAt: completedTimer.createdAt,
           updatedAt: DateTime.now(),
@@ -353,7 +353,7 @@ class ActiveTimerController extends ChangeNotifier
         status: SessionStatus.completed,
         createdAt: finishedSession.createdAt,
         updatedAt: DateTime.now(),
-        completedAt: DateTime.now(),
+        completedAt: DateTime.now().toIso8601String(),
       ));
     }
     _session = null;

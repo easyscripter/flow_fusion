@@ -35,7 +35,13 @@ class SessionTimer {
 
   Duration plannedDuration;
 
-  Duration? actualDuration;
+  /// Raw INTEGER column (milliseconds). Use [actualDuration] getter for a typed value.
+  @ColumnInfo(name: 'actualDuration')
+  int? actualDurationMs;
+
+  @ignore
+  Duration? get actualDuration =>
+      actualDurationMs == null ? null : Duration(milliseconds: actualDurationMs!);
 
   TimerStatus status;
 
@@ -52,7 +58,7 @@ class SessionTimer {
     this.icon,
     this.type = TimerType.work,
     required this.plannedDuration,
-    this.actualDuration,
+    this.actualDurationMs,
     this.status = TimerStatus.idle,
     required this.createdAt,
     required this.updatedAt,
