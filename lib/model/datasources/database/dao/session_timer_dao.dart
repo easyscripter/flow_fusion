@@ -26,6 +26,9 @@ abstract class SessionTimerDao {
   @Query('DELETE FROM timers WHERE sessionId = :sessionId')
   Future<void> deleteTimersForSession(int sessionId);
 
+  @Query('SELECT * FROM timers WHERE status = 3 AND type = 0')
+  Future<List<SessionTimer>> findCompletedWorkTimers();
+
   @factoryMethod
   static SessionTimerDao create(AppDatabase appDatabase) =>
       appDatabase.sessionTimerDao;

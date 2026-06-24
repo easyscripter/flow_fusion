@@ -25,6 +25,9 @@ abstract class SessionDao {
   @Query('DELETE FROM sessions')
   Future<void> clear();
 
+  @Query('SELECT COUNT(*) FROM sessions WHERE status = 3')
+  Future<int?> countCompletedSessions();
+
   @factoryMethod
   static SessionDao create(AppDatabase appDatabase) => appDatabase.sessionDao;
 }
