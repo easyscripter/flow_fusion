@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
+import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -10,6 +9,7 @@ class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {
   late SessionDao _sessionDao;
+  late SessionTimerDao _timerDao;
 
   @observable
   bool isLoading = false;
@@ -43,6 +43,7 @@ abstract class _HomeViewViewModelBase with Store {
   @action
   Future<void> init() async {
     _sessionDao = GetIt.I.get<SessionDao>();
+    _timerDao = GetIt.I.get<SessionTimerDao>();
     await update();
   }
 
@@ -50,24 +51,20 @@ abstract class _HomeViewViewModelBase with Store {
   Future<void> update() async {
     try {
       isLoading = true;
-      await _sessionDao.findAllSession();
-      focusByDay = ObservableMap.of(_generateFocusByDay());
+      focusByDay = ObservableMap.of(await _loadFocusByDay());
     } finally {
       isLoading = false;
     }
   }
 
-  Map<DateTime, int> _generateFocusByDay() {
-    final rng = Random(42);
-    final today = _today;
+  Future<Map<DateTime, int>> _loadFocusByDay() async {
+    final timers = await _timerDao.findCompletedWorkTimers();
     final result = <DateTime, int>{};
-    for (var i = 0; i < 365; i++) {
-      final date = today.subtract(Duration(days: i));
-      final isWeekend =
-          date.weekday == DateTime.saturday || date.weekday == DateTime.sunday;
-      if (rng.nextDouble() < (isWeekend ? 0.55 : 0.3)) continue;
-      final sessions = 1 + rng.nextInt(isWeekend ? 3 : 6);
-      result[date] = sessions * (20 + rng.nextInt(3) * 5);
+    for (final t in timers) {
+      final d = t.updatedAt;
+      final day = DateTime(d.year, d.month, d.day);
+      result[day] = (result[day] ?? 0) +
+          (t.actualDuration ?? t.plannedDuration).inMinutes;
     }
     return result;
   }
