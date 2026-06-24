@@ -22,9 +22,8 @@ abstract class _HomeViewViewModelBase with Store {
   @observable
   ObservableMap<DateTime, int> focusByDay = ObservableMap<DateTime, int>();
 
-  @computed
-  int get totalSessions =>
-      focusByDay.values.fold(0, (sum, m) => sum + (m / 25).round());
+  @observable
+  int totalSessions = 0;
 
   @computed
   Duration get totalFocus =>
@@ -52,6 +51,7 @@ abstract class _HomeViewViewModelBase with Store {
     try {
       isLoading = true;
       focusByDay = ObservableMap.of(await _loadFocusByDay());
+      totalSessions = await _sessionDao.countCompletedSessions() ?? 0;
     } finally {
       isLoading = false;
     }
