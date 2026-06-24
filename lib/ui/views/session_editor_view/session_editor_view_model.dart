@@ -137,8 +137,8 @@ abstract class _SessionEditorViewModelBase with Store {
         );
         await _sessionDao.updateSession(updated);
         sessionId = _editingId!;
-        // Rewrite the timer set so positions, edits and removals all apply.
-        await _timerDao.deleteTimersForSession(sessionId);
+        // Delete only idle timers — completed/skipped rows are analytics history.
+        await _timerDao.deleteIdleTimersForSession(sessionId);
       } else {
         final created = Session.create(
           title: title.trim(),

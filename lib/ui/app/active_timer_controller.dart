@@ -12,8 +12,7 @@ import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
-class ActiveTimerController extends ChangeNotifier
-    with WidgetsBindingObserver {
+class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   ActiveTimerController._();
 
   static final ActiveTimerController instance = ActiveTimerController._();
@@ -112,20 +111,25 @@ class ActiveTimerController extends ChangeNotifier
     if (!hasActiveSession) return;
     final skipped = currentTimer;
     if (skipped != null) {
-      unawaited(_timerDao.updateTimer(SessionTimer(
-        id: skipped.id,
-        sessionId: skipped.sessionId,
-        position: skipped.position,
-        title: skipped.title,
-        description: skipped.description,
-        icon: skipped.icon,
-        type: skipped.type,
-        plannedDuration: skipped.plannedDuration,
-        actualDurationMs: (skipped.plannedDuration - _remaining).inMilliseconds,
-        status: TimerStatus.skipped,
-        createdAt: skipped.createdAt,
-        updatedAt: DateTime.now(),
-      )));
+      final actualMs = (skipped.plannedDuration - _remaining).inMilliseconds;
+      debugPrint('[TimerCtrl] skipCurrentTimer: writing timer id=${skipped.id} status=skipped(4) actualDurationMs=$actualMs');
+      await _timerDao.updateTimer(
+        SessionTimer(
+          id: skipped.id,
+          sessionId: skipped.sessionId,
+          position: skipped.position,
+          title: skipped.title,
+          description: skipped.description,
+          icon: skipped.icon,
+          type: skipped.type,
+          plannedDuration: skipped.plannedDuration,
+          actualDurationMs: actualMs,
+          status: TimerStatus.skipped,
+          createdAt: skipped.createdAt,
+          updatedAt: DateTime.now(),
+        ),
+      );
+      debugPrint('[TimerCtrl] skipCurrentTimer: timer DB write done');
     }
     await _advanceToNextTimer();
   }
@@ -229,41 +233,14 @@ class ActiveTimerController extends ChangeNotifier
       final completedTimer = currentTimer;
       final nextIndex = _currentIndex + 1;
       if (nextIndex >= _timers.length) {
-        if (completedTimer != null) {
-          unawaited(_timerDao.updateTimer(SessionTimer(
-            id: completedTimer.id,
-            sessionId: completedTimer.sessionId,
-            position: completedTimer.position,
-            title: completedTimer.title,
-            description: completedTimer.description,
-            icon: completedTimer.icon,
-            type: completedTimer.type,
-            plannedDuration: completedTimer.plannedDuration,
-            actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
-            status: TimerStatus.completed,
-            createdAt: completedTimer.createdAt,
-            updatedAt: DateTime.now(),
-          )));
-          unawaited(
-            _timerAlertService.notifySessionFinished(
-              sessionTitle: _session?.title ?? completedTimer.title,
-            ),
-          );
-        }
-        if (_session != null) {
-          final finishedSession = _session!;
-          unawaited(_sessionDao.updateSession(Session(
-            id: finishedSession.id,
-            title: finishedSession.title,
-            description: finishedSession.description,
-            icon: finishedSession.icon,
-            status: SessionStatus.completed,
-            createdAt: finishedSession.createdAt,
-            updatedAt: DateTime.now(),
-            completedAt: DateTime.now().toIso8601String(),
-          )));
-        }
-        unawaited(_clearState(notify: notify));
+        final sessionTitle = _session?.title ?? completedTimer?.title ?? '';
+        unawaited(
+          _finalizeSessionNaturally(
+            completedTimer: completedTimer,
+            sessionTitle: sessionTitle,
+            notify: notify,
+          ),
+        );
         return;
       }
 
@@ -272,20 +249,24 @@ class ActiveTimerController extends ChangeNotifier
       final nextDuration = _timers[_currentIndex].plannedDuration;
 
       if (completedTimer != null) {
-        unawaited(_timerDao.updateTimer(SessionTimer(
-          id: completedTimer.id,
-          sessionId: completedTimer.sessionId,
-          position: completedTimer.position,
-          title: completedTimer.title,
-          description: completedTimer.description,
-          icon: completedTimer.icon,
-          type: completedTimer.type,
-          plannedDuration: completedTimer.plannedDuration,
-          actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
-          status: TimerStatus.completed,
-          createdAt: completedTimer.createdAt,
-          updatedAt: DateTime.now(),
-        )));
+        unawaited(
+          _timerDao.updateTimer(
+            SessionTimer(
+              id: completedTimer.id,
+              sessionId: completedTimer.sessionId,
+              position: completedTimer.position,
+              title: completedTimer.title,
+              description: completedTimer.description,
+              icon: completedTimer.icon,
+              type: completedTimer.type,
+              plannedDuration: completedTimer.plannedDuration,
+              actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
+              status: TimerStatus.completed,
+              createdAt: completedTimer.createdAt,
+              updatedAt: DateTime.now(),
+            ),
+          ),
+        );
         unawaited(
           _timerAlertService.notifyTimerFinished(
             timerTitle: completedTimer.title,
@@ -303,6 +284,54 @@ class ActiveTimerController extends ChangeNotifier
 
       extra -= nextDuration;
     }
+  }
+
+  Future<void> _finalizeSessionNaturally({
+    required SessionTimer? completedTimer,
+    required String sessionTitle,
+    required bool notify,
+  }) async {
+    if (completedTimer != null) {
+      debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing timer id=${completedTimer.id} status=completed(3) actualDurationMs=${completedTimer.plannedDuration.inMilliseconds}');
+      await _timerDao.updateTimer(
+        SessionTimer(
+          id: completedTimer.id,
+          sessionId: completedTimer.sessionId,
+          position: completedTimer.position,
+          title: completedTimer.title,
+          description: completedTimer.description,
+          icon: completedTimer.icon,
+          type: completedTimer.type,
+          plannedDuration: completedTimer.plannedDuration,
+          actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
+          status: TimerStatus.completed,
+          createdAt: completedTimer.createdAt,
+          updatedAt: DateTime.now(),
+        ),
+      );
+      debugPrint('[TimerCtrl] _finalizeSessionNaturally: timer DB write done');
+    }
+    if (_session != null) {
+      final finishedSession = _session!;
+      debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing session id=${finishedSession.id} status=completed(3) completedAt=${DateTime.now().toIso8601String()}');
+      await _sessionDao.updateSession(
+        Session(
+          id: finishedSession.id,
+          title: finishedSession.title,
+          description: finishedSession.description,
+          icon: finishedSession.icon,
+          status: SessionStatus.completed,
+          createdAt: finishedSession.createdAt,
+          updatedAt: DateTime.now(),
+          completedAt: DateTime.now().toIso8601String(),
+        ),
+      );
+      debugPrint('[TimerCtrl] _finalizeSessionNaturally: session DB write done');
+    }
+    unawaited(
+      _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
+    );
+    await _clearState(notify: notify);
   }
 
   Future<void> _advanceToNextTimer() async {
@@ -342,19 +371,24 @@ class ActiveTimerController extends ChangeNotifier
     bool notify = true,
     bool markSessionCompleted = false,
   }) async {
+    debugPrint('[TimerCtrl] _clearState called (markSessionCompleted=$markSessionCompleted, notify=$notify)');
     _stopTicker();
     if (markSessionCompleted && _session != null) {
       final finishedSession = _session!;
-      await _sessionDao.updateSession(Session(
-        id: finishedSession.id,
-        title: finishedSession.title,
-        description: finishedSession.description,
-        icon: finishedSession.icon,
-        status: SessionStatus.completed,
-        createdAt: finishedSession.createdAt,
-        updatedAt: DateTime.now(),
-        completedAt: DateTime.now().toIso8601String(),
-      ));
+      debugPrint('[TimerCtrl] _clearState: writing session id=${finishedSession.id} status=completed(3)');
+      await _sessionDao.updateSession(
+        Session(
+          id: finishedSession.id,
+          title: finishedSession.title,
+          description: finishedSession.description,
+          icon: finishedSession.icon,
+          status: SessionStatus.completed,
+          createdAt: finishedSession.createdAt,
+          updatedAt: DateTime.now(),
+          completedAt: DateTime.now().toIso8601String(),
+        ),
+      );
+      debugPrint('[TimerCtrl] _clearState: session DB write done');
     }
     _session = null;
     _timers = const [];
@@ -363,6 +397,7 @@ class ActiveTimerController extends ChangeNotifier
     _endsAt = null;
     _isPaused = false;
     _prefs.activeTimerState = null;
+    debugPrint('[TimerCtrl] _clearState: in-memory state wiped, notifyListeners firing=$notify');
     if (notify) notifyListeners();
   }
 

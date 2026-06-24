@@ -18,13 +18,11 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final HomeViewViewModel _viewModel = HomeViewViewModel();
   late final ActiveTimerController _timerController;
-  bool _wasActive = false;
 
   @override
   void initState() {
     super.initState();
     _timerController = GetIt.I.get<ActiveTimerController>();
-    _wasActive = _timerController.hasActiveSession;
     _timerController.addListener(_onTimerControllerChanged);
     _viewModel.init();
   }
@@ -37,10 +35,10 @@ class _HomeViewState extends State<HomeView> {
 
   void _onTimerControllerChanged() {
     final isActive = _timerController.hasActiveSession;
-    if (_wasActive && !isActive) {
+    debugPrint('[HomeView] _onTimerControllerChanged called, hasActiveSession=$isActive');
+    if (!isActive && !_viewModel.isLoading) {
       _viewModel.update();
     }
-    _wasActive = isActive;
   }
 
   @override
