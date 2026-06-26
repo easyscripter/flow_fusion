@@ -1,5 +1,5 @@
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
-import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
+import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -9,17 +9,12 @@ part 'home_view_view_model.g.dart';
 class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {
-  late SessionDao _sessionDao;
   late FocusLogDao _focusLogDao;
 
   @observable
   bool isLoading = false;
 
-  /// Минуты фокуса по дням за последний год — источник правды для всех метрик
-  /// и тепловой карты (формат, который ждёт `HeatMap.datasets`).
-  ///
-  /// TODO: заменить синтетические данные на реальный журнал завершённых
-  /// фокус-сессий (таблица с временной меткой), когда он появится в схеме.
+
   @observable
   ObservableMap<DateTime, int> focusByDay = ObservableMap<DateTime, int>();
 
@@ -42,7 +37,6 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> init() async {
-    _sessionDao = GetIt.I.get<SessionDao>();
     _focusLogDao = GetIt.I.get<FocusLogDao>();
     await update();
   }
@@ -52,13 +46,17 @@ abstract class _HomeViewViewModelBase with Store {
     debugPrint('[HomeVM] update() called');
     runInAction(() => isLoading = true);
     try {
-      final newFocusByDay = await _loadFocusByDay();
-      final totalMinutes = newFocusByDay.values.fold(0, (s, m) => s + m);
-      debugPrint('[HomeVM] _loadFocusByDay() returned ${newFocusByDay.length} day entries, $totalMinutes total minutes');
-      final newTotalSessions = await _sessionDao.countCompletedSessions() ?? 0;
-      debugPrint('[HomeVM] countCompletedSessions() returned $newTotalSessions');
+
+      final now = DateTime.now();
+      final start = DateTime(now.year - 1, now.month, now.day);
+      final runs = await _focusLogDao.findRunsBetween(
+        start.toIso8601String(),
+        now.toIso8601String(),
+      );
+      final newFocusByDay = _focusByDayFromRuns(runs);
+      final newTotalSessions = runs.length;
+      debugPrint('[HomeVM] focus_log: ${runs.length} runs, ${newFocusByDay.length} day entries');
       runInAction(() {
-        debugPrint('[HomeVM] runInAction: setting focusByDay=${newFocusByDay.length} entries, totalSessions=$newTotalSessions');
         focusByDay = ObservableMap.of(newFocusByDay);
         totalSessions = newTotalSessions;
         isLoading = false;
@@ -69,25 +67,16 @@ abstract class _HomeViewViewModelBase with Store {
     }
   }
 
-  Future<Map<DateTime, int>> _loadFocusByDay() async {
-
-    final now = DateTime.now();
-    final start = DateTime(now.year - 1, now.month, now.day);
-    final logs = await _focusLogDao.findWorkFocusBetween(
-      start.toIso8601String(),
-      now.toIso8601String(),
-    );
-    debugPrint('[HomeVM] _loadFocusByDay: focus_log returned ${logs.length} rows');
+  Map<DateTime, int> _focusByDayFromRuns(List<FocusLog> runs) {
     const int maxMinutesPerDay = 480;
     final result = <DateTime, int>{};
-    for (final log in logs) {
-      final d = DateTime.parse(log.completedAt);
+    for (final run in runs) {
+      final d = DateTime.parse(run.completedAt);
       final day = DateTime(d.year, d.month, d.day);
-      final minutes = Duration(milliseconds: log.durationMs).inMinutes;
+      final minutes = Duration(milliseconds: run.workMs).inMinutes;
       result[day] = ((result[day] ?? 0) + minutes).clamp(0, maxMinutesPerDay);
     }
     result.removeWhere((_, minutes) => minutes <= 0);
-    debugPrint('[HomeVM] _loadFocusByDay: built map with ${result.length} days (zeros removed)');
     return result;
   }
 

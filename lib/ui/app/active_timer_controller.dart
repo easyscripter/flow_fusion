@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
+import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
@@ -36,6 +37,8 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   Duration _remaining = Duration.zero;
   DateTime? _endsAt;
   bool _isPaused = false;
+
+  int _runWorkMs = 0;
 
   Session? get session => _session;
   List<SessionTimer> get timers => List.unmodifiable(_timers);
@@ -85,6 +88,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _currentIndex = 0;
     _remaining = timers.first.plannedDuration;
     _isPaused = false;
+    _runWorkMs = 0;
     _endsAt = DateTime.now().add(_remaining);
     _startTicker();
     await _persist();
@@ -116,7 +120,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     if (skipped != null) {
       final actualMs = (skipped.plannedDuration - _remaining).inMilliseconds;
       debugPrint('[TimerCtrl] skipCurrentTimer: writing timer id=${skipped.id} status=skipped(4) actualDurationMs=$actualMs');
-      await _logFocus(skipped, Duration(milliseconds: actualMs));
+      _accrueWork(skipped, Duration(milliseconds: actualMs));
       await _timerDao.updateTimer(
         SessionTimer(
           id: skipped.id,
@@ -178,6 +182,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       _timers = timers;
       _currentIndex = currentIndex;
       _isPaused = json['isPaused'] as bool? ?? false;
+      _runWorkMs = json['runWorkMs'] as int? ?? 0;
 
       if (_isPaused) {
         final remainingMs = json['remainingMs'] as int? ?? 0;
@@ -253,7 +258,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       final nextDuration = _timers[_currentIndex].plannedDuration;
 
       if (completedTimer != null) {
-        unawaited(_logFocus(completedTimer, completedTimer.plannedDuration));
+        _accrueWork(completedTimer, completedTimer.plannedDuration);
         unawaited(
           _timerDao.updateTimer(
             SessionTimer(
@@ -298,7 +303,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   }) async {
     if (completedTimer != null) {
       debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing timer id=${completedTimer.id} status=completed(3) actualDurationMs=${completedTimer.plannedDuration.inMilliseconds}');
-      await _logFocus(completedTimer, completedTimer.plannedDuration);
+      _accrueWork(completedTimer, completedTimer.plannedDuration);
       await _timerDao.updateTimer(
         SessionTimer(
           id: completedTimer.id,
@@ -332,7 +337,8 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
           completedAt: DateTime.now().toIso8601String(),
         ),
       );
-      debugPrint('[TimerCtrl] _finalizeSessionNaturally: session DB write done');
+      await _logCompletedRun(finishedSession);
+      debugPrint('[TimerCtrl] _finalizeSessionNaturally: session DB write done (workMs=$_runWorkMs)');
     }
     unawaited(
       _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
@@ -356,14 +362,18 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
   }
 
-  Future<void> _logFocus(SessionTimer timer, Duration actual) async {
-    await _focusLogDao.insertFocus(
-      FocusLog.create(
-        sessionId: timer.sessionId,
-        timerId: timer.id,
-        type: timer.type,
-        duration: actual,
-      ),
+
+  void _accrueWork(SessionTimer timer, Duration actual) {
+    if (timer.type == TimerType.work) {
+      _runWorkMs += actual.inMilliseconds;
+    }
+  }
+
+  Future<void> _logCompletedRun(Session session) async {
+    final sessionId = session.id;
+    if (sessionId == null) return;
+    await _focusLogDao.insertRun(
+      FocusLog.create(sessionId: sessionId, workMs: _runWorkMs),
     );
   }
 
@@ -377,6 +387,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       'sessionId': _session!.id,
       'currentIndex': _currentIndex,
       'isPaused': _isPaused,
+      'runWorkMs': _runWorkMs,
       if (_isPaused) 'remainingMs': _remaining.inMilliseconds,
       if (!_isPaused && _endsAt != null)
         'endsAtMs': _endsAt!.millisecondsSinceEpoch,
@@ -405,7 +416,8 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
           completedAt: DateTime.now().toIso8601String(),
         ),
       );
-      debugPrint('[TimerCtrl] _clearState: session DB write done');
+      await _logCompletedRun(finishedSession);
+      debugPrint('[TimerCtrl] _clearState: session DB write done (workMs=$_runWorkMs)');
     }
     _session = null;
     _timers = const [];
@@ -413,6 +425,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _remaining = Duration.zero;
     _endsAt = null;
     _isPaused = false;
+    _runWorkMs = 0;
     _prefs.activeTimerState = null;
     debugPrint('[TimerCtrl] _clearState: in-memory state wiped, notifyListeners firing=$notify');
     if (notify) notifyListeners();

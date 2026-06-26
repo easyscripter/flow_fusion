@@ -7,15 +7,14 @@ import 'package:injectable/injectable.dart';
 @dao
 abstract class FocusLogDao {
   @insert
-  Future<void> insertFocus(FocusLog log);
+  Future<void> insertRun(FocusLog log);
 
   @Query(
     'SELECT * FROM focus_log '
-    'WHERE type = 0 AND completedAt >= :startIso AND completedAt <= :endIso',
+    'WHERE completedAt >= :startIso AND completedAt <= :endIso',
   )
-  Future<List<FocusLog>> findWorkFocusBetween(String startIso, String endIso);
+  Future<List<FocusLog>> findRunsBetween(String startIso, String endIso);
 
   @factoryMethod
-  static FocusLogDao create(AppDatabase appDatabase) =>
-      appDatabase.focusLogDao;
+  static FocusLogDao create(AppDatabase appDatabase) => appDatabase.focusLogDao;
 }
