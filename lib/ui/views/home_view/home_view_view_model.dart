@@ -1,5 +1,5 @@
+import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
-import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -10,7 +10,7 @@ class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {
   late SessionDao _sessionDao;
-  late SessionTimerDao _timerDao;
+  late FocusLogDao _focusLogDao;
 
   @observable
   bool isLoading = false;
@@ -43,7 +43,7 @@ abstract class _HomeViewViewModelBase with Store {
   @action
   Future<void> init() async {
     _sessionDao = GetIt.I.get<SessionDao>();
-    _timerDao = GetIt.I.get<SessionTimerDao>();
+    _focusLogDao = GetIt.I.get<FocusLogDao>();
     await update();
   }
 
@@ -70,18 +70,21 @@ abstract class _HomeViewViewModelBase with Store {
   }
 
   Future<Map<DateTime, int>> _loadFocusByDay() async {
-    final timers = await _timerDao.findCompletedWorkTimers();
-    debugPrint('[HomeVM] _loadFocusByDay: DB returned ${timers.length} timers');
-    for (final t in timers) {
-      debugPrint('[HomeVM]   timer id=${t.id} status=${t.status.index} type=${t.type.index} actualDurationMs=${t.actualDurationMs} plannedMs=${t.plannedDuration.inMilliseconds} updatedAt=${t.updatedAt}');
-    }
-    const int _maxMinutesPerDay = 480;
+
+    final now = DateTime.now();
+    final start = DateTime(now.year - 1, now.month, now.day);
+    final logs = await _focusLogDao.findWorkFocusBetween(
+      start.toIso8601String(),
+      now.toIso8601String(),
+    );
+    debugPrint('[HomeVM] _loadFocusByDay: focus_log returned ${logs.length} rows');
+    const int maxMinutesPerDay = 480;
     final result = <DateTime, int>{};
-    for (final t in timers) {
-      final d = t.updatedAt;
+    for (final log in logs) {
+      final d = DateTime.parse(log.completedAt);
       final day = DateTime(d.year, d.month, d.day);
-      final minutes = (t.actualDuration ?? t.plannedDuration).inMinutes;
-      result[day] = ((result[day] ?? 0) + minutes).clamp(0, _maxMinutesPerDay);
+      final minutes = Duration(milliseconds: log.durationMs).inMinutes;
+      result[day] = ((result[day] ?? 0) + minutes).clamp(0, maxMinutesPerDay);
     }
     result.removeWhere((_, minutes) => minutes <= 0);
     debugPrint('[HomeVM] _loadFocusByDay: built map with ${result.length} days (zeros removed)');

@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
+import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
+import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
@@ -21,6 +23,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
 
   final SessionDao _sessionDao = GetIt.I.get<SessionDao>();
   final SessionTimerDao _timerDao = GetIt.I.get<SessionTimerDao>();
+  final FocusLogDao _focusLogDao = GetIt.I.get<FocusLogDao>();
   final Prefs _prefs = GetIt.I.get<Prefs>();
   final TimerAlertService _timerAlertService = GetIt.I.get<TimerAlertService>();
 
@@ -113,6 +116,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     if (skipped != null) {
       final actualMs = (skipped.plannedDuration - _remaining).inMilliseconds;
       debugPrint('[TimerCtrl] skipCurrentTimer: writing timer id=${skipped.id} status=skipped(4) actualDurationMs=$actualMs');
+      await _logFocus(skipped, Duration(milliseconds: actualMs));
       await _timerDao.updateTimer(
         SessionTimer(
           id: skipped.id,
@@ -249,6 +253,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       final nextDuration = _timers[_currentIndex].plannedDuration;
 
       if (completedTimer != null) {
+        unawaited(_logFocus(completedTimer, completedTimer.plannedDuration));
         unawaited(
           _timerDao.updateTimer(
             SessionTimer(
@@ -293,6 +298,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   }) async {
     if (completedTimer != null) {
       debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing timer id=${completedTimer.id} status=completed(3) actualDurationMs=${completedTimer.plannedDuration.inMilliseconds}');
+      await _logFocus(completedTimer, completedTimer.plannedDuration);
       await _timerDao.updateTimer(
         SessionTimer(
           id: completedTimer.id,
@@ -348,6 +354,17 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _startTicker();
     await _persist();
     notifyListeners();
+  }
+
+  Future<void> _logFocus(SessionTimer timer, Duration actual) async {
+    await _focusLogDao.insertFocus(
+      FocusLog.create(
+        sessionId: timer.sessionId,
+        timerId: timer.id,
+        type: timer.type,
+        duration: actual,
+      ),
+    );
   }
 
   Future<void> _persist() async {
