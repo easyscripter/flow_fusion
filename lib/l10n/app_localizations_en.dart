@@ -385,4 +385,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteModalConfirm => 'Delete';
+
+  @override
+  String get showWindow => 'Show Window';
+
+  @override
+  String get exitApp => 'Exit App';
 }

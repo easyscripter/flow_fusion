@@ -184,5 +184,7 @@
   "deleteSessionModalTitle": "Удалить сессию",
   "deleteSessionModalContent": "Вы действительно хотите удалить данную сессию?",
   "deleteModalCancel": "Отмена",
-  "deleteModalConfirm": "Удалить"
+  "deleteModalConfirm": "Удалить",
+  "showWindow": "Открыть",
+  "exitApp": "Выйти"
 }

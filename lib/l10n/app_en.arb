@@ -184,5 +184,7 @@
   "deleteSessionModalTitle": "Delete Session",
   "deleteSessionModalContent": "Are you sure for delete session?",
   "deleteModalCancel": "Cancel",
-  "deleteModalConfirm": "Delete"
+  "deleteModalConfirm": "Delete",
+  "showWindow": "Show Window",
+  "exitApp": "Exit App"
 }

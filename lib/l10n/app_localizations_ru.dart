@@ -395,4 +395,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deleteModalConfirm => 'Удалить';
+
+  @override
+  String get showWindow => 'Открыть';
+
+  @override
+  String get exitApp => 'Выйти';
 }

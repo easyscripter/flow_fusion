@@ -745,6 +745,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get deleteModalConfirm;
+
+  /// No description provided for @showWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Window'**
+  String get showWindow;
+
+  /// No description provided for @exitApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit App'**
+  String get exitApp;
 }
 
 class _AppLocalizationsDelegate
