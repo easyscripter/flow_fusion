@@ -370,4 +370,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionEditorCancel => 'Cancel';
+
+  @override
+  String get sessionDelete => 'Delete Session';
+
+  @override
+  String get deleteSessionModalTitle => 'Delete Session';
+
+  @override
+  String get deleteSessionModalContent => 'Are you sure for delete session?';
+
+  @override
+  String get deleteModalCancel => 'Cancel';
+
+  @override
+  String get deleteModalConfirm => 'Delete';
 }

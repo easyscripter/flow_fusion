@@ -379,4 +379,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sessionEditorCancel => 'Отмена';
+
+  @override
+  String get sessionDelete => 'Удалить сессию';
+
+  @override
+  String get deleteSessionModalTitle => 'Удалить сессию';
+
+  @override
+  String get deleteSessionModalContent =>
+      'Вы действительно хотите удалить данную сессию?';
+
+  @override
+  String get deleteModalCancel => 'Отмена';
+
+  @override
+  String get deleteModalConfirm => 'Удалить';
 }
