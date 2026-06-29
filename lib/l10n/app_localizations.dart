@@ -715,6 +715,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get sessionEditorCancel;
+
+  /// No description provided for @sessionDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Session'**
+  String get sessionDelete;
+
+  /// No description provided for @deleteSessionModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Session'**
+  String get deleteSessionModalTitle;
+
+  /// No description provided for @deleteSessionModalContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure for delete session?'**
+  String get deleteSessionModalContent;
+
+  /// No description provided for @deleteModalCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get deleteModalCancel;
+
+  /// No description provided for @deleteModalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteModalConfirm;
 }
 
 class _AppLocalizationsDelegate

@@ -28,6 +28,12 @@ abstract class _SessionsViewViewModelBase with Store {
   }
 
   @action
+  Future<void> deleteSession(Session session) async {
+    await _sessionDao.deleteSession(session);
+    await update();
+  }
+
+  @action
   Future<void> init() async {
     _sessionDao = GetIt.I.get<SessionDao>();
     await update();

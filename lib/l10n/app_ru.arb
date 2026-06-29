@@ -179,5 +179,10 @@
   "sessionEditorNoTimers": "Пока нет таймеров. Добавьте блок работы или отдыха.",
   "sessionEditorRemoveTimer": "Удалить таймер",
   "sessionEditorSave": "Сохранить",
-  "sessionEditorCancel": "Отмена"
+  "sessionEditorCancel": "Отмена",
+  "sessionDelete": "Удалить сессию",
+  "deleteSessionModalTitle": "Удалить сессию",
+  "deleteSessionModalContent": "Вы действительно хотите удалить данную сессию?",
+  "deleteModalCancel": "Отмена",
+  "deleteModalConfirm": "Удалить"
 }

@@ -8,12 +8,14 @@ class SessionsGrid extends StatelessWidget {
   final List<Session> sessions;
   final ValueChanged<Session> onOpen;
   final ValueChanged<Session> onStart;
+  final ValueChanged<Session> onDelete;
 
   const SessionsGrid({
     super.key,
     required this.sessions,
     required this.onOpen,
     required this.onStart,
+    required this.onDelete,
   });
 
   @override
@@ -43,6 +45,7 @@ class SessionsGrid extends StatelessWidget {
               session: session,
               onTap: () => onOpen(session),
               onStart: () => onStart(session),
+              onDelete: () => onDelete(session),
             );
           },
         );

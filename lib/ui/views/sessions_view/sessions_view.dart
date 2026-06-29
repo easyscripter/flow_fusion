@@ -70,6 +70,9 @@ class _SessionsViewState extends State<SessionsView> {
                     onStart: (session) {
                       unawaited(_startSession(session));
                     },
+                    onDelete: (session) {
+                      unawaited(_deleteSession(session));
+                    },
                   ),
                 ),
               ],
@@ -102,5 +105,30 @@ class _SessionsViewState extends State<SessionsView> {
 
     if (!mounted || !_timerController.hasActiveSession) return;
     context.go(Routes.timer.path);
+  }
+
+  Future<void> _deleteSession(Session session) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.deleteSessionModalTitle),
+        content: Text(context.l10n.deleteSessionModalContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.deleteModalCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.deleteModalConfirm),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return;
+
+    if (confirmed == true) {
+      await _viewModel.deleteSession(session);
+    }
   }
 }

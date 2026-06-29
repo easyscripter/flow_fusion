@@ -179,5 +179,10 @@
   "sessionEditorNoTimers": "No timers yet. Add a work or chill block to get started.",
   "sessionEditorRemoveTimer": "Remove timer",
   "sessionEditorSave": "Save",
-  "sessionEditorCancel": "Cancel"
+  "sessionEditorCancel": "Cancel",
+  "sessionDelete": "Delete Session",
+  "deleteSessionModalTitle": "Delete Session",
+  "deleteSessionModalContent": "Are you sure for delete session?",
+  "deleteModalCancel": "Cancel",
+  "deleteModalConfirm": "Delete"
 }

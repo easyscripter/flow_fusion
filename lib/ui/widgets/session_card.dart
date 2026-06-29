@@ -10,12 +10,14 @@ class SessionCard extends StatelessWidget {
   final Session session;
   final VoidCallback onTap;
   final VoidCallback onStart;
+  final VoidCallback onDelete;
 
   const SessionCard({
     super.key,
     required this.session,
     required this.onTap,
     required this.onStart,
+    required this.onDelete,
   });
 
   @override
@@ -54,13 +56,20 @@ class SessionCard extends StatelessWidget {
                 AnimatedBuilder(
                   animation: timerController,
                   builder: (context, _) {
-                    final isCurrent = timerController.currentSessionId == session.id;
+                    final isCurrent =
+                        timerController.currentSessionId == session.id;
                     return Row(
                       children: [
                         _CardActionButton(
                           tooltip: context.l10n.sessionsEdit,
                           icon: Icons.edit_outlined,
                           onPressed: isCurrent ? null : onTap,
+                        ),
+                        const SizedBox(width: 8),
+                        _CardActionButton(
+                          tooltip: context.l10n.sessionDelete,
+                          icon: Icons.delete_rounded,
+                          onPressed: isCurrent ? null : onDelete,
                         ),
                         const SizedBox(width: 8),
                         _CardActionButton(
