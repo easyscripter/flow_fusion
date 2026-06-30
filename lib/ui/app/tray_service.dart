@@ -21,7 +21,7 @@ class TrayService with TrayListener, WindowListener {
     await trayManager.setIcon(
       Platform.isWindows
           ? 'assets/images/app_icon.ico'
-          : 'assets/images/app_logo.png',
+          : 'assets/images/app_tray.png',
     );
     trayManager.setContextMenu(
       Menu(
