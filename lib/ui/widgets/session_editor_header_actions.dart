@@ -13,7 +13,14 @@ class SessionEditorHeaderActions extends StatelessWidget {
 
   Future<void> _save(BuildContext context) async {
     final saved = await viewModel.save();
-    if (saved && context.mounted) context.pop();
+    if (!context.mounted) return;
+    if (saved) {
+      context.pop();
+    } else if (viewModel.hasError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.errorSaveFailed)),
+      );
+    }
   }
 
   @override

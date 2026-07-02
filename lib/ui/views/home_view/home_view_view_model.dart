@@ -14,6 +14,8 @@ abstract class _HomeViewViewModelBase with Store {
   @observable
   bool isLoading = false;
 
+  @observable
+  bool hasError = false;
 
   @observable
   ObservableMap<DateTime, int> focusByDay = ObservableMap<DateTime, int>();
@@ -42,9 +44,11 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> update() async {
-    runInAction(() => isLoading = true);
+    runInAction(() {
+      isLoading = true;
+      hasError = false;
+    });
     try {
-
       final now = DateTime.now();
       final start = DateTime(now.year - 1, now.month, now.day);
       final runs = await _focusLogDao.findRunsBetween(
@@ -59,8 +63,10 @@ abstract class _HomeViewViewModelBase with Store {
         isLoading = false;
       });
     } catch (_) {
-      runInAction(() => isLoading = false);
-      rethrow;
+      runInAction(() {
+        isLoading = false;
+        hasError = true;
+      });
     }
   }
 

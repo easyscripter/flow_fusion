@@ -31,6 +31,9 @@ abstract class _SessionEditorViewModelBase with Store {
   bool showErrors = false;
 
   @observable
+  bool hasError = false;
+
+  @observable
   String title = '';
 
   @observable
@@ -121,6 +124,7 @@ abstract class _SessionEditorViewModelBase with Store {
     if (!canSave) return false;
 
     isSaving = true;
+    hasError = false;
     try {
       final trimmedDescription = description.trim();
       final descriptionValue = trimmedDescription.isEmpty
@@ -130,7 +134,10 @@ abstract class _SessionEditorViewModelBase with Store {
       final int sessionId;
       if (_editingId != null) {
         final current = await _sessionDao.findSessionById(_editingId!);
-        if (current == null) return false;
+        if (current == null) {
+          hasError = true;
+          return false;
+        }
         final updated = Session(
           id: _editingId,
           title: title.trim(),
@@ -166,6 +173,9 @@ abstract class _SessionEditorViewModelBase with Store {
       ];
       await _timerDao.insertTimers(entities);
       return true;
+    } catch (_) {
+      hasError = true;
+      return false;
     } finally {
       isSaving = false;
     }

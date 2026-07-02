@@ -757,6 +757,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exit App'**
   String get exitApp;
+
+  /// No description provided for @errorLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load data. Please try again.'**
+  String get errorLoadFailed;
+
+  /// No description provided for @errorRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get errorRetry;
+
+  /// No description provided for @errorSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the session. Please try again.'**
+  String get errorSaveFailed;
+
+  /// No description provided for @errorDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the session. Please try again.'**
+  String get errorDeleteFailed;
 }
 
 class _AppLocalizationsDelegate

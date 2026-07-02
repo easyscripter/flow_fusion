@@ -401,4 +401,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get exitApp => 'Выйти';
+
+  @override
+  String get errorLoadFailed =>
+      'Не удалось загрузить данные. Попробуйте ещё раз.';
+
+  @override
+  String get errorRetry => 'Повторить';
+
+  @override
+  String get errorSaveFailed =>
+      'Не удалось сохранить сессию. Попробуйте ещё раз.';
+
+  @override
+  String get errorDeleteFailed =>
+      'Не удалось удалить сессию. Попробуйте ещё раз.';
 }

@@ -391,4 +391,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exitApp => 'Exit App';
+
+  @override
+  String get errorLoadFailed => 'Couldn\'t load data. Please try again.';
+
+  @override
+  String get errorRetry => 'Retry';
+
+  @override
+  String get errorSaveFailed => 'Couldn\'t save the session. Please try again.';
+
+  @override
+  String get errorDeleteFailed =>
+      'Couldn\'t delete the session. Please try again.';
 }

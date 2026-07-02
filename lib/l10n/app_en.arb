@@ -186,5 +186,10 @@
   "deleteModalCancel": "Cancel",
   "deleteModalConfirm": "Delete",
   "showWindow": "Show Window",
-  "exitApp": "Exit App"
+  "exitApp": "Exit App",
+
+  "errorLoadFailed": "Couldn't load data. Please try again.",
+  "errorRetry": "Retry",
+  "errorSaveFailed": "Couldn't save the session. Please try again.",
+  "errorDeleteFailed": "Couldn't delete the session. Please try again."
 }

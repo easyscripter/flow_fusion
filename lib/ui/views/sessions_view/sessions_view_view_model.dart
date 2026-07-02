@@ -16,22 +16,33 @@ abstract class _SessionsViewViewModelBase with Store {
   bool isLoading = false;
 
   @observable
+  bool hasError = false;
+
+  @observable
   List<Session> sessions = [];
 
   @action
   Future<void> update() async {
     try {
       isLoading = true;
+      hasError = false;
       sessions = await _sessionDao.findAllSession();
+    } catch (_) {
+      hasError = true;
     } finally {
       isLoading = false;
     }
   }
 
   @action
-  Future<void> deleteSession(Session session) async {
-    await _sessionDao.deleteSession(session);
-    await update();
+  Future<bool> deleteSession(Session session) async {
+    try {
+      await _sessionDao.deleteSession(session);
+      await update();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   @action

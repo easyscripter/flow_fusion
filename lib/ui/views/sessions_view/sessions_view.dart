@@ -8,6 +8,7 @@ import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/app_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
+import 'package:flow_fusion/ui/widgets/error_retry.dart';
 import 'package:flow_fusion/ui/widgets/sessions_empty_state.dart';
 import 'package:flow_fusion/ui/widgets/sessions_grid.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,16 @@ class _SessionsViewState extends State<SessionsView> {
         builder: (context) {
           if (_viewModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
+          }
+
+          if (_viewModel.hasError) {
+            return Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingLarge),
+              child: ErrorRetry(
+                message: context.l10n.errorLoadFailed,
+                onRetry: _viewModel.update,
+              ),
+            );
           }
 
           if (_viewModel.sessions.isEmpty) {
@@ -129,7 +140,12 @@ class _SessionsViewState extends State<SessionsView> {
     if (!mounted) return;
 
     if (confirmed == true) {
-      await _viewModel.deleteSession(session);
+      final deleted = await _viewModel.deleteSession(session);
+      if (!deleted && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.errorDeleteFailed)),
+        );
+      }
     }
   }
 }
