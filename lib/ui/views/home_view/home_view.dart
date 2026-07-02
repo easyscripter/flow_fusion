@@ -35,7 +35,6 @@ class _HomeViewState extends State<HomeView> {
 
   void _onTimerControllerChanged() {
     final isActive = _timerController.hasActiveSession;
-    debugPrint('[HomeView] _onTimerControllerChanged called, hasActiveSession=$isActive');
     if (!isActive && !_viewModel.isLoading) {
       _viewModel.update();
     }

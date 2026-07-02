@@ -1,6 +1,5 @@
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -43,7 +42,6 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> update() async {
-    debugPrint('[HomeVM] update() called');
     runInAction(() => isLoading = true);
     try {
 
@@ -55,7 +53,6 @@ abstract class _HomeViewViewModelBase with Store {
       );
       final newFocusByDay = _focusByDayFromRuns(runs);
       final newTotalSessions = runs.length;
-      debugPrint('[HomeVM] focus_log: ${runs.length} runs, ${newFocusByDay.length} day entries');
       runInAction(() {
         focusByDay = ObservableMap.of(newFocusByDay);
         totalSessions = newTotalSessions;

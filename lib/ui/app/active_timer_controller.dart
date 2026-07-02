@@ -119,7 +119,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     final skipped = currentTimer;
     if (skipped != null) {
       final actualMs = (skipped.plannedDuration - _remaining).inMilliseconds;
-      debugPrint('[TimerCtrl] skipCurrentTimer: writing timer id=${skipped.id} status=skipped(4) actualDurationMs=$actualMs');
       _accrueWork(skipped, Duration(milliseconds: actualMs));
       await _timerDao.updateTimer(
         SessionTimer(
@@ -137,7 +136,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
           updatedAt: DateTime.now(),
         ),
       );
-      debugPrint('[TimerCtrl] skipCurrentTimer: timer DB write done');
     }
     await _advanceToNextTimer();
   }
@@ -302,7 +300,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     required bool notify,
   }) async {
     if (completedTimer != null) {
-      debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing timer id=${completedTimer.id} status=completed(3) actualDurationMs=${completedTimer.plannedDuration.inMilliseconds}');
       _accrueWork(completedTimer, completedTimer.plannedDuration);
       await _timerDao.updateTimer(
         SessionTimer(
