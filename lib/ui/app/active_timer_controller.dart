@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
@@ -7,8 +6,9 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
-import 'package:flow_fusion/model/datasources/local/prefs.dart';
+import 'package:flow_fusion/model/datasources/local/timer_state_store.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
+import 'package:flow_fusion/model/entity/timer_persisted_state.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
@@ -25,7 +25,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   final SessionDao _sessionDao = GetIt.I.get<SessionDao>();
   final SessionTimerDao _timerDao = GetIt.I.get<SessionTimerDao>();
   final FocusLogDao _focusLogDao = GetIt.I.get<FocusLogDao>();
-  final Prefs _prefs = GetIt.I.get<Prefs>();
+  final TimerStateStore _stateStore = GetIt.I.get<TimerStateStore>();
   final TimerAlertService _timerAlertService = GetIt.I.get<TimerAlertService>();
 
   Timer? _ticker;
@@ -157,42 +157,38 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> _restore() async {
-    final raw = _prefs.activeTimerState;
-    if (raw == null || raw.isEmpty) return;
+    final state = _stateStore.read();
+    if (state == null) return;
 
     try {
-      final json = jsonDecode(raw) as Map<String, dynamic>;
-      final sessionId = json['sessionId'] as int?;
-      final currentIndex = json['currentIndex'] as int?;
-      if (sessionId == null || currentIndex == null) {
-        await _clearState();
-        return;
-      }
-
-      final session = await _sessionDao.findSessionById(sessionId);
-      final timers = await _timerDao.findTimersBySessionId(sessionId);
-      if (session == null || timers.isEmpty || currentIndex >= timers.length) {
+      final session = await _sessionDao.findSessionById(state.sessionId);
+      final timers = await _timerDao.findTimersBySessionId(state.sessionId);
+      if (session == null ||
+          timers.isEmpty ||
+          state.currentIndex >= timers.length) {
         await _clearState();
         return;
       }
 
       _session = session;
       _timers = timers;
-      _currentIndex = currentIndex;
-      _isPaused = json['isPaused'] as bool? ?? false;
-      _runWorkMs = json['runWorkMs'] as int? ?? 0;
+      _currentIndex = state.currentIndex;
+      _isPaused = state.isPaused;
+      _runWorkMs = state.runWorkMs;
 
       if (_isPaused) {
-        final remainingMs = json['remainingMs'] as int? ?? 0;
-        _remaining = _durationFromMs(remainingMs, timers[currentIndex]);
+        _remaining = _durationFromMs(
+          state.remainingMs ?? 0,
+          timers[state.currentIndex],
+        );
         _endsAt = null;
       } else {
-        final endsAtMs = json['endsAtMs'] as int?;
+        final endsAtMs = state.endsAtMs;
         if (endsAtMs == null) {
           await _clearState();
           return;
         }
-        _remaining = timers[currentIndex].plannedDuration;
+        _remaining = timers[state.currentIndex].plannedDuration;
         _endsAt = DateTime.fromMillisecondsSinceEpoch(endsAtMs);
         _syncRunningState();
         if (hasActiveSession && !_isPaused) {
@@ -372,21 +368,24 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> _persist() async {
-    if (!hasActiveSession) {
-      _prefs.activeTimerState = null;
+    final sessionId = _session?.id;
+    if (!hasActiveSession || sessionId == null) {
+      _stateStore.clear();
       return;
     }
 
-    final payload = <String, dynamic>{
-      'sessionId': _session!.id,
-      'currentIndex': _currentIndex,
-      'isPaused': _isPaused,
-      'runWorkMs': _runWorkMs,
-      if (_isPaused) 'remainingMs': _remaining.inMilliseconds,
-      if (!_isPaused && _endsAt != null)
-        'endsAtMs': _endsAt!.millisecondsSinceEpoch,
-    };
-    _prefs.activeTimerState = jsonEncode(payload);
+    _stateStore.write(
+      TimerPersistedState(
+        sessionId: sessionId,
+        currentIndex: _currentIndex,
+        isPaused: _isPaused,
+        runWorkMs: _runWorkMs,
+        remainingMs: _isPaused ? _remaining.inMilliseconds : null,
+        endsAtMs: (!_isPaused && _endsAt != null)
+            ? _endsAt!.millisecondsSinceEpoch
+            : null,
+      ),
+    );
   }
 
   Future<void> _clearState({
@@ -417,7 +416,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _endsAt = null;
     _isPaused = false;
     _runWorkMs = 0;
-    _prefs.activeTimerState = null;
+    _stateStore.clear();
     if (notify) notifyListeners();
   }
 
