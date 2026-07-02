@@ -12,6 +12,7 @@ import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flow_fusion/ui/widgets/timer_empty_state.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class TimerView extends StatefulWidget {
   const TimerView({super.key});
@@ -21,7 +22,7 @@ class TimerView extends StatefulWidget {
 }
 
 class _TimerViewState extends State<TimerView> {
-  final _controller = ActiveTimerController.instance;
+  final _controller = GetIt.I.get<ActiveTimerController>();
   final _routeScrollController = ScrollController();
 
   int _lastAutoScrolledIndex = -1;

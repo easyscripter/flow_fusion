@@ -23,7 +23,7 @@ class _AppState extends State<App> {
     super.initState();
 
     _appViewModel.init();
-    ActiveTimerController.instance.init();
+    GetIt.I.get<ActiveTimerController>().init();
   }
 
   @override

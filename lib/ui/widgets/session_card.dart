@@ -5,6 +5,7 @@ import 'package:flow_fusion/ui/constants/session_icons.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class SessionCard extends StatelessWidget {
   final Session session;
@@ -25,7 +26,7 @@ class SessionCard extends StatelessWidget {
     final colors = context.fusionColors;
     final theme = Theme.of(context);
     final description = session.description;
-    final timerController = ActiveTimerController.instance;
+    final timerController = GetIt.I.get<ActiveTimerController>();
 
     return Card(
       child: Padding(

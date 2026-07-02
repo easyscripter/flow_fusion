@@ -12,6 +12,7 @@ import 'package:flow_fusion/ui/widgets/sessions_empty_state.dart';
 import 'package:flow_fusion/ui/widgets/sessions_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class SessionsView extends StatefulWidget {
@@ -23,7 +24,7 @@ class SessionsView extends StatefulWidget {
 
 class _SessionsViewState extends State<SessionsView> {
   final _viewModel = SessionsViewViewModel();
-  final _timerController = ActiveTimerController.instance;
+  final _timerController = GetIt.I.get<ActiveTimerController>();
 
   @override
   void initState() {

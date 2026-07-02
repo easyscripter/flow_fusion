@@ -14,11 +14,11 @@ import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
-  ActiveTimerController._();
-
-  static final ActiveTimerController instance = ActiveTimerController._();
+  ActiveTimerController();
 
   static const _tickInterval = Duration(seconds: 1);
 

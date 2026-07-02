@@ -7,6 +7,7 @@ import 'package:flow_fusion/ui/widgets/sidebar_brand.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 class _NavItem {
@@ -60,7 +61,7 @@ class SidebarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.fusionColors;
     final location = GoRouterState.of(context).uri.path;
-    final timerController = ActiveTimerController.instance;
+    final timerController = GetIt.I.get<ActiveTimerController>();
 
     return Container(
       width: AppSizes.sidebarWidth,
