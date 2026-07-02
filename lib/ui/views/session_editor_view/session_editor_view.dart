@@ -8,6 +8,7 @@ import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 class SessionEditorView extends StatefulWidget {
   final int? sessionId;
@@ -19,7 +20,7 @@ class SessionEditorView extends StatefulWidget {
 }
 
 class _SessionEditorViewState extends State<SessionEditorView> {
-  final _viewModel = SessionEditorViewModel();
+  final _viewModel = SessionEditorViewModel(GetIt.I.get(), GetIt.I.get());
   final _scrollController = ScrollController();
 
   @override

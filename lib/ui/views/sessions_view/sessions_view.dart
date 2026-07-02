@@ -23,7 +23,7 @@ class SessionsView extends StatefulWidget {
 }
 
 class _SessionsViewState extends State<SessionsView> {
-  final _viewModel = SessionsViewViewModel();
+  final _viewModel = SessionsViewViewModel(GetIt.I.get());
   final _timerController = GetIt.I.get<ActiveTimerController>();
 
   @override

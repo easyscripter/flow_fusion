@@ -4,7 +4,6 @@ import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dar
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'session_editor_view_model.g.dart';
@@ -13,8 +12,10 @@ class SessionEditorViewModel = _SessionEditorViewModelBase
     with _$SessionEditorViewModel;
 
 abstract class _SessionEditorViewModelBase with Store {
-  late SessionDao _sessionDao;
-  late SessionTimerDao _timerDao;
+  _SessionEditorViewModelBase(this._sessionDao, this._timerDao);
+
+  final SessionDao _sessionDao;
+  final SessionTimerDao _timerDao;
 
   int? _editingId;
 
@@ -56,8 +57,6 @@ abstract class _SessionEditorViewModelBase with Store {
 
   @action
   Future<void> init(int? sessionId) async {
-    _sessionDao = GetIt.I.get<SessionDao>();
-    _timerDao = GetIt.I.get<SessionTimerDao>();
     _editingId = sessionId;
 
     if (sessionId == null) {

@@ -1,6 +1,5 @@
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_view_view_model.g.dart';
@@ -8,7 +7,9 @@ part 'home_view_view_model.g.dart';
 class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {
-  late FocusLogDao _focusLogDao;
+  _HomeViewViewModelBase(this._focusLogDao);
+
+  final FocusLogDao _focusLogDao;
 
   @observable
   bool isLoading = false;
@@ -36,7 +37,6 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> init() async {
-    _focusLogDao = GetIt.I.get<FocusLogDao>();
     await update();
   }
 

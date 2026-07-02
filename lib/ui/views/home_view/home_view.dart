@@ -16,7 +16,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final HomeViewViewModel _viewModel = HomeViewViewModel();
+  final HomeViewViewModel _viewModel = HomeViewViewModel(GetIt.I.get());
   late final ActiveTimerController _timerController;
 
   @override
