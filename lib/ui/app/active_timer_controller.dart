@@ -317,11 +317,9 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
           updatedAt: DateTime.now(),
         ),
       );
-      debugPrint('[TimerCtrl] _finalizeSessionNaturally: timer DB write done');
     }
     if (_session != null) {
       final finishedSession = _session!;
-      debugPrint('[TimerCtrl] _finalizeSessionNaturally: writing session id=${finishedSession.id} status=completed(3) completedAt=${DateTime.now().toIso8601String()}');
       await _sessionDao.updateSession(
         Session(
           id: finishedSession.id,
@@ -335,7 +333,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
         ),
       );
       await _logCompletedRun(finishedSession);
-      debugPrint('[TimerCtrl] _finalizeSessionNaturally: session DB write done (workMs=$_runWorkMs)');
     }
     unawaited(
       _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
@@ -396,11 +393,9 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     bool notify = true,
     bool markSessionCompleted = false,
   }) async {
-    debugPrint('[TimerCtrl] _clearState called (markSessionCompleted=$markSessionCompleted, notify=$notify)');
     _stopTicker();
     if (markSessionCompleted && _session != null) {
       final finishedSession = _session!;
-      debugPrint('[TimerCtrl] _clearState: writing session id=${finishedSession.id} status=completed(3)');
       await _sessionDao.updateSession(
         Session(
           id: finishedSession.id,
@@ -414,7 +409,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
         ),
       );
       await _logCompletedRun(finishedSession);
-      debugPrint('[TimerCtrl] _clearState: session DB write done (workMs=$_runWorkMs)');
     }
     _session = null;
     _timers = const [];
@@ -424,7 +418,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _isPaused = false;
     _runWorkMs = 0;
     _prefs.activeTimerState = null;
-    debugPrint('[TimerCtrl] _clearState: in-memory state wiped, notifyListeners firing=$notify');
     if (notify) notifyListeners();
   }
 

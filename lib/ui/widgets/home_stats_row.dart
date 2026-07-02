@@ -1,4 +1,5 @@
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
+import 'package:flow_fusion/utils/duration_formatter.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/stat_card.dart';
 import 'package:flow_fusion/ui/widgets/stat_card_grid.dart';
@@ -46,13 +47,4 @@ class HomeStatsRow extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Форматирует длительность фокуса: "12h 30m" / "45m" / "0m".
-String formatFocusDuration(Duration d) {
-  final int hours = d.inHours;
-  final int minutes = d.inMinutes.remainder(60);
-  if (hours == 0) return '${minutes}m';
-  if (minutes == 0) return '${hours}h';
-  return '${hours}h ${minutes}m';
 }

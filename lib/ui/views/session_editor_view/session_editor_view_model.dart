@@ -67,7 +67,12 @@ abstract class _SessionEditorViewModelBase with Store {
 
     isLoading = true;
     try {
-      final session = (await _sessionDao.findSessionById(sessionId))!;
+      final session = await _sessionDao.findSessionById(sessionId);
+      if (session == null) {
+        _editingId = null;
+        timers = ObservableList<TimerDraft>.of([_buildDraft(TimerType.work)]);
+        return;
+      }
       title = session.title;
       description = session.description ?? '';
       icon = session.icon;
@@ -125,7 +130,8 @@ abstract class _SessionEditorViewModelBase with Store {
 
       final int sessionId;
       if (_editingId != null) {
-        final current = (await _sessionDao.findSessionById(_editingId!))!;
+        final current = await _sessionDao.findSessionById(_editingId!);
+        if (current == null) return false;
         final updated = Session(
           id: _editingId,
           title: title.trim(),
