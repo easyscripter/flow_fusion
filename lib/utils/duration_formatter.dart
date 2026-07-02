@@ -1,4 +1,3 @@
-/// Форматирует длительность фокуса: "12h 30m" / "45m" / "0m".
 String formatFocusDuration(Duration d) {
   final int hours = d.inHours;
   final int minutes = d.inMinutes.remainder(60);
