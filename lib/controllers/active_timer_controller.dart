@@ -37,7 +37,9 @@ class ActiveTimerController with WidgetsBindingObserver {
 
   Timer? _ticker;
   bool _initialized = false;
+  bool _isFinalizingSession = false;
 
+  ActiveTimerState get state => _state;
   Session? get session => _state.session;
   List<SessionTimer> get timers => List.unmodifiable(_state.timers);
   int get currentIndex => _state.currentIndex;
@@ -64,6 +66,7 @@ class ActiveTimerController with WidgetsBindingObserver {
     if (timers.isEmpty) return;
 
     runInAction(() {
+      _isFinalizingSession = false;
       final firstDuration = timers.first.plannedDuration;
       _state
         ..session = session
@@ -102,10 +105,10 @@ class ActiveTimerController with WidgetsBindingObserver {
   }
 
   Future<void> skipCurrentTimer() async {
-    if (!hasActiveSession) return;
+    if (!hasActiveSession || _isFinalizingSession) return;
     final skipped = _state.currentTimer;
     if (skipped != null) {
-      final actual = skipped.plannedDuration - _state.remaining;
+      final actual = _resolveElapsed(skipped);
       _state.accrueWork(skipped, actual);
       await _markTimerSkipped(skipped, actual);
     }
@@ -186,9 +189,13 @@ class ActiveTimerController with WidgetsBindingObserver {
     _ticker = null;
   }
 
-
   void _syncRunningState() {
-    if (!hasActiveSession || _state.isPaused || _state.endsAt == null) return;
+    if (_isFinalizingSession ||
+        !hasActiveSession ||
+        _state.isPaused ||
+        _state.endsAt == null) {
+      return;
+    }
 
     final now = DateTime.now();
     final diff = _state.endsAt!.difference(now);
@@ -249,18 +256,34 @@ class ActiveTimerController with WidgetsBindingObserver {
     required SessionTimer? completedTimer,
     required String sessionTitle,
   }) async {
-    if (completedTimer != null) {
-      _state.accrueWork(completedTimer, completedTimer.plannedDuration);
-      await _markTimerCompleted(completedTimer);
+    if (_isFinalizingSession) return;
+    _isFinalizingSession = true;
+    _stopTicker();
+
+    Session? session;
+    var workMs = 0;
+    runInAction(() {
+      if (completedTimer != null) {
+        _state.accrueWork(completedTimer, completedTimer.plannedDuration);
+      }
+      session = _state.session;
+      workMs = _state.runWorkMs;
+      _resetState();
+    });
+
+    try {
+      if (completedTimer != null) {
+        await _markTimerCompleted(completedTimer);
+      }
+      if (session != null) {
+        await _completeSession(session!, workMs: workMs);
+      }
+      unawaited(
+        _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
+      );
+    } finally {
+      _isFinalizingSession = false;
     }
-    final session = _state.session;
-    if (session != null) {
-      await _completeSession(session);
-    }
-    unawaited(
-      _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
-    );
-    await _clearState();
   }
 
   Future<void> _advanceToNextTimer() async {
@@ -302,21 +325,21 @@ class ActiveTimerController with WidgetsBindingObserver {
     );
   }
 
-  Future<void> _completeSession(Session session) async {
+  Future<void> _completeSession(Session session, {required int workMs}) async {
     await _sessionDao.updateSession(
       session.copyWith(
         status: SessionStatus.completed,
         completedAt: DateTime.now().toIso8601String(),
       ),
     );
-    await _logCompletedRun(session);
+    await _logCompletedRun(session, workMs: workMs);
   }
 
-  Future<void> _logCompletedRun(Session session) async {
+  Future<void> _logCompletedRun(Session session, {required int workMs}) async {
     final sessionId = session.id;
     if (sessionId == null) return;
     await _focusLogDao.insertRun(
-      FocusLog.create(sessionId: sessionId, workMs: _state.runWorkMs),
+      FocusLog.create(sessionId: sessionId, workMs: workMs),
     );
   }
 
@@ -332,10 +355,24 @@ class ActiveTimerController with WidgetsBindingObserver {
   Future<void> _clearState({bool markSessionCompleted = false}) async {
     _stopTicker();
     final session = _state.session;
+    final workMs = _state.runWorkMs;
+    runInAction(_resetState);
+    _isFinalizingSession = false;
+
     if (markSessionCompleted && session != null) {
-      await _completeSession(session);
+      await _completeSession(session, workMs: workMs);
     }
+  }
+
+  void _resetState() {
     _state.reset();
     _stateStore.clear();
+  }
+
+  Duration _resolveElapsed(SessionTimer timer) {
+    final elapsed = timer.plannedDuration - _state.remaining;
+    if (elapsed <= Duration.zero) return Duration.zero;
+    if (elapsed >= timer.plannedDuration) return timer.plannedDuration;
+    return elapsed;
   }
 }

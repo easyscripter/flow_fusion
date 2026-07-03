@@ -8,7 +8,6 @@ import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
 import 'package:flow_fusion/ui/views/timer_view/timer_view.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,17 +70,15 @@ final router = GoRouter(
         final viewModel = GetIt.I.get<AppViewModel>();
         final timerController = GetIt.I.get<ActiveTimerController>();
 
-        return Observer(
-          builder: (_) => Scaffold(
-            body: Row(
-              children: [
-                SidebarWidget(
-                  packageVersion: viewModel.packageVersion,
-                  timerController: timerController,
-                ),
-                Expanded(child: navigationShell),
-              ],
-            ),
+        return Scaffold(
+          body: Row(
+            children: [
+              SidebarWidget(
+                packageVersion: viewModel.packageVersion,
+                timerController: timerController,
+              ),
+              Expanded(child: navigationShell),
+            ],
           ),
         );
       },
