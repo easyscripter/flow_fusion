@@ -20,12 +20,13 @@ class SessionEditorView extends StatefulWidget {
 }
 
 class _SessionEditorViewState extends State<SessionEditorView> {
-  final _viewModel = SessionEditorViewModel(GetIt.I.get(), GetIt.I.get());
+  late final SessionEditorViewModel _viewModel;
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _viewModel = GetIt.I.get<SessionEditorViewModel>();
     _viewModel.init(widget.sessionId);
   }
 

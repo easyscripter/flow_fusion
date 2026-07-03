@@ -1,9 +1,11 @@
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_view_view_model.g.dart';
 
+@injectable
 class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {

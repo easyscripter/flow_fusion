@@ -1,4 +1,5 @@
 import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/widgets/session_card.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 /// Адаптивная сетка карточек сессий.
 class SessionsGrid extends StatelessWidget {
   final List<Session> sessions;
+  final ActiveTimerController timerController;
   final ValueChanged<Session> onOpen;
   final ValueChanged<Session> onStart;
   final ValueChanged<Session> onDelete;
@@ -13,6 +15,7 @@ class SessionsGrid extends StatelessWidget {
   const SessionsGrid({
     super.key,
     required this.sessions,
+    required this.timerController,
     required this.onOpen,
     required this.onStart,
     required this.onDelete,
@@ -43,6 +46,7 @@ class SessionsGrid extends StatelessWidget {
             return SessionCard(
               key: ValueKey(session.id),
               session: session,
+              timerController: timerController,
               onTap: () => onOpen(session),
               onStart: () => onStart(session),
               onDelete: () => onDelete(session),

@@ -1,10 +1,11 @@
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class NotificationPermissionDialog extends StatelessWidget {
-  const NotificationPermissionDialog({super.key});
+  final AppViewModel appViewModel;
+
+  const NotificationPermissionDialog({super.key, required this.appViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class NotificationPermissionDialog extends StatelessWidget {
         ),
         FilledButton(
           onPressed: () {
-            GetIt.I.get<AppViewModel>().openSystemNotificationSettings();
+            appViewModel.openSystemNotificationSettings();
             Navigator.of(context).pop();
           },
           child: Text(context.l10n.notificationPermissionOpenSettings),

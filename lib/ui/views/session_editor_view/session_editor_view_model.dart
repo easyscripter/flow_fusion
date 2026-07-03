@@ -4,10 +4,12 @@ import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dar
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'session_editor_view_model.g.dart';
 
+@injectable
 class SessionEditorViewModel = _SessionEditorViewModelBase
     with _$SessionEditorViewModel;
 

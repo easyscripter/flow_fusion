@@ -1,4 +1,5 @@
 import 'package:flow_fusion/enums/routes.dart';
+import 'package:flow_fusion/ui/app/active_timer_controller.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view.dart';
@@ -68,12 +69,16 @@ final router = GoRouter(
       ],
       builder: (context, state, navigationShell) {
         final viewModel = GetIt.I.get<AppViewModel>();
+        final timerController = GetIt.I.get<ActiveTimerController>();
 
         return Observer(
           builder: (_) => Scaffold(
             body: Row(
               children: [
-                SidebarWidget(packageVersion: viewModel.packageVersion),
+                SidebarWidget(
+                  packageVersion: viewModel.packageVersion,
+                  timerController: timerController,
+                ),
                 Expanded(child: navigationShell),
               ],
             ),

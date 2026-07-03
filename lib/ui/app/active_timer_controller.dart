@@ -13,20 +13,25 @@ import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
-  ActiveTimerController();
+  ActiveTimerController(
+    this._sessionDao,
+    this._timerDao,
+    this._focusLogDao,
+    this._stateStore,
+    this._timerAlertService,
+  );
 
   static const _tickInterval = Duration(seconds: 1);
 
-  final SessionDao _sessionDao = GetIt.I.get<SessionDao>();
-  final SessionTimerDao _timerDao = GetIt.I.get<SessionTimerDao>();
-  final FocusLogDao _focusLogDao = GetIt.I.get<FocusLogDao>();
-  final TimerStateStore _stateStore = GetIt.I.get<TimerStateStore>();
-  final TimerAlertService _timerAlertService = GetIt.I.get<TimerAlertService>();
+  final SessionDao _sessionDao;
+  final SessionTimerDao _timerDao;
+  final FocusLogDao _focusLogDao;
+  final TimerStateStore _stateStore;
+  final TimerAlertService _timerAlertService;
 
   Timer? _ticker;
   bool _initialized = false;

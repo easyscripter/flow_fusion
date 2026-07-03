@@ -1,9 +1,11 @@
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'sessions_view_view_model.g.dart';
 
+@injectable
 class SessionsViewViewModel = _SessionsViewViewModelBase
     with _$SessionsViewViewModel;
 

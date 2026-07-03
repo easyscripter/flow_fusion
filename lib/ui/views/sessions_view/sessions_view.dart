@@ -24,12 +24,14 @@ class SessionsView extends StatefulWidget {
 }
 
 class _SessionsViewState extends State<SessionsView> {
-  final _viewModel = SessionsViewViewModel(GetIt.I.get());
-  final _timerController = GetIt.I.get<ActiveTimerController>();
+  late final SessionsViewViewModel _viewModel;
+  late final ActiveTimerController _timerController;
 
   @override
   void initState() {
     super.initState();
+    _viewModel = GetIt.I.get<SessionsViewViewModel>();
+    _timerController = GetIt.I.get<ActiveTimerController>();
     _viewModel.init();
   }
 
@@ -78,6 +80,7 @@ class _SessionsViewState extends State<SessionsView> {
                 Expanded(
                   child: SessionsGrid(
                     sessions: _viewModel.sessions,
+                    timerController: _timerController,
                     onOpen: _openSession,
                     onStart: (session) {
                       unawaited(_startSession(session));

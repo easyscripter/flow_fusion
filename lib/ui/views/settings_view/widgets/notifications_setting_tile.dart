@@ -4,15 +4,14 @@ import 'package:flow_fusion/ui/views/settings_view/widgets/notification_permissi
 import 'package:flow_fusion/ui/widgets/setting_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
 class NotificationsSettingTile extends StatelessWidget {
-  const NotificationsSettingTile({super.key});
+  final AppViewModel appViewModel;
+
+  const NotificationsSettingTile({super.key, required this.appViewModel});
 
   @override
   Widget build(BuildContext context) {
-    final appViewModel = GetIt.I.get<AppViewModel>();
-
     return Observer(
       builder: (_) => SettingRow(
         title: context.l10n.settingsNotificationsEnabled,
@@ -39,7 +38,7 @@ class NotificationsSettingTile extends StatelessWidget {
     if (value && !active && context.mounted) {
       await showDialog<void>(
         context: context,
-        builder: (_) => const NotificationPermissionDialog(),
+        builder: (_) => NotificationPermissionDialog(appViewModel: appViewModel),
       );
     }
   }

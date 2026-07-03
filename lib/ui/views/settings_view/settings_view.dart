@@ -52,7 +52,9 @@ class _SettingsViewState extends State<SettingsView> {
                     _buildSettingsSection(
                       context,
                       title: context.l10n.settingsSectionNotifications,
-                      children: const [NotificationsSettingTile()],
+                      children: [
+                        NotificationsSettingTile(appViewModel: _appViewModel),
+                      ],
                     ),
                   ],
                 ),

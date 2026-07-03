@@ -1,7 +1,6 @@
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -12,8 +11,11 @@ part 'app_view_model.g.dart';
 class AppViewModel = _AppViewModelBase with _$AppViewModel;
 
 abstract class _AppViewModelBase with Store {
-  final prefs = GetIt.I.get<Prefs>();
-  final _timerAlertService = GetIt.I.get<TimerAlertService>();
+  _AppViewModelBase(this.prefs, this._timerAlertService, this._packageInfo);
+
+  final Prefs prefs;
+  final TimerAlertService _timerAlertService;
+  final PackageInfo _packageInfo;
   static const _defaultThemeMode = ThemeMode.system;
 
   @observable
@@ -32,9 +34,6 @@ abstract class _AppViewModelBase with Store {
   @computed
   bool get notificationsActive => notificationsEnabled && notificationsGranted;
 
-  @observable
-  PackageInfo? _packageInfo;
-
   AppLifecycleListener? _lifecycleListener;
 
   @action
@@ -43,7 +42,6 @@ abstract class _AppViewModelBase with Store {
     final languageCode = prefs.language ?? 'en';
     locale = Locale(languageCode);
     notificationsEnabled = prefs.notificationsEnabled;
-    _packageInfo = GetIt.I.get<PackageInfo>();
     await refreshNotificationsPermission();
     _lifecycleListener ??= AppLifecycleListener(
       onResume: refreshNotificationsPermission,
@@ -86,5 +84,5 @@ abstract class _AppViewModelBase with Store {
   Future<void> openSystemNotificationSettings() =>
       _timerAlertService.openSystemNotificationSettings();
 
-  String get packageVersion => _packageInfo?.version ?? '';
+  String get packageVersion => _packageInfo.version;
 }
