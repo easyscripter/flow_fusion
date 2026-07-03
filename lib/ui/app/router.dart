@@ -1,5 +1,5 @@
 import 'package:flow_fusion/enums/routes.dart';
-import 'package:flow_fusion/ui/app/active_timer_controller.dart';
+import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view.dart';

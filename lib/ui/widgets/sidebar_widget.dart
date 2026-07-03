@@ -1,5 +1,5 @@
 import 'package:flow_fusion/enums/routes.dart';
-import 'package:flow_fusion/ui/app/active_timer_controller.dart';
+import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
