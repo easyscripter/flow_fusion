@@ -1,21 +1,22 @@
 import 'dart:async';
 
-import 'package:flow_fusion/model/entity/active_timer_state.dart';
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
 import 'package:flow_fusion/model/datasources/local/timer_state_store.dart';
+import 'package:flow_fusion/model/entity/active_timer_state.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mobx/mobx.dart';
 
 @lazySingleton
-class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
+class ActiveTimerController with WidgetsBindingObserver {
   ActiveTimerController(
     this._sessionDao,
     this._timerDao,
@@ -62,39 +63,42 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     final timers = await _timerDao.findTimersBySessionId(sessionId);
     if (timers.isEmpty) return;
 
-    final firstDuration = timers.first.plannedDuration;
-    _state
-      ..session = session
-      ..timers = timers
-      ..currentIndex = 0
-      ..remaining = firstDuration
-      ..isPaused = false
-      ..runWorkMs = 0
-      ..endsAt = DateTime.now().add(firstDuration);
+    runInAction(() {
+      final firstDuration = timers.first.plannedDuration;
+      _state
+        ..session = session
+        ..timers = timers
+        ..currentIndex = 0
+        ..remaining = firstDuration
+        ..isPaused = false
+        ..runWorkMs = 0
+        ..endsAt = DateTime.now().add(firstDuration);
+    });
     _startTicker();
     await _persist();
-    notifyListeners();
   }
 
   Future<void> pause() async {
     if (!hasActiveSession || _state.isPaused) return;
-    _syncRunningState();
-    _state
-      ..isPaused = true
-      ..endsAt = null;
+    runInAction(() {
+      _syncRunningState();
+      _state
+        ..isPaused = true
+        ..endsAt = null;
+    });
     _stopTicker();
     await _persist();
-    notifyListeners();
   }
 
   Future<void> resume() async {
     if (!hasActiveSession || !_state.isPaused) return;
-    _state
-      ..isPaused = false
-      ..endsAt = DateTime.now().add(_state.remaining);
+    runInAction(() {
+      _state
+        ..isPaused = false
+        ..endsAt = DateTime.now().add(_state.remaining);
+    });
     _startTicker();
     await _persist();
-    notifyListeners();
   }
 
   Future<void> skipCurrentTimer() async {
@@ -110,16 +114,11 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _syncRunningState(notify: true);
-      unawaited(_persist());
-      return;
-    }
-
-    if (state == AppLifecycleState.inactive ||
+    if (state == AppLifecycleState.resumed ||
+        state == AppLifecycleState.inactive ||
         state == AppLifecycleState.hidden ||
         state == AppLifecycleState.paused) {
-      _syncRunningState();
+      runInAction(_syncRunningState);
       unawaited(_persist());
     }
   }
@@ -138,36 +137,37 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
         return;
       }
 
-      _state
-        ..session = session
-        ..timers = timers
-        ..currentIndex = persisted.currentIndex
-        ..isPaused = persisted.isPaused
-        ..runWorkMs = persisted.runWorkMs;
-
-      if (_state.isPaused) {
-        _state
-          ..remaining = ActiveTimerState.durationFromMs(
-            persisted.remainingMs ?? 0,
-            timers[persisted.currentIndex],
-          )
-          ..endsAt = null;
-      } else {
-        final endsAtMs = persisted.endsAtMs;
-        if (endsAtMs == null) {
-          await _clearState();
-          return;
-        }
-        _state
-          ..remaining = timers[persisted.currentIndex].plannedDuration
-          ..endsAt = DateTime.fromMillisecondsSinceEpoch(endsAtMs);
-        _syncRunningState();
-        if (hasActiveSession && !_state.isPaused) {
-          _startTicker();
-        }
+      if (!persisted.isPaused && persisted.endsAtMs == null) {
+        await _clearState();
+        return;
       }
 
-      notifyListeners();
+      var shouldStartTicker = false;
+      runInAction(() {
+        _state
+          ..session = session
+          ..timers = timers
+          ..currentIndex = persisted.currentIndex
+          ..isPaused = persisted.isPaused
+          ..runWorkMs = persisted.runWorkMs;
+
+        if (persisted.isPaused) {
+          _state
+            ..remaining = remainingFromPersistedMs(
+              persisted.remainingMs ?? 0,
+              timers[persisted.currentIndex],
+            )
+            ..endsAt = null;
+        } else {
+          _state
+            ..remaining = timers[persisted.currentIndex].plannedDuration
+            ..endsAt = DateTime.fromMillisecondsSinceEpoch(persisted.endsAtMs!);
+          _syncRunningState();
+          shouldStartTicker = hasActiveSession && !_state.isPaused;
+        }
+      });
+
+      if (shouldStartTicker) _startTicker();
     } catch (_) {
       await _clearState();
     }
@@ -176,7 +176,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   void _startTicker() {
     _stopTicker();
     _ticker = Timer.periodic(_tickInterval, (_) {
-      _syncRunningState(notify: true);
+      runInAction(_syncRunningState);
       unawaited(_persist());
     });
   }
@@ -186,21 +186,21 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _ticker = null;
   }
 
-  void _syncRunningState({bool notify = false}) {
+
+  void _syncRunningState() {
     if (!hasActiveSession || _state.isPaused || _state.endsAt == null) return;
 
     final now = DateTime.now();
     final diff = _state.endsAt!.difference(now);
     if (diff > Duration.zero) {
       _state.remaining = diff;
-      if (notify) notifyListeners();
       return;
     }
 
-    _advanceAcrossElapsedTime(now.difference(_state.endsAt!), notify: notify);
+    _advanceAcrossElapsedTime(now.difference(_state.endsAt!));
   }
 
-  void _advanceAcrossElapsedTime(Duration overshoot, {bool notify = false}) {
+  void _advanceAcrossElapsedTime(Duration overshoot) {
     var extra = overshoot;
 
     while (_state.session != null) {
@@ -213,7 +213,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
           _finalizeSessionNaturally(
             completedTimer: completedTimer,
             sessionTitle: sessionTitle,
-            notify: notify,
           ),
         );
         return;
@@ -239,7 +238,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
         _state
           ..remaining = nextRemaining
           ..endsAt = DateTime.now().add(nextRemaining);
-        if (notify) notifyListeners();
         return;
       }
 
@@ -250,7 +248,6 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> _finalizeSessionNaturally({
     required SessionTimer? completedTimer,
     required String sessionTitle,
-    required bool notify,
   }) async {
     if (completedTimer != null) {
       _state.accrueWork(completedTimer, completedTimer.plannedDuration);
@@ -263,7 +260,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     unawaited(
       _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
     );
-    await _clearState(notify: notify);
+    await _clearState();
   }
 
   Future<void> _advanceToNextTimer() async {
@@ -273,15 +270,16 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       return;
     }
 
-    final nextDuration = _state.timers[nextIndex].plannedDuration;
-    _state
-      ..currentIndex = nextIndex
-      ..remaining = nextDuration
-      ..isPaused = false
-      ..endsAt = DateTime.now().add(nextDuration);
+    runInAction(() {
+      final nextDuration = _state.timers[nextIndex].plannedDuration;
+      _state
+        ..currentIndex = nextIndex
+        ..remaining = nextDuration
+        ..isPaused = false
+        ..endsAt = DateTime.now().add(nextDuration);
+    });
     _startTicker();
     await _persist();
-    notifyListeners();
   }
 
   Future<void> _markTimerCompleted(SessionTimer timer) {
@@ -331,10 +329,7 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     _stateStore.write(snapshot);
   }
 
-  Future<void> _clearState({
-    bool notify = true,
-    bool markSessionCompleted = false,
-  }) async {
+  Future<void> _clearState({bool markSessionCompleted = false}) async {
     _stopTicker();
     final session = _state.session;
     if (markSessionCompleted && session != null) {
@@ -342,6 +337,5 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     }
     _state.reset();
     _stateStore.clear();
-    if (notify) notifyListeners();
   }
 }

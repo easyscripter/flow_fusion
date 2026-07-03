@@ -15,8 +15,7 @@ abstract class _HomeViewViewModelBase with Store {
   final FocusLogDao _focusLogDao;
   final ActiveTimerController _timerController;
 
-  bool _isBound = false;
-  bool _hadActiveSession = false;
+  ReactionDisposer? _timerReaction;
 
   @observable
   bool isLoading = false;
@@ -46,19 +45,19 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> init() async {
-    if (!_isBound) {
-      _hadActiveSession = _timerController.hasActiveSession;
-      _timerController.addListener(_onTimerControllerChanged);
-      _isBound = true;
-    }
+    _timerReaction ??= reaction<bool>(
+      (_) => _timerController.hasActiveSession,
+      (hasActiveSession) {
+        if (!hasActiveSession && !isLoading) update();
+      },
+    );
 
     await update();
   }
 
   void dispose() {
-    if (!_isBound) return;
-    _timerController.removeListener(_onTimerControllerChanged);
-    _isBound = false;
+    _timerReaction?.call();
+    _timerReaction = null;
   }
 
   @action
@@ -105,15 +104,5 @@ abstract class _HomeViewViewModelBase with Store {
   DateTime get _today {
     final now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
-  }
-
-  void _onTimerControllerChanged() {
-    final hasActiveSession = _timerController.hasActiveSession;
-    final shouldRefresh = _hadActiveSession && !hasActiveSession && !isLoading;
-    _hadActiveSession = hasActiveSession;
-
-    if (shouldRefresh) {
-      update();
-    }
   }
 }

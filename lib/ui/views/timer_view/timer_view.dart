@@ -12,7 +12,9 @@ import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flow_fusion/ui/widgets/timer_empty_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 class TimerView extends StatefulWidget {
   const TimerView({super.key});
@@ -25,12 +27,23 @@ class _TimerViewState extends State<TimerView> {
   final _controller = GetIt.I.get<ActiveTimerController>();
   final _routeScrollController = ScrollController();
 
+  late final ReactionDisposer _scrollReactionDisposer;
   int _lastAutoScrolledIndex = -1;
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_handleTimerChanged);
+    _scrollReactionDisposer = reaction<int>(
+      (_) => _controller.currentIndex,
+      (index) {
+        if (!mounted) return;
+        if (index != _lastAutoScrolledIndex) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToCurrentStation();
+          });
+        }
+      },
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToCurrentStation(animated: false);
     });
@@ -38,19 +51,9 @@ class _TimerViewState extends State<TimerView> {
 
   @override
   void dispose() {
-    _controller.removeListener(_handleTimerChanged);
+    _scrollReactionDisposer();
     _routeScrollController.dispose();
     super.dispose();
-  }
-
-  void _handleTimerChanged() {
-    if (!mounted) return;
-    final index = _controller.currentIndex;
-    if (index != _lastAutoScrolledIndex) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollToCurrentStation();
-      });
-    }
   }
 
   void _scrollToCurrentStation({bool animated = true}) {
@@ -87,9 +90,8 @@ class _TimerViewState extends State<TimerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
+      body: Observer(
+        builder: (context) {
           if (!_controller.hasActiveSession) {
             return const TimerEmptyState();
           }

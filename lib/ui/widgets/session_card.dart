@@ -5,6 +5,7 @@ import 'package:flow_fusion/ui/constants/session_icons.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SessionCard extends StatelessWidget {
   final Session session;
@@ -54,9 +55,8 @@ class SessionCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                AnimatedBuilder(
-                  animation: timerController,
-                  builder: (context, _) {
+                Observer(
+                  builder: (context) {
                     final isCurrent =
                         timerController.currentSessionId == session.id;
                     return Row(

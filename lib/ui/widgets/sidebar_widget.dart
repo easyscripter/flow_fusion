@@ -7,6 +7,7 @@ import 'package:flow_fusion/ui/widgets/sidebar_brand.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 
 class _NavItem {
@@ -98,9 +99,8 @@ class SidebarWidget extends StatelessWidget {
                         onTap: () => context.go(item.route.path),
                       ),
                     ),
-                  AnimatedBuilder(
-                    animation: timerController,
-                    builder: (context, _) {
+                  Observer(
+                    builder: (context) {
                       if (!timerController.hasActiveSession) {
                         return const SizedBox.shrink();
                       }

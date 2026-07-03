@@ -2,25 +2,47 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/model/entity/timer_persisted_state.dart';
+import 'package:mobx/mobx.dart';
 
-class ActiveTimerState {
+part 'active_timer_state.g.dart';
+
+class ActiveTimerState = _ActiveTimerState with _$ActiveTimerState;
+
+abstract class _ActiveTimerState with Store {
+  @observable
   Session? session;
+
+  @observable
   List<SessionTimer> timers = const [];
+
+  @observable
   int currentIndex = -1;
+
+  @observable
   Duration remaining = Duration.zero;
+
+  @observable
   DateTime? endsAt;
+
+  @observable
   bool isPaused = false;
+
+  @observable
   int runWorkMs = 0;
 
+  @computed
   SessionTimer? get currentTimer {
     if (currentIndex < 0 || currentIndex >= timers.length) return null;
     return timers[currentIndex];
   }
 
+  @computed
   bool get hasActiveSession => session != null && currentTimer != null;
 
+  @computed
   int? get currentSessionId => session?.id;
 
+  @computed
   double get progress {
     final timer = currentTimer;
     if (timer == null) return 0;
@@ -30,6 +52,7 @@ class ActiveTimerState {
     return (doneMs / totalMs).clamp(0, 1).toDouble();
   }
 
+  @computed
   String get formattedRemaining {
     final totalSeconds = remaining.inSeconds.clamp(0, 599999);
     final minutes = totalSeconds ~/ 60;
@@ -37,12 +60,14 @@ class ActiveTimerState {
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 
+  @action
   void accrueWork(SessionTimer timer, Duration actual) {
     if (timer.type == TimerType.work) {
       runWorkMs += actual.inMilliseconds;
     }
   }
 
+  @action
   void reset() {
     session = null;
     timers = const [];
@@ -67,11 +92,10 @@ class ActiveTimerState {
           : null,
     );
   }
+}
 
-  static Duration durationFromMs(int value, SessionTimer timer) {
-    final clamped = value
-        .clamp(0, timer.plannedDuration.inMilliseconds)
-        .toInt();
-    return Duration(milliseconds: clamped);
-  }
+
+Duration remainingFromPersistedMs(int value, SessionTimer timer) {
+  final clamped = value.clamp(0, timer.plannedDuration.inMilliseconds).toInt();
+  return Duration(milliseconds: clamped);
 }
