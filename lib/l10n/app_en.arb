@@ -1,0 +1,195 @@
+{
+  "@@locale": "en",
+
+  "brandSubtitle": "Focus workspace",
+  "navOverview": "Overview",
+  "navSessions": "Sessions",
+  "navTimer": "Timer",
+  "navSettings": "Settings",
+  "sidebarSectionApp": "App",
+  "sidebarSectionActive": "Active",
+  "versionLabel": "v{version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeTitle": "Analytics",
+  "homeSubtitle": "Your personal activity and focus",
+  "badgePomodoro": "Pomodoro",
+  "homeOpenSessions": "Open sessions",
+  "homeThemeSettings": "Theme settings",
+  "homeCardSessionsTitle": "Focus sessions",
+  "homeCardSessionsSubtitle": "Open scenarios, review timers, and move to the next cycle without any noise.",
+  "homeCardThemeTitle": "Theme & behavior",
+  "homeCardThemeSubtitle": "Switch between light and dark themes while keeping the same strict, calm visual language.",
+  "homeStatTotalSessions": "Total sessions",
+  "homeStatTotalFocus": "Total focus time",
+  "homeStatTodayFocus": "Today's focus",
+  "homeStatAvgSession": "Avg session",
+  "homeStatTotalSessionsCaption": "Completed focus blocks",
+  "homeStatTotalFocusCaption": "Across all sessions",
+  "homeStatTodayFocusCaption": "Keep your streak going",
+  "homeStatAvgSessionCaption": "Per focus block",
+  "homeActivityTitle": "Focus Map",
+  "homeActivitySubtitle": "Focus minutes over the last year.",
+  "homeActivityLess": "Less",
+  "homeActivityMore": "More",
+
+  "sessionsTitle": "Sessions",
+  "sessionsSubtitle": "Your sessions",
+  "sessionsNew": "New session",
+  "sessionsStart": "Start session",
+  "sessionsOpenTimer": "Open timer",
+  "sessionsEdit": "Edit session",
+  "sessionsOpenCardSubtitle": "Open the timer layout, check the rhythm, and prepare to launch.",
+  "sessionsEmptyTitle": "No sessions yet",
+  "sessionsEmptyDescription": "Create your first session",
+  "sessionsCreateNotConnected": "Creating a new session is not wired up yet.",
+  "sessionsOpening": "Opening session: {name}",
+  "@sessionsOpening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+
+  "settingsTitle": "Settings",
+  "settingsSubtitle": "Application settings",
+  "badgeTheme": "Theme",
+  "settingsSectionAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeDescription": "The system theme is active by default. The light theme keeps the same strict component style without bright accents.",
+  "badgeNeutralSurfaces": "Neutral surfaces",
+  "badgeSubtleBorders": "Subtle borders",
+  "badgeRoundedCorners": "Rounded corners",
+  "themeSystem": "System",
+  "themeDark": "Dark",
+  "themeLight": "Light",
+  "settingsSectionLanguage": "Language",
+
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+  "settingsLanguageDescription": "Choose your preferred language",
+
+  "settingsSectionNotifications": "Notifications",
+  "settingsNotificationsEnabled": "Timer notifications",
+  "settingsNotificationsDescription": "Show a notification when a timer or session finishes. If notifications don't appear, enable them for Flow Fusion in your system settings.",
+  "notificationTestTitle": "Notifications enabled",
+  "notificationTestBody": "You'll be notified when a timer finishes.",
+  "notificationPermissionTitle": "Notifications are turned off",
+  "notificationPermissionMessage": "Flow Fusion isn't allowed to send notifications. Open the system settings and enable notifications for Flow Fusion, then come back.",
+  "notificationPermissionOpenSettings": "Open settings",
+  "notificationPermissionCancel": "Not now",
+
+  "timerWork": "Work",
+  "timerChill": "Chill",
+  "timerScreenTitle": "Timer",
+  "timerPause": "Pause",
+  "timerResume": "Resume",
+  "timerSkip": "Skip",
+  "timerQueueTitle": "Route",
+  "timerEmptyTitle": "No active timer",
+  "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
+  "timerFinishedTitle": "Timer finished",
+  "timerFinishedBody": "\"{timerTitle}\" is complete.",
+  "@timerFinishedBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerFinishedNextBody": "\"{timerTitle}\" is complete. Up next: \"{nextTimerTitle}\".",
+  "@timerFinishedNextBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      },
+      "nextTimerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionFinishedTitle": "Session finished",
+  "sessionFinishedBody": "\"{sessionTitle}\" is complete.",
+  "@sessionFinishedBody": {
+    "placeholders": {
+      "sessionTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerPlannedDuration": "{minutes,plural, =1{1 min} other{{minutes} min}}",
+  "@timerPlannedDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "timerTitleHint": "Timer title",
+  "timerDescriptionHint": "Description (optional)",
+  "timerMinutesShort": "min",
+  "timerDurationMinutes": "{minutes,plural, =1{{minutes} min} other{{minutes} min}}",
+  "@timerDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursOnly": "{hours,plural, =1{1 hour} other{{hours} hours}}",
+  "@timerDurationHoursOnly": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursMinutes": "{hours,plural, =1{1 hour} other{{hours} hours}} {minutes} min",
+  "@timerDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "sessionEditorCreateTitle": "New session",
+  "sessionEditorEditTitle": "Edit session",
+  "sessionEditorCreateSubtitle": "Add timers and details, then save.",
+  "sessionEditorEditSubtitle": "Update the timers and details of this session.",
+  "sessionEditorIconLabel": "Icon",
+  "sessionEditorTitleLabel": "Title",
+  "sessionEditorTitleHint": "e.g. Deep work",
+  "sessionEditorTitleRequired": "Please enter a title",
+  "sessionEditorDescriptionLabel": "Description",
+  "sessionEditorDescriptionHint": "What is this session about?",
+  "sessionEditorTimersTitle": "Timers",
+  "sessionEditorAddWork": "Add work",
+  "sessionEditorAddChill": "Add chill",
+  "sessionEditorNoTimers": "No timers yet. Add a work or chill block to get started.",
+  "sessionEditorRemoveTimer": "Remove timer",
+  "sessionEditorSave": "Save",
+  "sessionEditorCancel": "Cancel",
+  "sessionDelete": "Delete Session",
+  "deleteSessionModalTitle": "Delete Session",
+  "deleteSessionModalContent": "Are you sure for delete session?",
+  "deleteModalCancel": "Cancel",
+  "deleteModalConfirm": "Delete",
+  "showWindow": "Show Window",
+  "exitApp": "Exit App",
+
+  "errorLoadFailed": "Couldn't load data. Please try again.",
+  "errorRetry": "Retry",
+  "errorSaveFailed": "Couldn't save the session. Please try again.",
+  "errorDeleteFailed": "Couldn't delete the session. Please try again."
+}

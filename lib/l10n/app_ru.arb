@@ -1,0 +1,195 @@
+{
+  "@@locale": "ru",
+
+  "brandSubtitle": "Пространство фокуса",
+  "navOverview": "Обзор",
+  "navSessions": "Сессии",
+  "navTimer": "Таймер",
+  "navSettings": "Настройки",
+  "sidebarSectionApp": "Приложение",
+  "sidebarSectionActive": "Активно",
+  "versionLabel": "v{version}",
+  "@versionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+
+  "homeTitle": "Аналитика",
+  "homeSubtitle": "Ваша активность и фокус",
+  "badgePomodoro": "Pomodoro",
+  "homeOpenSessions": "Открыть сессии",
+  "homeThemeSettings": "Настройки темы",
+  "homeCardSessionsTitle": "Сессии фокуса",
+  "homeCardSessionsSubtitle": "Откройте сценарии, проверьте таймеры и переходите к следующему циклу без лишнего шума.",
+  "homeCardThemeTitle": "Тема и поведение",
+  "homeCardThemeSubtitle": "Переключайте светлую и тёмную тему, сохраняя тот же строгий и спокойный визуальный язык.",
+  "homeStatTotalSessions": "Всего сессий",
+  "homeStatTotalFocus": "Всего фокуса",
+  "homeStatTodayFocus": "Фокус сегодня",
+  "homeStatAvgSession": "Средняя сессия",
+  "homeStatTotalSessionsCaption": "Завершённых блоков фокуса",
+  "homeStatTotalFocusCaption": "За все сессии",
+  "homeStatTodayFocusCaption": "Не теряйте темп",
+  "homeStatAvgSessionCaption": "На один блок фокуса",
+  "homeActivityTitle": "Карта фокуса",
+  "homeActivitySubtitle": "Минуты фокуса за последний год.",
+  "homeActivityLess": "Меньше",
+  "homeActivityMore": "Больше",
+
+  "sessionsTitle": "Сессии",
+  "sessionsSubtitle": "Ваши сессии",
+  "sessionsNew": "Новая сессия",
+  "sessionsStart": "Запустить сессию",
+  "sessionsOpenTimer": "Открыть таймер",
+  "sessionsEdit": "Редактировать сессию",
+  "sessionsOpenCardSubtitle": "Откройте состав фаз, проверьте ритм и подготовьте запуск.",
+  "sessionsEmptyTitle": "Сессий пока нет",
+  "sessionsEmptyDescription": "Создайте свою первую сессию прямо сейчас",
+  "sessionsCreateNotConnected": "Создание новой сессии пока не подключено.",
+  "sessionsOpening": "Открытие сессии: {name}",
+  "@sessionsOpening": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+
+  "settingsTitle": "Настройки",
+  "settingsSubtitle": "Настройки приложения",
+  "badgeTheme": "Тема",
+  "settingsSectionAppearance": "Оформление",
+  "settingsTheme": "Тема",
+  "settingsThemeDescription": "Системная тема активна по умолчанию. Светлая тема сохраняет тот же строгий компонентный стиль без ярких акцентов.",
+  "badgeNeutralSurfaces": "Нейтральные поверхности",
+  "badgeSubtleBorders": "Мягкие границы",
+  "badgeRoundedCorners": "Скруглённые углы",
+  "themeSystem": "Системная",
+  "themeDark": "Тёмная",
+  "themeLight": "Светлая",
+  "settingsSectionLanguage": "Язык",
+
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+  "settingsLanguageDescription": "Выберите предпочитаемый язык",
+
+  "settingsSectionNotifications": "Уведомления",
+  "settingsNotificationsEnabled": "Уведомления таймера",
+  "settingsNotificationsDescription": "Показывать уведомление, когда таймер или сессия завершаются. Если уведомления не появляются, включите их для Flow Fusion в системных настройках.",
+  "notificationTestTitle": "Уведомления включены",
+  "notificationTestBody": "Вы получите уведомление, когда таймер завершится.",
+  "notificationPermissionTitle": "Уведомления выключены",
+  "notificationPermissionMessage": "Flow Fusion не разрешено отправлять уведомления. Откройте системные настройки, включите уведомления для Flow Fusion и вернитесь обратно.",
+  "notificationPermissionOpenSettings": "Открыть настройки",
+  "notificationPermissionCancel": "Не сейчас",
+
+  "timerWork": "Работа",
+  "timerChill": "Отдых",
+  "timerScreenTitle": "Таймер",
+  "timerPause": "Пауза",
+  "timerResume": "Продолжить",
+  "timerSkip": "Пропустить",
+  "timerQueueTitle": "Очередь",
+  "timerEmptyTitle": "Нет активного таймера",
+  "timerEmptyDescription": "Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.",
+  "timerFinishedTitle": "Таймер завершён",
+  "timerFinishedBody": "\"{timerTitle}\" завершён.",
+  "@timerFinishedBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerFinishedNextBody": "\"{timerTitle}\" завершён. Дальше: \"{nextTimerTitle}\".",
+  "@timerFinishedNextBody": {
+    "placeholders": {
+      "timerTitle": {
+        "type": "String"
+      },
+      "nextTimerTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionFinishedTitle": "Сессия завершена",
+  "sessionFinishedBody": "\"{sessionTitle}\" завершена.",
+  "@sessionFinishedBody": {
+    "placeholders": {
+      "sessionTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "timerPlannedDuration": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "@timerPlannedDuration": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "timerTitleHint": "Название таймера",
+  "timerDescriptionHint": "Описание (необязательно)",
+  "timerMinutesShort": "мин",
+  "timerDurationMinutes": "{minutes,plural, one{{minutes} мин} few{{minutes} мин} many{{minutes} мин} other{{minutes} мин}}",
+  "@timerDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursOnly": "{hours,plural, =1{1 час} few{{hours} часа} many{{hours} часов} other{{hours} часа}}",
+  "@timerDurationHoursOnly": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "timerDurationHoursMinutes": "{hours,plural, =1{1 час} few{{hours} часа} many{{hours} часов} other{{hours} часа}} {minutes} мин",
+  "@timerDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "sessionEditorCreateTitle": "Новая сессия",
+  "sessionEditorEditTitle": "Редактирование сессии",
+  "sessionEditorCreateSubtitle": "Добавьте таймеры и детали, затем сохраните.",
+  "sessionEditorEditSubtitle": "Измените таймеры и детали этой сессии.",
+  "sessionEditorIconLabel": "Иконка",
+  "sessionEditorTitleLabel": "Название",
+  "sessionEditorTitleHint": "напр. Глубокая работа",
+  "sessionEditorTitleRequired": "Введите название",
+  "sessionEditorDescriptionLabel": "Описание",
+  "sessionEditorDescriptionHint": "О чём эта сессия?",
+  "sessionEditorTimersTitle": "Таймеры",
+  "sessionEditorAddWork": "Добавить работу",
+  "sessionEditorAddChill": "Добавить отдых",
+  "sessionEditorNoTimers": "Пока нет таймеров. Добавьте блок работы или отдыха.",
+  "sessionEditorRemoveTimer": "Удалить таймер",
+  "sessionEditorSave": "Сохранить",
+  "sessionEditorCancel": "Отмена",
+  "sessionDelete": "Удалить сессию",
+  "deleteSessionModalTitle": "Удалить сессию",
+  "deleteSessionModalContent": "Вы действительно хотите удалить данную сессию?",
+  "deleteModalCancel": "Отмена",
+  "deleteModalConfirm": "Удалить",
+  "showWindow": "Открыть",
+  "exitApp": "Выйти",
+
+  "errorLoadFailed": "Не удалось загрузить данные. Попробуйте ещё раз.",
+  "errorRetry": "Повторить",
+  "errorSaveFailed": "Не удалось сохранить сессию. Попробуйте ещё раз.",
+  "errorDeleteFailed": "Не удалось удалить сессию. Попробуйте ещё раз."
+}

@@ -1,14 +1,34 @@
 import 'dart:async';
 
-import 'package:floor/floor.dart';
-import 'package:flow_fusion/model/datasources/database/dao/person_dao.dart';
-import 'package:flow_fusion/model/entity/database/person.dart';
+import 'package:froom/froom.dart';
+import 'package:flow_fusion/enums/timer_type.dart';
+import 'package:flow_fusion/enums/session_status.dart';
+import 'package:flow_fusion/enums/timer_status.dart';
+import 'package:flow_fusion/model/datasources/database/converter/date_time_converter.dart';
+import 'package:flow_fusion/model/datasources/database/converter/duration_converter.dart';
+import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
+import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
+import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
+import 'package:flow_fusion/model/entity/database/focus_log.dart';
+import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'app_database.g.dart';
 
-@Database(version: 1, entities: [Person])
-abstract class AppDatabase extends FloorDatabase {
-  // As an example
-  PersonDao get personDao;
+final migration1To2 = Migration(1, 2, (database) async {
+  await database.execute(
+    'ALTER TABLE sessions ADD COLUMN completedAt TEXT',
+  );
+  await database.execute(
+    'ALTER TABLE timers ADD COLUMN actualDuration INTEGER',
+  );
+});
+
+@TypeConverters([DurationConverter, DateTimeConverter])
+@Database(version: 3, entities: [Session, SessionTimer, FocusLog])
+abstract class AppDatabase extends FroomDatabase {
+  SessionDao get sessionDao;
+  SessionTimerDao get sessionTimerDao;
+  FocusLogDao get focusLogDao;
 }

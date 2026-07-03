@@ -1,0 +1,87 @@
+import 'package:flow_fusion/enums/routes.dart';
+import 'package:flow_fusion/controllers/active_timer_controller.dart';
+import 'package:flow_fusion/ui/app/app_view_model.dart';
+import 'package:flow_fusion/ui/views/home_view/home_view.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view.dart';
+import 'package:flow_fusion/ui/views/sessions_view/sessions_view.dart';
+import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
+import 'package:flow_fusion/ui/views/timer_view/timer_view.dart';
+import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+
+final router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    StatefulShellRoute.indexedStack(
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.home.path,
+              pageBuilder: (context, state) =>
+                  NoTransitionPage(key: state.pageKey, child: const HomeView()),
+            ),
+            GoRoute(
+              path: Routes.sessions.path,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const SessionsView(),
+              ),
+              routes: [
+                GoRoute(
+                  path: 'new',
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    key: state.pageKey,
+                    child: const SessionEditorView(),
+                  ),
+                ),
+                GoRoute(
+                  path: 'edit/:id',
+                  pageBuilder: (context, state) {
+                    final id = int.tryParse(state.pathParameters['id'] ?? '');
+                    return NoTransitionPage(
+                      key: state.pageKey,
+                      child: SessionEditorView(sessionId: id),
+                    );
+                  },
+                ),
+              ],
+            ),
+            GoRoute(
+              path: Routes.settings.path,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const SettingsView(),
+              ),
+            ),
+            GoRoute(
+              path: Routes.timer.path,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const TimerView(),
+              ),
+            ),
+          ],
+        ),
+      ],
+      builder: (context, state, navigationShell) {
+        final viewModel = GetIt.I.get<AppViewModel>();
+        final timerController = GetIt.I.get<ActiveTimerController>();
+
+        return Scaffold(
+          body: Row(
+            children: [
+              SidebarWidget(
+                packageVersion: viewModel.packageVersion,
+                timerController: timerController,
+              ),
+              Expanded(child: navigationShell),
+            ],
+          ),
+        );
+      },
+    ),
+  ],
+);

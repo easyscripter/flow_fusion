@@ -1,6 +1,6 @@
 # Flow Fusion
 
-![Flow Fusion Logo](https://github.com/easyscripter/flow_fusion/blob/7540863e0ec1d0c0419bfa318a17a2e8e9050d4f/assets/images/bucket.png)
+![Flow Fusion Logo](https://github.com/easyscripter/flow_fusion/blob/7540863e0ec1d0c0419bfa318a17a2e8e9050d4f/assets/images/app_logo.png)
 `TODO: Logo. IDK Why I use this stupid bucket image.`
 
 `TODO: Description`
@@ -28,4 +28,3 @@ Flow Fusion is licensed under the ~~[MIT License](LICENSE)~~ `TODO: Add LICENSE`
 ## Support
 
 For any questions, issues, or feedback, please contact us at `TODO: PASTE EMAIL HERE`.
-
