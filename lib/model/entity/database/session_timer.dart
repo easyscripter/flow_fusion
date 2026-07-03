@@ -88,4 +88,39 @@ class SessionTimer {
       updatedAt: now,
     );
   }
+
+  SessionTimer copyWith({
+    int? id,
+    int? sessionId,
+    int? position,
+    String? title,
+    String? description,
+    bool clearDescription = false,
+    String? icon,
+    bool clearIcon = false,
+    TimerType? type,
+    Duration? plannedDuration,
+    int? actualDurationMs,
+    bool clearActualDurationMs = false,
+    TimerStatus? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return SessionTimer(
+      id: id ?? this.id,
+      sessionId: sessionId ?? this.sessionId,
+      position: position ?? this.position,
+      title: title ?? this.title,
+      description: clearDescription ? null : (description ?? this.description),
+      icon: clearIcon ? null : (icon ?? this.icon),
+      type: type ?? this.type,
+      plannedDuration: plannedDuration ?? this.plannedDuration,
+      actualDurationMs: clearActualDurationMs
+          ? null
+          : (actualDurationMs ?? this.actualDurationMs),
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

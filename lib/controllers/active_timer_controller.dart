@@ -126,18 +126,9 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
       final actualMs = (skipped.plannedDuration - _remaining).inMilliseconds;
       _accrueWork(skipped, Duration(milliseconds: actualMs));
       await _timerDao.updateTimer(
-        SessionTimer(
-          id: skipped.id,
-          sessionId: skipped.sessionId,
-          position: skipped.position,
-          title: skipped.title,
-          description: skipped.description,
-          icon: skipped.icon,
-          type: skipped.type,
-          plannedDuration: skipped.plannedDuration,
+        skipped.copyWith(
           actualDurationMs: actualMs,
           status: TimerStatus.skipped,
-          createdAt: skipped.createdAt,
           updatedAt: DateTime.now(),
         ),
       );
@@ -260,18 +251,9 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
         _accrueWork(completedTimer, completedTimer.plannedDuration);
         unawaited(
           _timerDao.updateTimer(
-            SessionTimer(
-              id: completedTimer.id,
-              sessionId: completedTimer.sessionId,
-              position: completedTimer.position,
-              title: completedTimer.title,
-              description: completedTimer.description,
-              icon: completedTimer.icon,
-              type: completedTimer.type,
-              plannedDuration: completedTimer.plannedDuration,
+            completedTimer.copyWith(
               actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
               status: TimerStatus.completed,
-              createdAt: completedTimer.createdAt,
               updatedAt: DateTime.now(),
             ),
           ),
@@ -303,18 +285,9 @@ class ActiveTimerController extends ChangeNotifier with WidgetsBindingObserver {
     if (completedTimer != null) {
       _accrueWork(completedTimer, completedTimer.plannedDuration);
       await _timerDao.updateTimer(
-        SessionTimer(
-          id: completedTimer.id,
-          sessionId: completedTimer.sessionId,
-          position: completedTimer.position,
-          title: completedTimer.title,
-          description: completedTimer.description,
-          icon: completedTimer.icon,
-          type: completedTimer.type,
-          plannedDuration: completedTimer.plannedDuration,
+        completedTimer.copyWith(
           actualDurationMs: completedTimer.plannedDuration.inMilliseconds,
           status: TimerStatus.completed,
-          createdAt: completedTimer.createdAt,
           updatedAt: DateTime.now(),
         ),
       );
