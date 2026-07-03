@@ -1,4 +1,3 @@
-import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
@@ -19,28 +18,18 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final HomeViewViewModel _viewModel;
-  late final ActiveTimerController _timerController;
 
   @override
   void initState() {
     super.initState();
     _viewModel = GetIt.I.get<HomeViewViewModel>();
-    _timerController = GetIt.I.get<ActiveTimerController>();
-    _timerController.addListener(_onTimerControllerChanged);
     _viewModel.init();
   }
 
   @override
   void dispose() {
-    _timerController.removeListener(_onTimerControllerChanged);
+    _viewModel.dispose();
     super.dispose();
-  }
-
-  void _onTimerControllerChanged() {
-    final isActive = _timerController.hasActiveSession;
-    if (!isActive && !_viewModel.isLoading) {
-      _viewModel.update();
-    }
   }
 
   @override

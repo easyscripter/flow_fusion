@@ -1,3 +1,4 @@
+import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:injectable/injectable.dart';
@@ -9,9 +10,13 @@ part 'home_view_view_model.g.dart';
 class HomeViewViewModel = _HomeViewViewModelBase with _$HomeViewViewModel;
 
 abstract class _HomeViewViewModelBase with Store {
-  _HomeViewViewModelBase(this._focusLogDao);
+  _HomeViewViewModelBase(this._focusLogDao, this._timerController);
 
   final FocusLogDao _focusLogDao;
+  final ActiveTimerController _timerController;
+
+  bool _isBound = false;
+  bool _hadActiveSession = false;
 
   @observable
   bool isLoading = false;
@@ -41,7 +46,19 @@ abstract class _HomeViewViewModelBase with Store {
 
   @action
   Future<void> init() async {
+    if (!_isBound) {
+      _hadActiveSession = _timerController.hasActiveSession;
+      _timerController.addListener(_onTimerControllerChanged);
+      _isBound = true;
+    }
+
     await update();
+  }
+
+  void dispose() {
+    if (!_isBound) return;
+    _timerController.removeListener(_onTimerControllerChanged);
+    _isBound = false;
   }
 
   @action
@@ -88,5 +105,15 @@ abstract class _HomeViewViewModelBase with Store {
   DateTime get _today {
     final now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
+  }
+
+  void _onTimerControllerChanged() {
+    final hasActiveSession = _timerController.hasActiveSession;
+    final shouldRefresh = _hadActiveSession && !hasActiveSession && !isLoading;
+    _hadActiveSession = hasActiveSession;
+
+    if (shouldRefresh) {
+      update();
+    }
   }
 }
