@@ -86,6 +86,14 @@
   "notificationPermissionOpenSettings": "Открыть настройки",
   "notificationPermissionCancel": "Не сейчас",
 
+  "settingsSectionDiagnostics": "Диагностика",
+  "settingsLogs": "Логи приложения",
+  "settingsLogsDescription": "Если что-то работает не так, откройте папку с логами и отправьте файл разработчику.",
+  "settingsLogsOpenFolder": "Открыть папку с логами",
+  "settingsCopyDiagnostics": "Скопировать данные",
+  "settingsDiagnosticsCopied": "Диагностика скопирована в буфер обмена",
+  "settingsLogsUnavailable": "Логи недоступны",
+
   "timerWork": "Работа",
   "timerChill": "Отдых",
   "timerScreenTitle": "Таймер",

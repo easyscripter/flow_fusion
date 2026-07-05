@@ -1,5 +1,6 @@
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
+import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -29,7 +30,8 @@ abstract class _SessionsViewViewModelBase with Store {
       isLoading = true;
       hasError = false;
       sessions = await _sessionDao.findAllSession();
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.error('SessionsViewViewModel.update', e, s);
       hasError = true;
     } finally {
       isLoading = false;
@@ -42,7 +44,8 @@ abstract class _SessionsViewViewModelBase with Store {
       await _sessionDao.deleteSession(session);
       await update();
       return true;
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.error('SessionsViewViewModel.delete', e, s);
       return false;
     }
   }

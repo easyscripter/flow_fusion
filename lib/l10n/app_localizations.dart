@@ -488,6 +488,48 @@ abstract class AppLocalizations {
   /// **'Not now'**
   String get notificationPermissionCancel;
 
+  /// No description provided for @settingsSectionDiagnostics.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostics'**
+  String get settingsSectionDiagnostics;
+
+  /// No description provided for @settingsLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Application logs'**
+  String get settingsLogs;
+
+  /// No description provided for @settingsLogsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'If something goes wrong, open the logs folder and send the file to the developer.'**
+  String get settingsLogsDescription;
+
+  /// No description provided for @settingsLogsOpenFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Open logs folder'**
+  String get settingsLogsOpenFolder;
+
+  /// No description provided for @settingsCopyDiagnostics.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy info'**
+  String get settingsCopyDiagnostics;
+
+  /// No description provided for @settingsDiagnosticsCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnostics copied to clipboard'**
+  String get settingsDiagnosticsCopied;
+
+  /// No description provided for @settingsLogsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs are unavailable'**
+  String get settingsLogsUnavailable;
+
   /// No description provided for @timerWork.
   ///
   /// In en, this message translates to:

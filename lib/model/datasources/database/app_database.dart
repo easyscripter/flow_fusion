@@ -25,6 +25,18 @@ final migration1To2 = Migration(1, 2, (database) async {
   );
 });
 
+// Schema version 3 introduced the `focus_log` table (see app_database.g.dart).
+// Without this migration, users upgrading from a v2 database crash on launch.
+final migration2To3 = Migration(2, 3, (database) async {
+  await database.execute(
+    'CREATE TABLE IF NOT EXISTS `focus_log` ('
+    '`id` INTEGER PRIMARY KEY AUTOINCREMENT, '
+    '`sessionId` INTEGER NOT NULL, '
+    '`workMs` INTEGER NOT NULL, '
+    '`completedAt` TEXT NOT NULL)',
+  );
+});
+
 @TypeConverters([DurationConverter, DateTimeConverter])
 @Database(version: 3, entities: [Session, SessionTimer, FocusLog])
 abstract class AppDatabase extends FroomDatabase {

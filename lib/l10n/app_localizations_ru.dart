@@ -217,6 +217,29 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notificationPermissionCancel => 'Не сейчас';
 
   @override
+  String get settingsSectionDiagnostics => 'Диагностика';
+
+  @override
+  String get settingsLogs => 'Логи приложения';
+
+  @override
+  String get settingsLogsDescription =>
+      'Если что-то работает не так, откройте папку с логами и отправьте файл разработчику.';
+
+  @override
+  String get settingsLogsOpenFolder => 'Открыть папку с логами';
+
+  @override
+  String get settingsCopyDiagnostics => 'Скопировать данные';
+
+  @override
+  String get settingsDiagnosticsCopied =>
+      'Диагностика скопирована в буфер обмена';
+
+  @override
+  String get settingsLogsUnavailable => 'Логи недоступны';
+
+  @override
   String get timerWork => 'Работа';
 
   @override

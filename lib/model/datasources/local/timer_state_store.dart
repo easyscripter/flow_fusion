@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/model/entity/timer_persisted_state.dart';
+import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -16,7 +17,9 @@ class TimerStateStore {
     try {
       final json = jsonDecode(raw) as Map<String, dynamic>;
       return TimerPersistedState.fromJson(json);
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.warn('TimerStateStore.read', 'Discarding corrupt state: $e');
+      AppLogger.debug('TimerStateStore.read', s);
       return null;
     }
   }

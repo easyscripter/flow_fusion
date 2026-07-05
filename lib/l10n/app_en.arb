@@ -86,6 +86,14 @@
   "notificationPermissionOpenSettings": "Open settings",
   "notificationPermissionCancel": "Not now",
 
+  "settingsSectionDiagnostics": "Diagnostics",
+  "settingsLogs": "Application logs",
+  "settingsLogsDescription": "If something goes wrong, open the logs folder and send the file to the developer.",
+  "settingsLogsOpenFolder": "Open logs folder",
+  "settingsCopyDiagnostics": "Copy info",
+  "settingsDiagnosticsCopied": "Diagnostics copied to clipboard",
+  "settingsLogsUnavailable": "Logs are unavailable",
+
   "timerWork": "Work",
   "timerChill": "Chill",
   "timerScreenTitle": "Timer",

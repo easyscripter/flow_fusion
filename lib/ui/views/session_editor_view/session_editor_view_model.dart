@@ -4,6 +4,7 @@ import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dar
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
+import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -175,7 +176,8 @@ abstract class _SessionEditorViewModelBase with Store {
       ];
       await _timerDao.insertTimers(entities);
       return true;
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.error('SessionEditorViewModel.save', e, s);
       hasError = true;
       return false;
     } finally {

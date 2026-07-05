@@ -11,6 +11,7 @@ import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
+import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -171,7 +172,8 @@ class ActiveTimerController with WidgetsBindingObserver {
       });
 
       if (shouldStartTicker) _startTicker();
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.error('ActiveTimerController.restore', e, s);
       await _clearState();
     }
   }

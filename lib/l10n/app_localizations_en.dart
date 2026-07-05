@@ -216,6 +216,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationPermissionCancel => 'Not now';
 
   @override
+  String get settingsSectionDiagnostics => 'Diagnostics';
+
+  @override
+  String get settingsLogs => 'Application logs';
+
+  @override
+  String get settingsLogsDescription =>
+      'If something goes wrong, open the logs folder and send the file to the developer.';
+
+  @override
+  String get settingsLogsOpenFolder => 'Open logs folder';
+
+  @override
+  String get settingsCopyDiagnostics => 'Copy info';
+
+  @override
+  String get settingsDiagnosticsCopied => 'Diagnostics copied to clipboard';
+
+  @override
+  String get settingsLogsUnavailable => 'Logs are unavailable';
+
+  @override
   String get timerWork => 'Work';
 
   @override

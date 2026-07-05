@@ -1,6 +1,7 @@
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
+import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -80,7 +81,8 @@ abstract class _HomeViewViewModelBase with Store {
         totalSessions = newTotalSessions;
         isLoading = false;
       });
-    } catch (_) {
+    } catch (e, s) {
+      AppLogger.error('HomeViewViewModel.load', e, s);
       runInAction(() {
         isLoading = false;
         hasError = true;

@@ -17,7 +17,7 @@ abstract class DatabaseModule {
   @preResolve
   Future<AppDatabase> get db => $FroomAppDatabase
       .databaseBuilder('flow_fusion.db')
-      .addMigrations([migration1To2])
+      .addMigrations([migration1To2, migration2To3])
       .build();
 }
 
