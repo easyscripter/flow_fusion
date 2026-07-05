@@ -1,0 +1,125 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+# contents: create the GitHub Release. pages/id-token: deploy the OTA feed.
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Never run two Pages deploys at once.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: "3.44.2"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run code generation
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build & package (Windows)
+        run: dart run desktop_updater:release publish --platform windows
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feed-windows
+          path: dist/desktop_updater/
+          if-no-files-found: error
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run code generation
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build & package (macOS)
+        run: dart run desktop_updater:release publish --platform macos
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feed-macos
+          path: dist/desktop_updater/
+          if-no-files-found: error
+
+  publish:
+    needs: [build-windows, build-macos]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: feed-windows
+          path: feed/windows
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: feed-macos
+          path: feed/macos
+
+      - name: Assemble Pages site (merge platform feeds)
+        run: |
+          set -euo pipefail
+          mkdir -p site/releases
+          # Merge the per-platform app-archive.json item lists into one feed.
+          jq -s '{schemaVersion: .[0].schemaVersion, appName: .[0].appName, items: (map(.items) | add)}' \
+            feed/windows/app-archive.json feed/macos/app-archive.json > site/app-archive.json
+          # Both platforms use disjoint releases/<version>/<platform>/ subpaths.
+          rsync -a feed/windows/releases/ site/releases/
+          rsync -a feed/macos/releases/ site/releases/
+          # Localized "What's new" changelog served next to the feed.
+          cp release-notes.en.json release-notes.ru.json site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body_path: INSTALL.md
+          fail_on_unmatched_files: true
+          files: |
+            feed/windows/releases/**/*.zip
+            feed/macos/releases/**/*.zip
