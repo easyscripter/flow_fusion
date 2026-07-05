@@ -94,6 +94,29 @@
   "settingsDiagnosticsCopied": "Диагностика скопирована в буфер обмена",
   "settingsLogsUnavailable": "Логи недоступны",
 
+  "updateAvailable": "Доступна новая версия {version}",
+  "@updateAvailable": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateActionUpdate": "Обновить",
+  "updateActionLater": "Позже",
+  "updateDownloading": "Загрузка обновления…",
+  "updateReady": "Обновление готово к установке",
+  "updateActionRestart": "Перезапустить и установить",
+  "updateInstalling": "Установка…",
+  "updateFailed": "Не удалось обновиться",
+  "updateActionRetry": "Повторить",
+  "settingsSectionUpdates": "Обновления",
+  "settingsCheckUpdates": "Проверить обновления",
+  "settingsCheckUpdatesDescription": "Проверить, есть ли новая версия на GitHub.",
+  "updateChecking": "Проверка…",
+  "updateUpToDate": "У вас установлена последняя версия",
+  "updateCheckFailed": "Не удалось проверить обновления",
+
   "timerWork": "Работа",
   "timerChill": "Отдых",
   "timerScreenTitle": "Таймер",

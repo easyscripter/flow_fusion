@@ -1,9 +1,11 @@
+import 'package:desktop_updater/desktop_updater.dart';
 import 'package:flow_fusion/l10n/app_localizations.dart';
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/router.dart';
 import 'package:flow_fusion/ui/theme/app_theme.dart';
 import 'package:flow_fusion/ui/widgets/title_bar.dart';
+import 'package:flow_fusion/ui/widgets/update/update_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +19,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _appViewModel = GetIt.I.get<AppViewModel>();
+  final _updateController = GetIt.I.get<DesktopUpdaterController>();
 
   @override
   void initState() {
@@ -45,9 +48,10 @@ class _AppState extends State<App> {
               body: Column(
                 children: [
                   const TitleBar(),
+                  UpdateBanner(controller: _updateController),
                   Expanded(child: child ?? const SizedBox.shrink()),
                 ],
-              )
+              ),
             );
           },
         );

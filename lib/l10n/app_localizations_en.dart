@@ -238,6 +238,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLogsUnavailable => 'Logs are unavailable';
 
   @override
+  String updateAvailable(String version) {
+    return 'A new version $version is available';
+  }
+
+  @override
+  String get updateActionUpdate => 'Update';
+
+  @override
+  String get updateActionLater => 'Later';
+
+  @override
+  String get updateDownloading => 'Downloading update…';
+
+  @override
+  String get updateReady => 'Update ready to install';
+
+  @override
+  String get updateActionRestart => 'Restart & install';
+
+  @override
+  String get updateInstalling => 'Installing…';
+
+  @override
+  String get updateFailed => 'Update failed';
+
+  @override
+  String get updateActionRetry => 'Retry';
+
+  @override
+  String get settingsSectionUpdates => 'Updates';
+
+  @override
+  String get settingsCheckUpdates => 'Check for updates';
+
+  @override
+  String get settingsCheckUpdatesDescription =>
+      'Check GitHub for a newer version.';
+
+  @override
+  String get updateChecking => 'Checking…';
+
+  @override
+  String get updateUpToDate => 'You have the latest version';
+
+  @override
+  String get updateCheckFailed => 'Couldn\'t check for updates';
+
+  @override
   String get timerWork => 'Work';
 
   @override

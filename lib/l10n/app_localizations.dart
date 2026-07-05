@@ -530,6 +530,96 @@ abstract class AppLocalizations {
   /// **'Logs are unavailable'**
   String get settingsLogsUnavailable;
 
+  /// No description provided for @updateAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version {version} is available'**
+  String updateAvailable(String version);
+
+  /// No description provided for @updateActionUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateActionUpdate;
+
+  /// No description provided for @updateActionLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateActionLater;
+
+  /// No description provided for @updateDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading update…'**
+  String get updateDownloading;
+
+  /// No description provided for @updateReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Update ready to install'**
+  String get updateReady;
+
+  /// No description provided for @updateActionRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart & install'**
+  String get updateActionRestart;
+
+  /// No description provided for @updateInstalling.
+  ///
+  /// In en, this message translates to:
+  /// **'Installing…'**
+  String get updateInstalling;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Update failed'**
+  String get updateFailed;
+
+  /// No description provided for @updateActionRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get updateActionRetry;
+
+  /// No description provided for @settingsSectionUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates'**
+  String get settingsSectionUpdates;
+
+  /// No description provided for @settingsCheckUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for updates'**
+  String get settingsCheckUpdates;
+
+  /// No description provided for @settingsCheckUpdatesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Check GitHub for a newer version.'**
+  String get settingsCheckUpdatesDescription;
+
+  /// No description provided for @updateChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get updateChecking;
+
+  /// No description provided for @updateUpToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the latest version'**
+  String get updateUpToDate;
+
+  /// No description provided for @updateCheckFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t check for updates'**
+  String get updateCheckFailed;
+
   /// No description provided for @timerWork.
   ///
   /// In en, this message translates to:

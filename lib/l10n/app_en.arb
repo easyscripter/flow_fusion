@@ -94,6 +94,29 @@
   "settingsDiagnosticsCopied": "Diagnostics copied to clipboard",
   "settingsLogsUnavailable": "Logs are unavailable",
 
+  "updateAvailable": "A new version {version} is available",
+  "@updateAvailable": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateActionUpdate": "Update",
+  "updateActionLater": "Later",
+  "updateDownloading": "Downloading update…",
+  "updateReady": "Update ready to install",
+  "updateActionRestart": "Restart & install",
+  "updateInstalling": "Installing…",
+  "updateFailed": "Update failed",
+  "updateActionRetry": "Retry",
+  "settingsSectionUpdates": "Updates",
+  "settingsCheckUpdates": "Check for updates",
+  "settingsCheckUpdatesDescription": "Check GitHub for a newer version.",
+  "updateChecking": "Checking…",
+  "updateUpToDate": "You have the latest version",
+  "updateCheckFailed": "Couldn't check for updates",
+
   "timerWork": "Work",
   "timerChill": "Chill",
   "timerScreenTitle": "Timer",

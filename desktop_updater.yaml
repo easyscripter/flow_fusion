@@ -1,0 +1,5 @@
+# Configuration for the desktop_updater release CLI.
+# Hosted on GitHub Releases: the `latest/download/<asset>` path is a stable URL
+# that always redirects to the newest published release's assets.
+updates:
+  baseUrl: https://github.com/easyscripter/flow_fusion/releases/latest/download

@@ -240,6 +240,54 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLogsUnavailable => 'Логи недоступны';
 
   @override
+  String updateAvailable(String version) {
+    return 'Доступна новая версия $version';
+  }
+
+  @override
+  String get updateActionUpdate => 'Обновить';
+
+  @override
+  String get updateActionLater => 'Позже';
+
+  @override
+  String get updateDownloading => 'Загрузка обновления…';
+
+  @override
+  String get updateReady => 'Обновление готово к установке';
+
+  @override
+  String get updateActionRestart => 'Перезапустить и установить';
+
+  @override
+  String get updateInstalling => 'Установка…';
+
+  @override
+  String get updateFailed => 'Не удалось обновиться';
+
+  @override
+  String get updateActionRetry => 'Повторить';
+
+  @override
+  String get settingsSectionUpdates => 'Обновления';
+
+  @override
+  String get settingsCheckUpdates => 'Проверить обновления';
+
+  @override
+  String get settingsCheckUpdatesDescription =>
+      'Проверить, есть ли новая версия на GitHub.';
+
+  @override
+  String get updateChecking => 'Проверка…';
+
+  @override
+  String get updateUpToDate => 'У вас установлена последняя версия';
+
+  @override
+  String get updateCheckFailed => 'Не удалось проверить обновления';
+
+  @override
   String get timerWork => 'Работа';
 
   @override
