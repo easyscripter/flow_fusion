@@ -32,6 +32,13 @@ set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
 
+# The pinned flutter_local_notifications_windows still includes
+# <experimental/coroutine>, which newer MSVC toolchains (e.g. the Visual Studio
+# on GitHub's windows-latest runner) treat as a hard error (STL1011). Define
+# this directory-wide (before plugins are added below) so the plugin compiles
+# until it migrates to the C++20 <coroutine> header.
+add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
+
 # ---------------------------------------------------------------------------
 # ATL header workaround
 # flutter_local_notifications_windows requires atlbase.h (ATL/COM headers).
