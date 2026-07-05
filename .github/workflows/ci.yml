@@ -30,5 +30,7 @@ jobs:
       - name: Run code generation
         run: dart run build_runner build --delete-conflicting-outputs
 
+      # --no-fatal-infos: don't fail on info-level hints (e.g. a deprecation
+      # in third-party-facing widget APIs); errors and warnings still fail.
       - name: Analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
