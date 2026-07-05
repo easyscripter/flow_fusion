@@ -267,6 +267,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateActionRetry => 'Retry';
 
   @override
+  String get updateWhatsNew => 'What\'s new';
+
+  @override
+  String updateWhatsNewTitle(String version) {
+    return 'What\'s new in $version';
+  }
+
+  @override
+  String get updateActionClose => 'Close';
+
+  @override
+  String get releaseNotesEmpty => 'No release notes for this version.';
+
+  @override
+  String get releaseNotesFailed => 'Couldn\'t load release notes.';
+
+  @override
+  String get releaseNotesFeatures => 'New';
+
+  @override
+  String get releaseNotesFixes => 'Fixes';
+
+  @override
+  String get releaseNotesSecurity => 'Security';
+
+  @override
+  String get releaseNotesBreaking => 'Breaking changes';
+
+  @override
+  String get releaseNotesOther => 'Other';
+
+  @override
   String get settingsSectionUpdates => 'Updates';
 
   @override

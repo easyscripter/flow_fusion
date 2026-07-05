@@ -269,6 +269,38 @@ class AppLocalizationsRu extends AppLocalizations {
   String get updateActionRetry => 'Повторить';
 
   @override
+  String get updateWhatsNew => 'Что нового';
+
+  @override
+  String updateWhatsNewTitle(String version) {
+    return 'Что нового в $version';
+  }
+
+  @override
+  String get updateActionClose => 'Закрыть';
+
+  @override
+  String get releaseNotesEmpty => 'Для этой версии нет описания изменений.';
+
+  @override
+  String get releaseNotesFailed => 'Не удалось загрузить список изменений.';
+
+  @override
+  String get releaseNotesFeatures => 'Новое';
+
+  @override
+  String get releaseNotesFixes => 'Исправления';
+
+  @override
+  String get releaseNotesSecurity => 'Безопасность';
+
+  @override
+  String get releaseNotesBreaking => 'Важные изменения';
+
+  @override
+  String get releaseNotesOther => 'Прочее';
+
+  @override
   String get settingsSectionUpdates => 'Обновления';
 
   @override

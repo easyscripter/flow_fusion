@@ -110,6 +110,23 @@
   "updateInstalling": "Установка…",
   "updateFailed": "Не удалось обновиться",
   "updateActionRetry": "Повторить",
+  "updateWhatsNew": "Что нового",
+  "updateWhatsNewTitle": "Что нового в {version}",
+  "@updateWhatsNewTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateActionClose": "Закрыть",
+  "releaseNotesEmpty": "Для этой версии нет описания изменений.",
+  "releaseNotesFailed": "Не удалось загрузить список изменений.",
+  "releaseNotesFeatures": "Новое",
+  "releaseNotesFixes": "Исправления",
+  "releaseNotesSecurity": "Безопасность",
+  "releaseNotesBreaking": "Важные изменения",
+  "releaseNotesOther": "Прочее",
   "settingsSectionUpdates": "Обновления",
   "settingsCheckUpdates": "Проверить обновления",
   "settingsCheckUpdatesDescription": "Проверить, есть ли новая версия на GitHub.",

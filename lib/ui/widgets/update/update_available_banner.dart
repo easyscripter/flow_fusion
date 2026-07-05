@@ -1,9 +1,9 @@
 import 'package:desktop_updater/desktop_updater.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/widgets/update/update_banner_layout.dart';
+import 'package:flow_fusion/ui/widgets/update/update_release_notes_dialog.dart';
 import 'package:flutter/material.dart';
 
-/// Banner shown when a newer release is available: offers "Later" and "Update".
 class UpdateAvailableBanner extends StatelessWidget {
   const UpdateAvailableBanner({
     super.key,
@@ -21,6 +21,10 @@ class UpdateAvailableBanner extends StatelessWidget {
       message: context.l10n.updateAvailable(version),
       trailing: [
         TextButton(
+          onPressed: () => _showWhatsNew(context),
+          child: Text(context.l10n.updateWhatsNew),
+        ),
+        TextButton(
           onPressed: () => runUpdateAction('skip', controller.makeSkipUpdate),
           child: Text(context.l10n.updateActionLater),
         ),
@@ -30,6 +34,14 @@ class UpdateAvailableBanner extends StatelessWidget {
           child: Text(context.l10n.updateActionUpdate),
         ),
       ],
+    );
+  }
+
+  void _showWhatsNew(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (_) =>
+          UpdateReleaseNotesDialog(controller: controller, version: version),
     );
   }
 }

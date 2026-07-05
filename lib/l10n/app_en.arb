@@ -110,6 +110,23 @@
   "updateInstalling": "Installing…",
   "updateFailed": "Update failed",
   "updateActionRetry": "Retry",
+  "updateWhatsNew": "What's new",
+  "updateWhatsNewTitle": "What's new in {version}",
+  "@updateWhatsNewTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateActionClose": "Close",
+  "releaseNotesEmpty": "No release notes for this version.",
+  "releaseNotesFailed": "Couldn't load release notes.",
+  "releaseNotesFeatures": "New",
+  "releaseNotesFixes": "Fixes",
+  "releaseNotesSecurity": "Security",
+  "releaseNotesBreaking": "Breaking changes",
+  "releaseNotesOther": "Other",
   "settingsSectionUpdates": "Updates",
   "settingsCheckUpdates": "Check for updates",
   "settingsCheckUpdatesDescription": "Check GitHub for a newer version.",

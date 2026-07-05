@@ -1,5 +1,6 @@
 import 'package:desktop_updater/desktop_updater.dart';
 import 'package:flow_fusion/model/datasources/database/app_database.dart';
+import 'package:flow_fusion/model/datasources/update/release_notes_loader.dart';
 import 'package:flow_fusion/ui/constants/app_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -32,9 +33,11 @@ abstract class PackageVersionModule {
 @module
 abstract class UpdaterModule {
   @lazySingleton
-  DesktopUpdaterController get updater => DesktopUpdaterController(
-    appArchiveUrl: Uri.parse(AppConfig.updateArchiveUrl),
-  );
+  DesktopUpdaterController updater(LocalizedReleaseNotesLoader notesLoader) =>
+      DesktopUpdaterController(
+        appArchiveUrl: Uri.parse(AppConfig.updateArchiveUrl),
+        releaseNotesLoader: notesLoader.load,
+      );
 }
 
 @InjectableInit()

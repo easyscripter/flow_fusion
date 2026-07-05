@@ -584,6 +584,66 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get updateActionRetry;
 
+  /// No description provided for @updateWhatsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get updateWhatsNew;
+
+  /// No description provided for @updateWhatsNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new in {version}'**
+  String updateWhatsNewTitle(String version);
+
+  /// No description provided for @updateActionClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get updateActionClose;
+
+  /// No description provided for @releaseNotesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No release notes for this version.'**
+  String get releaseNotesEmpty;
+
+  /// No description provided for @releaseNotesFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load release notes.'**
+  String get releaseNotesFailed;
+
+  /// No description provided for @releaseNotesFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get releaseNotesFeatures;
+
+  /// No description provided for @releaseNotesFixes.
+  ///
+  /// In en, this message translates to:
+  /// **'Fixes'**
+  String get releaseNotesFixes;
+
+  /// No description provided for @releaseNotesSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get releaseNotesSecurity;
+
+  /// No description provided for @releaseNotesBreaking.
+  ///
+  /// In en, this message translates to:
+  /// **'Breaking changes'**
+  String get releaseNotesBreaking;
+
+  /// No description provided for @releaseNotesOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get releaseNotesOther;
+
   /// No description provided for @settingsSectionUpdates.
   ///
   /// In en, this message translates to:

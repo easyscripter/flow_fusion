@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "format": "desktop_updater.release_notes.v1",
+  "locale": "en",
+  "summary": "First public beta of Flow Fusion.",
+  "sections": [
+    {
+      "type": "features",
+      "items": [
+        { "body": "Automatic updates (OTA) with an in-app update banner." },
+        { "body": "\"Check for updates\" and \"What's new\" in Settings." },
+        { "body": "Crash-safe startup: global error handling and file logging, with a diagnostics export in Settings." }
+      ]
+    },
+    {
+      "type": "fixes",
+      "items": [
+        { "body": "Fixed a crash when upgrading the database from an older version (v2 to v3 migration)." }
+      ]
+    }
+  ]
+}
