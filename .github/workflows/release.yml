@@ -72,6 +72,15 @@ jobs:
           path: dist/desktop_updater/
           if-no-files-found: error
 
+      - name: Build .dmg installer
+        run: bash scripts/package_macos_dmg.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installer-macos
+          path: dist/installers/*.dmg
+          if-no-files-found: error
+
   publish:
     needs: [build-windows, build-macos]
     runs-on: ubuntu-latest
@@ -90,6 +99,11 @@ jobs:
         with:
           name: feed-macos
           path: feed/macos
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: installer-macos
+          path: installers
 
       - name: Assemble Pages site (merge platform feeds)
         run: |
@@ -119,7 +133,9 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           body_path: INSTALL.md
+          prerelease: true
           fail_on_unmatched_files: true
           files: |
+            installers/*.dmg
             feed/windows/releases/**/*.zip
             feed/macos/releases/**/*.zip
