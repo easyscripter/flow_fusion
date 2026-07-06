@@ -46,6 +46,21 @@ jobs:
           path: dist/desktop_updater/
           if-no-files-found: error
 
+      - name: Build installer (Inno Setup)
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          $raw = Get-Content pubspec.yaml | Where-Object { $_ -match '^version:' } | Select-Object -First 1
+          $version = ($raw -replace '^version:\s*', '' -replace '\+.*$', '').Trim()
+          Write-Host "Building installer for version $version"
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=$version" scripts\flow_fusion.iss
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installer-windows
+          path: dist/installers/*.exe
+          if-no-files-found: error
+
   build-macos:
     runs-on: macos-latest
     steps:
@@ -105,6 +120,11 @@ jobs:
           name: installer-macos
           path: installers
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: installer-windows
+          path: installers
+
       - name: Assemble Pages site (merge platform feeds)
         run: |
           set -euo pipefail
@@ -137,5 +157,6 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             installers/*.dmg
+            installers/*.exe
             feed/windows/releases/**/*.zip
             feed/macos/releases/**/*.zip

@@ -7,22 +7,23 @@ automatically (OTA), so you only do this once.
 
 ## Windows 10 / 11
 
-1. Download the Windows ZIP (`Flow Fusion-<version>-windows.zip`) from the latest
-   [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
-2. Right-click the ZIP → **Extract All…** to a folder you like
-   (e.g. `Documents\Flow Fusion`). Do not run it from inside the ZIP.
-3. Open the folder and double-click **`Flow Fusion.exe`**.
-4. If Windows shows **"Windows protected your PC" (SmartScreen)**:
+1. Download the Windows installer (`Flow Fusion-<version>-windows-setup.exe`) from
+   the latest [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
+2. Double-click it. If Windows shows **"Windows protected your PC" (SmartScreen)**:
    click **More info** → **Run anyway**.
+3. Follow the wizard. It installs just for you (no admin password needed) and
+   adds a **Start menu** shortcut. Launch Flow Fusion from there.
 
-> Keep all files together in the extracted folder — the app needs the DLLs and
-> the `data` folder next to the `.exe`. Auto-updates replace these in place.
+> Prefer no installer? A portable `Flow Fusion-<version>-windows.zip` is also
+> attached to the release — extract it and run `Flow Fusion.exe`, keeping all the
+> DLLs and the `data` folder next to it.
 
 ## macOS 10.14+ (Mojave and newer)
 
-1. Download the macOS ZIP (`Flow Fusion-<version>-macos.zip`) from the latest
-   [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
-2. Move **Flow Fusion.app** to your `Applications` folder.
+1. Download the macOS disk image (`Flow Fusion-<version>-macos.dmg`) from the
+   latest [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
+2. Double-click the `.dmg` and **drag Flow Fusion into the Applications** folder,
+   then eject the disk image.
 3. The first launch is blocked by Gatekeeper. Use **one** of these:
    - **Right-click** (or Control-click) the app → **Open** → **Open** in the
      dialog; **or**
