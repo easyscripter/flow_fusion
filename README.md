@@ -37,7 +37,7 @@ Windows 10 / 11 and macOS 10.14+ (Mojave and newer).
 ## Install (beta testers)
 
 Download the latest build from the
-[Releases page](https://github.com/easyscripter/flow_fusion/releases/latest) and
+[Releases page](https://github.com/easyscripter/flow_fusion/releases) and
 follow **[INSTALL.md](INSTALL.md)**. Builds are currently unsigned, so the first
 launch needs a one-time Gatekeeper / SmartScreen bypass (covered in the guide).
 After that, the app keeps itself up to date automatically.

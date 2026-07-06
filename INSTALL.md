@@ -8,7 +8,7 @@ automatically (OTA), so you only do this once.
 ## Windows 10 / 11
 
 1. Download the Windows installer (`Flow Fusion-<version>-windows-setup.exe`) from
-   the latest [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
+   the [Releases page](https://github.com/easyscripter/flow_fusion/releases) (newest is at the top).
 2. Double-click it. If Windows shows **"Windows protected your PC" (SmartScreen)**:
    click **More info** → **Run anyway**.
 3. Follow the wizard. It installs just for you (no admin password needed) and
@@ -21,7 +21,7 @@ automatically (OTA), so you only do this once.
 ## macOS 10.14+ (Mojave and newer)
 
 1. Download the macOS disk image (`Flow Fusion-<version>-macos.dmg`) from the
-   latest [GitHub Release](https://github.com/easyscripter/flow_fusion/releases/latest).
+   [Releases page](https://github.com/easyscripter/flow_fusion/releases) (newest is at the top).
 2. Double-click the `.dmg` and **drag Flow Fusion into the Applications** folder,
    then eject the disk image.
 3. The first launch is blocked by Gatekeeper. Use **one** of these:
