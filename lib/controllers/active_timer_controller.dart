@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:flow_fusion/controllers/session_lifecycle_observer.dart';
+import 'package:flow_fusion/controllers/session_ticker.dart';
+import 'package:flow_fusion/controllers/session_timeline.dart';
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
@@ -12,12 +15,11 @@ import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flow_fusion/utils/app_logger.dart';
-import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 @lazySingleton
-class ActiveTimerController with WidgetsBindingObserver {
+class ActiveTimerController {
   ActiveTimerController(
     this._sessionDao,
     this._timerDao,
@@ -25,8 +27,6 @@ class ActiveTimerController with WidgetsBindingObserver {
     this._stateStore,
     this._timerAlertService,
   );
-
-  static const _tickInterval = Duration(seconds: 1);
 
   final SessionDao _sessionDao;
   final SessionTimerDao _timerDao;
@@ -36,7 +36,9 @@ class ActiveTimerController with WidgetsBindingObserver {
 
   final ActiveTimerState _state = ActiveTimerState();
 
-  Timer? _ticker;
+  final SessionTicker _ticker = SessionTicker();
+  late final SessionLifecycleObserver _lifecycleObserver =
+      SessionLifecycleObserver(_onLifecycleChange);
   bool _initialized = false;
   bool _isFinalizingSession = false;
 
@@ -55,7 +57,7 @@ class ActiveTimerController with WidgetsBindingObserver {
   Future<void> init() async {
     if (_initialized) return;
     _initialized = true;
-    WidgetsBinding.instance.addObserver(this);
+    _lifecycleObserver.start();
     await _restore();
   }
 
@@ -107,24 +109,18 @@ class ActiveTimerController with WidgetsBindingObserver {
 
   Future<void> skipCurrentTimer() async {
     if (!hasActiveSession || _isFinalizingSession) return;
-    final skipped = _state.currentTimer;
+    final SessionTimer? skipped = _state.currentTimer;
     if (skipped != null) {
-      final actual = _resolveElapsed(skipped);
+      final Duration actual = elapsedIn(skipped.plannedDuration, _state.remaining);
       _state.accrueWork(skipped, actual);
       await _markTimerSkipped(skipped, actual);
     }
     await _advanceToNextTimer();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed ||
-        state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.hidden ||
-        state == AppLifecycleState.paused) {
-      runInAction(_syncRunningState);
-      unawaited(_persist());
-    }
+  void _onLifecycleChange() {
+    runInAction(_syncRunningState);
+    unawaited(_persist());
   }
 
   Future<void> _restore() async {
@@ -179,17 +175,13 @@ class ActiveTimerController with WidgetsBindingObserver {
   }
 
   void _startTicker() {
-    _stopTicker();
-    _ticker = Timer.periodic(_tickInterval, (_) {
+    _ticker.start(() {
       runInAction(_syncRunningState);
       unawaited(_persist());
     });
   }
 
-  void _stopTicker() {
-    _ticker?.cancel();
-    _ticker = null;
-  }
+  void _stopTicker() => _ticker.stop();
 
   void _syncRunningState() {
     if (_isFinalizingSession ||
@@ -210,47 +202,44 @@ class ActiveTimerController with WidgetsBindingObserver {
   }
 
   void _advanceAcrossElapsedTime(Duration overshoot) {
-    var extra = overshoot;
+    final List<TimerTransition> transitions = planAdvance(
+      overshoot: overshoot,
+      currentIndex: _state.currentIndex,
+      durations: <Duration>[
+        for (final SessionTimer timer in _state.timers) timer.plannedDuration,
+      ],
+    );
 
-    while (_state.session != null) {
-      final completedTimer = _state.currentTimer;
-      final nextIndex = _state.currentIndex + 1;
-      if (nextIndex >= _state.timers.length) {
-        final sessionTitle =
-            _state.session?.title ?? completedTimer?.title ?? '';
-        unawaited(
-          _finalizeSessionNaturally(
-            completedTimer: completedTimer,
-            sessionTitle: sessionTitle,
-          ),
-        );
-        return;
+    for (final TimerTransition transition in transitions) {
+      switch (transition) {
+        case TimerCompleted(:final int completedIndex, :final int nextIndex):
+          final SessionTimer completedTimer = _state.timers[completedIndex];
+          final SessionTimer nextTimer = _state.timers[nextIndex];
+          _state.currentIndex = nextIndex;
+          _state.accrueWork(completedTimer, completedTimer.plannedDuration);
+          unawaited(_markTimerCompleted(completedTimer));
+          unawaited(
+            _timerAlertService.notifyTimerFinished(
+              timerTitle: completedTimer.title,
+              nextTimerTitle: nextTimer.title,
+            ),
+          );
+        case SettleOn(:final int index, :final Duration remaining):
+          _state
+            ..currentIndex = index
+            ..remaining = remaining
+            ..endsAt = DateTime.now().add(remaining);
+        case SessionFinished(:final int completedIndex):
+          final SessionTimer completedTimer = _state.timers[completedIndex];
+          final String sessionTitle =
+              _state.session?.title ?? completedTimer.title;
+          unawaited(
+            _finalizeSessionNaturally(
+              completedTimer: completedTimer,
+              sessionTitle: sessionTitle,
+            ),
+          );
       }
-
-      _state.currentIndex = nextIndex;
-      final nextTimer = _state.timers[_state.currentIndex];
-      final nextDuration = nextTimer.plannedDuration;
-
-      if (completedTimer != null) {
-        _state.accrueWork(completedTimer, completedTimer.plannedDuration);
-        unawaited(_markTimerCompleted(completedTimer));
-        unawaited(
-          _timerAlertService.notifyTimerFinished(
-            timerTitle: completedTimer.title,
-            nextTimerTitle: nextTimer.title,
-          ),
-        );
-      }
-
-      if (extra < nextDuration) {
-        final nextRemaining = nextDuration - extra;
-        _state
-          ..remaining = nextRemaining
-          ..endsAt = DateTime.now().add(nextRemaining);
-        return;
-      }
-
-      extra -= nextDuration;
     }
   }
 
@@ -371,10 +360,4 @@ class ActiveTimerController with WidgetsBindingObserver {
     _stateStore.clear();
   }
 
-  Duration _resolveElapsed(SessionTimer timer) {
-    final elapsed = timer.plannedDuration - _state.remaining;
-    if (elapsed <= Duration.zero) return Duration.zero;
-    if (elapsed >= timer.plannedDuration) return timer.plannedDuration;
-    return elapsed;
-  }
 }
