@@ -42,4 +42,11 @@ class Prefs {
   set notificationsEnabled(bool value) {
     _prefs.setBool(_notificationsEnabledKey, value);
   }
+
+  static const String _manualPhaseSwitchKey = 'manual_phase_switch';
+  bool get manualPhaseSwitch =>
+      _prefs.getBool(_manualPhaseSwitchKey) ?? false;
+  set manualPhaseSwitch(bool value) {
+    _prefs.setBool(_manualPhaseSwitchKey, value);
+  }
 }

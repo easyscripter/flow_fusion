@@ -8,6 +8,7 @@ import 'package:flow_fusion/enums/timer_status.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
+import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/model/datasources/local/timer_state_store.dart';
 import 'package:flow_fusion/model/entity/active_timer_state.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
@@ -26,6 +27,7 @@ class ActiveTimerController {
     this._focusLogDao,
     this._stateStore,
     this._timerAlertService,
+    this._prefs,
   );
 
   final SessionDao _sessionDao;
@@ -33,6 +35,7 @@ class ActiveTimerController {
   final FocusLogDao _focusLogDao;
   final TimerStateStore _stateStore;
   final TimerAlertService _timerAlertService;
+  final Prefs _prefs;
 
   final ActiveTimerState _state = ActiveTimerState();
 
@@ -53,6 +56,9 @@ class ActiveTimerController {
   SessionTimer? get currentTimer => _state.currentTimer;
   double get progress => _state.progress;
   String get formattedRemaining => _state.formattedRemaining;
+  bool get awaitingManualAdvance => _state.awaitingManualAdvance;
+
+  bool get _hasNextTimer => _state.currentIndex + 1 < _state.timers.length;
 
   Future<void> init() async {
     if (_initialized) return;
@@ -77,6 +83,7 @@ class ActiveTimerController {
         ..currentIndex = 0
         ..remaining = firstDuration
         ..isPaused = false
+        ..awaitingManualAdvance = false
         ..runWorkMs = 0
         ..endsAt = DateTime.now().add(firstDuration);
     });
@@ -85,7 +92,9 @@ class ActiveTimerController {
   }
 
   Future<void> pause() async {
-    if (!hasActiveSession || _state.isPaused) return;
+    if (!hasActiveSession || _state.isPaused || _state.awaitingManualAdvance) {
+      return;
+    }
     runInAction(() {
       _syncRunningState();
       _state
@@ -108,14 +117,47 @@ class ActiveTimerController {
   }
 
   Future<void> skipCurrentTimer() async {
-    if (!hasActiveSession || _isFinalizingSession) return;
+    if (!hasActiveSession ||
+        _isFinalizingSession ||
+        _state.awaitingManualAdvance) {
+      return;
+    }
     final SessionTimer? skipped = _state.currentTimer;
     if (skipped != null) {
-      final Duration actual = elapsedIn(skipped.plannedDuration, _state.remaining);
+      final Duration actual = elapsedIn(
+        skipped.plannedDuration,
+        _state.remaining,
+      );
       _state.accrueWork(skipped, actual);
       await _markTimerSkipped(skipped, actual);
     }
     await _advanceToNextTimer();
+  }
+
+  Future<void> advanceToNextPhaseManually() async {
+    if (!hasActiveSession ||
+        _isFinalizingSession ||
+        !_state.awaitingManualAdvance) {
+      return;
+    }
+
+    final int nextIndex = _state.currentIndex + 1;
+    if (nextIndex >= _state.timers.length) {
+      await _clearState(markSessionCompleted: true);
+      return;
+    }
+
+    runInAction(() {
+      final Duration nextDuration = _state.timers[nextIndex].plannedDuration;
+      _state
+        ..awaitingManualAdvance = false
+        ..currentIndex = nextIndex
+        ..remaining = nextDuration
+        ..isPaused = false
+        ..endsAt = DateTime.now().add(nextDuration);
+    });
+    _startTicker();
+    await _persist();
   }
 
   void _onLifecycleChange() {
@@ -134,6 +176,21 @@ class ActiveTimerController {
           timers.isEmpty ||
           persisted.currentIndex >= timers.length) {
         await _clearState();
+        return;
+      }
+
+      if (persisted.awaitingManualAdvance) {
+        runInAction(() {
+          _state
+            ..session = session
+            ..timers = timers
+            ..currentIndex = persisted.currentIndex
+            ..isPaused = false
+            ..runWorkMs = persisted.runWorkMs
+            ..remaining = Duration.zero
+            ..endsAt = null
+            ..awaitingManualAdvance = true;
+        });
         return;
       }
 
@@ -187,6 +244,7 @@ class ActiveTimerController {
     if (_isFinalizingSession ||
         !hasActiveSession ||
         _state.isPaused ||
+        _state.awaitingManualAdvance ||
         _state.endsAt == null) {
       return;
     }
@@ -198,7 +256,33 @@ class ActiveTimerController {
       return;
     }
 
+    if (_prefs.manualPhaseSwitch && _hasNextTimer) {
+      _enterManualHold();
+      return;
+    }
+
     _advanceAcrossElapsedTime(now.difference(_state.endsAt!));
+  }
+
+  void _enterManualHold() {
+    final int completedIndex = _state.currentIndex;
+    final SessionTimer completedTimer = _state.timers[completedIndex];
+    final SessionTimer nextTimer = _state.timers[completedIndex + 1];
+
+    _state.accrueWork(completedTimer, completedTimer.plannedDuration);
+    _state
+      ..remaining = Duration.zero
+      ..endsAt = null
+      ..awaitingManualAdvance = true;
+    _stopTicker();
+
+    unawaited(_markTimerCompleted(completedTimer));
+    unawaited(
+      _timerAlertService.notifyTimerFinished(
+        timerTitle: completedTimer.title,
+        nextTimerTitle: nextTimer.title,
+      ),
+    );
   }
 
   void _advanceAcrossElapsedTime(Duration overshoot) {
@@ -359,5 +443,4 @@ class ActiveTimerController {
     _state.reset();
     _stateStore.clear();
   }
-
 }

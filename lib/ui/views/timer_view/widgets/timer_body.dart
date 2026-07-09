@@ -117,39 +117,54 @@ class TimerBody extends StatelessWidget {
                             alignment: WrapAlignment.center,
                             spacing: AppSizes.paddingSmall,
                             runSpacing: AppSizes.paddingSmall,
-                            children: [
-                              SizedBox(
-                                width: 176,
-                                height: 48,
-                                child: AppButton(
-                                  label: state.isPaused
-                                      ? context.l10n.timerResume
-                                      : context.l10n.timerPause,
-                                  icon: state.isPaused
-                                      ? Icons.play_arrow_rounded
-                                      : Icons.pause_rounded,
-                                  onPressed: () async {
-                                    if (state.isPaused) {
-                                      await controller.resume();
-                                      return;
-                                    }
-                                    await controller.pause();
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 176,
-                                height: 48,
-                                child: AppButton(
-                                  label: context.l10n.timerSkip,
-                                  icon: Icons.skip_next_rounded,
-                                  variant: AppButtonVariant.secondary,
-                                  onPressed: () async {
-                                    await controller.skipCurrentTimer();
-                                  },
-                                ),
-                              ),
-                            ],
+                            children: state.awaitingManualAdvance
+                                ? [
+                                    SizedBox(
+                                      width: 176,
+                                      height: 48,
+                                      child: AppButton(
+                                        label: context.l10n.timerNextPhase,
+                                        icon: Icons.arrow_forward_rounded,
+                                        onPressed: () async {
+                                          await controller
+                                              .advanceToNextPhaseManually();
+                                        },
+                                      ),
+                                    ),
+                                  ]
+                                : [
+                                    SizedBox(
+                                      width: 176,
+                                      height: 48,
+                                      child: AppButton(
+                                        label: state.isPaused
+                                            ? context.l10n.timerResume
+                                            : context.l10n.timerPause,
+                                        icon: state.isPaused
+                                            ? Icons.play_arrow_rounded
+                                            : Icons.pause_rounded,
+                                        onPressed: () async {
+                                          if (state.isPaused) {
+                                            await controller.resume();
+                                            return;
+                                          }
+                                          await controller.pause();
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 176,
+                                      height: 48,
+                                      child: AppButton(
+                                        label: context.l10n.timerSkip,
+                                        icon: Icons.skip_next_rounded,
+                                        variant: AppButtonVariant.secondary,
+                                        onPressed: () async {
+                                          await controller.skipCurrentTimer();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                           ),
                           const SizedBox(height: AppSizes.paddingLarge),
                           Align(

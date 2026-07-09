@@ -76,6 +76,9 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Выберите предпочитаемый язык",
 
+  "settingsSectionTimer": "Таймер",
+  "settingsManualPhaseSwitch": "Ручное переключение фаз",
+  "settingsManualPhaseSwitchDescription": "Когда включено, фазы не переключаются автоматически — вы сами нажимаете «Следующая фаза», чтобы перейти дальше. Когда выключено, таймеры работают в автоматическом режиме.",
   "settingsSectionNotifications": "Уведомления",
   "settingsNotificationsEnabled": "Уведомления таймера",
   "settingsNotificationsDescription": "Показывать уведомление, когда таймер или сессия завершаются. Если уведомления не появляются, включите их для Flow Fusion в системных настройках.",
@@ -140,6 +143,7 @@
   "timerPause": "Пауза",
   "timerResume": "Продолжить",
   "timerSkip": "Пропустить",
+  "timerNextPhase": "Следующая фаза",
   "timerQueueTitle": "Очередь",
   "timerEmptyTitle": "Нет активного таймера",
   "timerEmptyDescription": "Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.",

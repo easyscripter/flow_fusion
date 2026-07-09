@@ -19,15 +19,28 @@ class LogsSettingTile extends StatelessWidget {
       description: context.l10n.settingsLogsDescription,
       control: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           OutlinedButton(
             onPressed: () => _openLogsFolder(context),
-            child: Text(context.l10n.settingsLogsOpenFolder),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
+            ),
+            child: Text(
+              context.l10n.settingsLogsOpenFolder,
+              textAlign: TextAlign.center,
+            ),
           ),
           const SizedBox(height: 8),
           TextButton(
             onPressed: () => _copyDiagnostics(context),
-            child: Text(context.l10n.settingsCopyDiagnostics),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
+            ),
+            child: Text(
+              context.l10n.settingsCopyDiagnostics,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),

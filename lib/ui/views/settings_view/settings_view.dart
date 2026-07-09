@@ -2,6 +2,7 @@ import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/logs_setting_tile.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/manual_phase_switch_setting_tile.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/notifications_setting_tile.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/update_setting_tile.dart';
 import 'package:flow_fusion/ui/widgets/app_dropdown.dart';
@@ -48,6 +49,16 @@ class _SettingsViewState extends State<SettingsView> {
                         Observer(builder: (_) => _buildThemeTile(context)),
                         const Divider(),
                         Observer(builder: (_) => _buildLanguageTile(context)),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    _buildSettingsSection(
+                      context,
+                      title: context.l10n.settingsSectionTimer,
+                      children: [
+                        ManualPhaseSwitchSettingTile(
+                          appViewModel: _appViewModel,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 24),

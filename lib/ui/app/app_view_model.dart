@@ -27,6 +27,9 @@ abstract class _AppViewModelBase with Store {
   @observable
   bool notificationsEnabled = true;
 
+  @observable
+  bool manualPhaseSwitch = false;
+
   /// Whether the OS currently allows notifications.
   @observable
   bool notificationsGranted = true;
@@ -42,6 +45,7 @@ abstract class _AppViewModelBase with Store {
     final languageCode = prefs.language ?? 'en';
     locale = Locale(languageCode);
     notificationsEnabled = prefs.notificationsEnabled;
+    manualPhaseSwitch = prefs.manualPhaseSwitch;
     await refreshNotificationsPermission();
     _lifecycleListener ??= AppLifecycleListener(
       onResume: refreshNotificationsPermission,
@@ -79,6 +83,12 @@ abstract class _AppViewModelBase with Store {
       await _timerAlertService.sendTestNotification();
     }
     return granted;
+  }
+
+  @action
+  void setManualPhaseSwitch(bool value) {
+    prefs.manualPhaseSwitch = value;
+    manualPhaseSwitch = value;
   }
 
   Future<void> openSystemNotificationSettings() =>

@@ -186,6 +186,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguageDescription => 'Choose your preferred language';
 
   @override
+  String get settingsSectionTimer => 'Timer';
+
+  @override
+  String get settingsManualPhaseSwitch => 'Manual phase switching';
+
+  @override
+  String get settingsManualPhaseSwitchDescription =>
+      'When on, phases don\'t switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.';
+
+  @override
   String get settingsSectionNotifications => 'Notifications';
 
   @override
@@ -334,6 +344,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timerSkip => 'Skip';
+
+  @override
+  String get timerNextPhase => 'Next phase';
 
   @override
   String get timerQueueTitle => 'Route';

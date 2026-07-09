@@ -434,6 +434,24 @@ abstract class AppLocalizations {
   /// **'Choose your preferred language'**
   String get settingsLanguageDescription;
 
+  /// No description provided for @settingsSectionTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get settingsSectionTimer;
+
+  /// No description provided for @settingsManualPhaseSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual phase switching'**
+  String get settingsManualPhaseSwitch;
+
+  /// No description provided for @settingsManualPhaseSwitchDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'When on, phases don\'t switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.'**
+  String get settingsManualPhaseSwitchDescription;
+
   /// No description provided for @settingsSectionNotifications.
   ///
   /// In en, this message translates to:
@@ -715,6 +733,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Skip'**
   String get timerSkip;
+
+  /// No description provided for @timerNextPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Next phase'**
+  String get timerNextPhase;
 
   /// No description provided for @timerQueueTitle.
   ///

@@ -187,6 +187,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguageDescription => 'Выберите предпочитаемый язык';
 
   @override
+  String get settingsSectionTimer => 'Таймер';
+
+  @override
+  String get settingsManualPhaseSwitch => 'Ручное переключение фаз';
+
+  @override
+  String get settingsManualPhaseSwitchDescription =>
+      'Когда включено, фазы не переключаются автоматически — вы сами нажимаете «Следующая фаза», чтобы перейти дальше. Когда выключено, таймеры работают в автоматическом режиме.';
+
+  @override
   String get settingsSectionNotifications => 'Уведомления';
 
   @override
@@ -336,6 +346,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get timerSkip => 'Пропустить';
+
+  @override
+  String get timerNextPhase => 'Следующая фаза';
 
   @override
   String get timerQueueTitle => 'Очередь';

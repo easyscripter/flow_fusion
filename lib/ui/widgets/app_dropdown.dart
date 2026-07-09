@@ -33,6 +33,7 @@ class AppDropdown<T> extends StatelessWidget {
           isExpanded: true,
           icon: const Icon(Icons.keyboard_arrow_down),
           dropdownColor: Theme.of(context).colorScheme.surface,
+          focusColor: Colors.transparent,
         ),
       ),
     );

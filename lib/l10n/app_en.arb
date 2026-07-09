@@ -76,6 +76,9 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Choose your preferred language",
 
+  "settingsSectionTimer": "Timer",
+  "settingsManualPhaseSwitch": "Manual phase switching",
+  "settingsManualPhaseSwitchDescription": "When on, phases don't switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.",
   "settingsSectionNotifications": "Notifications",
   "settingsNotificationsEnabled": "Timer notifications",
   "settingsNotificationsDescription": "Show a notification when a timer or session finishes. If notifications don't appear, enable them for Flow Fusion in your system settings.",
@@ -140,6 +143,7 @@
   "timerPause": "Pause",
   "timerResume": "Resume",
   "timerSkip": "Skip",
+  "timerNextPhase": "Next phase",
   "timerQueueTitle": "Route",
   "timerEmptyTitle": "No active timer",
   "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
