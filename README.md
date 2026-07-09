@@ -23,12 +23,30 @@ year-long focus heatmap.
 
 - **Focus sessions** — create sessions as sequences of Work and Chill timers.
 - **Run controls** — start, pause, resume, and skip; state is restored on restart.
+- **Focus blocking** — automatically close distracting apps (Windows & macOS) and block websites (Windows) while a Work timer runs.
 - **Desktop notifications** — alerts when a timer or a session completes.
 - **Analytics** — total sessions, total / today focus time, average session, and a year-long focus heatmap.
 - **System tray** — close to tray and keep timers running; show window or quit from the tray.
 - **Themes & languages** — system / light / dark themes, English and Russian.
 - **Automatic updates (OTA)** — in-app update banner with a localized "What's new" changelog, plus a manual "Check for updates".
 - **Built-in diagnostics** — file logging and a one-click log / diagnostics export in Settings.
+
+### Focus blocking
+
+During **Work** phases Flow Fusion can automatically get distractions out of the
+way. Both lists are configured per session in the editor and only apply while a
+Work timer is actively running — never during Chill, while paused, or on a manual
+phase hold. When the Work phase ends, everything is released.
+
+- **Apps** (Windows & macOS) — pick apps to block (Windows: choose the `.exe`;
+  macOS: pick from installed apps). Flow Fusion asks them to quit *gracefully*
+  (Windows: `WM_CLOSE` + minimize; macOS: quit + hide — no force-kill), and
+  re-closes them if reopened mid-phase. It never closes itself.
+- **Websites** (Windows only for now) — enter domains to block. While a Work
+  phase runs they are redirected to a dead end (`127.0.0.1` / `::1`) in the
+  system `hosts` file, so **every browser is covered at once**. Editing `hosts`
+  requires administrator rights, so the Windows build requests elevation (a UAC
+  prompt) at launch. macOS website blocking is not available yet.
 
 ## Platforms
 
