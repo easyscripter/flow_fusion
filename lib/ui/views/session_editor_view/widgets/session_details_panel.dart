@@ -2,7 +2,7 @@ import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view_model.dart';
-import 'package:flow_fusion/ui/widgets/session_icon_picker.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_icon_picker.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

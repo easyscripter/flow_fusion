@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
-import 'package:flow_fusion/ui/widgets/setting_row.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/setting_row.dart';
 import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,7 +1,7 @@
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/notification_permission_dialog.dart';
-import 'package:flow_fusion/ui/widgets/setting_row.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/setting_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

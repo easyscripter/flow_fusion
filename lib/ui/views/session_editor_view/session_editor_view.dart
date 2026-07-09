@@ -1,9 +1,9 @@
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view_model.dart';
-import 'package:flow_fusion/ui/widgets/session_details_panel.dart';
-import 'package:flow_fusion/ui/widgets/session_editor_header_actions.dart';
-import 'package:flow_fusion/ui/widgets/session_timers_section.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_details_panel.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_editor_header_actions.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_timers_section.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

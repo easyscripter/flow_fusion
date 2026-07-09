@@ -1,7 +1,7 @@
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
-import 'package:flow_fusion/ui/widgets/session_card.dart';
+import 'package:flow_fusion/ui/views/sessions_view/widgets/session_card.dart';
 import 'package:flutter/material.dart';
 
 /// Адаптивная сетка карточек сессий.

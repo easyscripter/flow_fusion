@@ -1,5 +1,5 @@
 import 'package:flow_fusion/ui/constants/session_icons.dart';
-import 'package:flow_fusion/ui/widgets/session_icon_option.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_icon_option.dart';
 import 'package:flutter/material.dart';
 
 class SessionIconPicker extends StatelessWidget {

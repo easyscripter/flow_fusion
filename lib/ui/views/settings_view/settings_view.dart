@@ -8,7 +8,7 @@ import 'package:flow_fusion/ui/widgets/app_dropdown.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 
-import 'package:flow_fusion/ui/widgets/setting_row.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/setting_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';

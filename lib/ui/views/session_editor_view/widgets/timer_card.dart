@@ -2,10 +2,10 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
-import 'package:flow_fusion/ui/widgets/timer_description_field.dart';
-import 'package:flow_fusion/ui/widgets/timer_minutes_field.dart';
-import 'package:flow_fusion/ui/widgets/timer_title_field.dart';
-import 'package:flow_fusion/ui/widgets/timer_type_icon.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/timer_description_field.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/timer_minutes_field.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/timer_title_field.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/timer_type_icon.dart';
 import 'package:flutter/material.dart';
 
 class TimerCard extends StatelessWidget {

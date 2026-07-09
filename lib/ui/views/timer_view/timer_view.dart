@@ -1,6 +1,6 @@
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_body.dart';
-import 'package:flow_fusion/ui/widgets/timer_empty_state.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/timer_empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
