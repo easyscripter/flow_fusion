@@ -920,6 +920,60 @@ abstract class AppLocalizations {
   /// **'Remove timer'**
   String get sessionEditorRemoveTimer;
 
+  /// No description provided for @sessionEditorBlockedAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked apps'**
+  String get sessionEditorBlockedAppsTitle;
+
+  /// No description provided for @sessionEditorBlockedAppsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed automatically during work phases.'**
+  String get sessionEditorBlockedAppsSubtitle;
+
+  /// No description provided for @sessionEditorAddBlockedApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Add app'**
+  String get sessionEditorAddBlockedApp;
+
+  /// No description provided for @sessionEditorNoBlockedApps.
+  ///
+  /// In en, this message translates to:
+  /// **'No apps selected. Add one to close it during work phases.'**
+  String get sessionEditorNoBlockedApps;
+
+  /// No description provided for @sessionEditorRemoveBlockedApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove app'**
+  String get sessionEditorRemoveBlockedApp;
+
+  /// No description provided for @sessionEditorCannotBlockSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t block Flow Fusion itself.'**
+  String get sessionEditorCannotBlockSelf;
+
+  /// No description provided for @blockedAppsPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an application'**
+  String get blockedAppsPickerTitle;
+
+  /// No description provided for @blockedAppsPickerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No applications found.'**
+  String get blockedAppsPickerEmpty;
+
+  /// No description provided for @blockedAppsPickerCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get blockedAppsPickerCancel;
+
   /// No description provided for @sessionEditorSave.
   ///
   /// In en, this message translates to:

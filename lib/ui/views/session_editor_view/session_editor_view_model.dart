@@ -1,6 +1,7 @@
 import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
+import 'package:flow_fusion/model/entity/blocked_app.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
@@ -48,6 +49,9 @@ abstract class _SessionEditorViewModelBase with Store {
   @observable
   ObservableList<TimerDraft> timers = ObservableList<TimerDraft>();
 
+  @observable
+  ObservableList<BlockedApp> blockedApps = ObservableList<BlockedApp>();
+
   @computed
   bool get isEditing => _editingId != null;
 
@@ -81,6 +85,7 @@ abstract class _SessionEditorViewModelBase with Store {
       title = session.title;
       description = session.description ?? '';
       icon = session.icon;
+      blockedApps = ObservableList<BlockedApp>.of(session.blockedApps);
 
       final exisitinTimers = await _timerDao.findTimersBySessionId(sessionId);
       timers = ObservableList<TimerDraft>.of([
@@ -112,6 +117,19 @@ abstract class _SessionEditorViewModelBase with Store {
 
   @action
   void removeTimer(TimerDraft draft) => timers.remove(draft);
+
+  @action
+  void addBlockedApp(BlockedApp app) {
+    final bool alreadyAdded = blockedApps.any(
+      (BlockedApp existing) =>
+          existing.bundleId == app.bundleId &&
+          existing.executable == app.executable,
+    );
+    if (!alreadyAdded) blockedApps.add(app);
+  }
+
+  @action
+  void removeBlockedApp(BlockedApp app) => blockedApps.remove(app);
 
   @action
   void reorder(int oldIndex, int newIndex) {
@@ -149,16 +167,19 @@ abstract class _SessionEditorViewModelBase with Store {
           status: current.status,
           createdAt: current.createdAt,
           updatedAt: DateTime.now(),
+          completedAt: current.completedAt,
+          blockedApps: blockedApps.toList(),
         );
         await _sessionDao.updateSession(updated);
         sessionId = _editingId!;
-        // Delete only idle timers — completed/skipped rows are analytics history.
-        await _timerDao.deleteIdleTimersForSession(sessionId);
+
+        await _timerDao.deleteTimersForSession(sessionId);
       } else {
         final created = Session.create(
           title: title.trim(),
           description: descriptionValue,
           icon: icon,
+          blockedApps: blockedApps.toList(),
         );
         sessionId = await _sessionDao.insertSession(created);
       }

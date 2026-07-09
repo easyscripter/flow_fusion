@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:flow_fusion/controllers/app_blocker_service.dart';
 import 'package:flow_fusion/controllers/session_lifecycle_observer.dart';
 import 'package:flow_fusion/controllers/session_ticker.dart';
 import 'package:flow_fusion/controllers/session_timeline.dart';
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/enums/timer_status.dart';
+import 'package:flow_fusion/enums/timer_type.dart';
+import 'package:flow_fusion/model/entity/blocked_app.dart';
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
@@ -28,6 +31,7 @@ class ActiveTimerController {
     this._stateStore,
     this._timerAlertService,
     this._prefs,
+    this._appBlocker,
   );
 
   final SessionDao _sessionDao;
@@ -36,6 +40,7 @@ class ActiveTimerController {
   final TimerStateStore _stateStore;
   final TimerAlertService _timerAlertService;
   final Prefs _prefs;
+  final AppBlockerService _appBlocker;
 
   final ActiveTimerState _state = ActiveTimerState();
 
@@ -59,6 +64,21 @@ class ActiveTimerController {
   bool get awaitingManualAdvance => _state.awaitingManualAdvance;
 
   bool get _hasNextTimer => _state.currentIndex + 1 < _state.timers.length;
+
+  void _syncBlockingForCurrentPhase() {
+    final SessionTimer? timer = _state.currentTimer;
+    final List<BlockedApp> apps = _state.session?.blockedApps ?? const <BlockedApp>[];
+    final bool shouldBlock = hasActiveSession &&
+        !_state.isPaused &&
+        !_state.awaitingManualAdvance &&
+        timer?.type == TimerType.work &&
+        apps.isNotEmpty;
+    if (shouldBlock) {
+      _appBlocker.startBlocking(apps);
+    } else {
+      _appBlocker.stopBlocking();
+    }
+  }
 
   Future<void> init() async {
     if (_initialized) return;
@@ -88,6 +108,7 @@ class ActiveTimerController {
         ..endsAt = DateTime.now().add(firstDuration);
     });
     _startTicker();
+    _syncBlockingForCurrentPhase();
     await _persist();
   }
 
@@ -102,6 +123,7 @@ class ActiveTimerController {
         ..endsAt = null;
     });
     _stopTicker();
+    _syncBlockingForCurrentPhase();
     await _persist();
   }
 
@@ -113,6 +135,7 @@ class ActiveTimerController {
         ..endsAt = DateTime.now().add(_state.remaining);
     });
     _startTicker();
+    _syncBlockingForCurrentPhase();
     await _persist();
   }
 
@@ -157,6 +180,7 @@ class ActiveTimerController {
         ..endsAt = DateTime.now().add(nextDuration);
     });
     _startTicker();
+    _syncBlockingForCurrentPhase();
     await _persist();
   }
 
@@ -225,6 +249,7 @@ class ActiveTimerController {
       });
 
       if (shouldStartTicker) _startTicker();
+      _syncBlockingForCurrentPhase();
     } catch (e, s) {
       AppLogger.error('ActiveTimerController.restore', e, s);
       await _clearState();
@@ -276,6 +301,8 @@ class ActiveTimerController {
       ..awaitingManualAdvance = true;
     _stopTicker();
 
+    _syncBlockingForCurrentPhase();
+
     unawaited(_markTimerCompleted(completedTimer));
     unawaited(
       _timerAlertService.notifyTimerFinished(
@@ -325,6 +352,7 @@ class ActiveTimerController {
           );
       }
     }
+    _syncBlockingForCurrentPhase();
   }
 
   Future<void> _finalizeSessionNaturally({
@@ -377,6 +405,7 @@ class ActiveTimerController {
         ..endsAt = DateTime.now().add(nextDuration);
     });
     _startTicker();
+    _syncBlockingForCurrentPhase();
     await _persist();
   }
 
@@ -440,6 +469,7 @@ class ActiveTimerController {
   }
 
   void _resetState() {
+    _appBlocker.stopBlocking();
     _state.reset();
     _stateStore.clear();
   }

@@ -481,6 +481,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionEditorRemoveTimer => 'Remove timer';
 
   @override
+  String get sessionEditorBlockedAppsTitle => 'Blocked apps';
+
+  @override
+  String get sessionEditorBlockedAppsSubtitle =>
+      'Closed automatically during work phases.';
+
+  @override
+  String get sessionEditorAddBlockedApp => 'Add app';
+
+  @override
+  String get sessionEditorNoBlockedApps =>
+      'No apps selected. Add one to close it during work phases.';
+
+  @override
+  String get sessionEditorRemoveBlockedApp => 'Remove app';
+
+  @override
+  String get sessionEditorCannotBlockSelf =>
+      'You can\'t block Flow Fusion itself.';
+
+  @override
+  String get blockedAppsPickerTitle => 'Choose an application';
+
+  @override
+  String get blockedAppsPickerEmpty => 'No applications found.';
+
+  @override
+  String get blockedAppsPickerCancel => 'Cancel';
+
+  @override
   String get sessionEditorSave => 'Save';
 
   @override

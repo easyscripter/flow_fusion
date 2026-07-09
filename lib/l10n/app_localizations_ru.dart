@@ -491,6 +491,36 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sessionEditorRemoveTimer => 'Удалить таймер';
 
   @override
+  String get sessionEditorBlockedAppsTitle => 'Блокируемые приложения';
+
+  @override
+  String get sessionEditorBlockedAppsSubtitle =>
+      'Автоматически закрываются во время фаз работы.';
+
+  @override
+  String get sessionEditorAddBlockedApp => 'Добавить приложение';
+
+  @override
+  String get sessionEditorNoBlockedApps =>
+      'Приложения не выбраны. Добавьте, чтобы закрывать его во время работы.';
+
+  @override
+  String get sessionEditorRemoveBlockedApp => 'Убрать приложение';
+
+  @override
+  String get sessionEditorCannotBlockSelf =>
+      'Нельзя заблокировать сам Flow Fusion.';
+
+  @override
+  String get blockedAppsPickerTitle => 'Выберите приложение';
+
+  @override
+  String get blockedAppsPickerEmpty => 'Приложения не найдены.';
+
+  @override
+  String get blockedAppsPickerCancel => 'Отмена';
+
+  @override
   String get sessionEditorSave => 'Сохранить';
 
   @override

@@ -14,7 +14,7 @@
 
 #define MyAppName "Flow Fusion"
 #define MyAppPublisher "easyscripter"
-#define MyAppExeName "Flow Fusion.exe"
+#define MyAppExeName "flow_fusion.exe"
 #define MyAppUrl "https://github.com/easyscripter/flow_fusion"
 
 #ifndef MyAppVersion

@@ -15,7 +15,7 @@ automatically (OTA), so you only do this once.
    adds a **Start menu** shortcut. Launch Flow Fusion from there.
 
 > Prefer no installer? A portable `Flow Fusion-<version>-windows.zip` is also
-> attached to the release — extract it and run `Flow Fusion.exe`, keeping all the
+> attached to the release — extract it and run `flow_fusion.exe`, keeping all the
 > DLLs and the `data` folder next to it.
 
 ## macOS 10.14+ (Mojave and newer)
