@@ -2,6 +2,7 @@ import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view_model.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/widgets/blocked_apps_section.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/blocked_sites_section.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_details_panel.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_editor_header_actions.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/widgets/session_timers_section.dart';
@@ -86,6 +87,8 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                       ),
                       const SizedBox(height: AppSizes.paddingLarge),
                       BlockedAppsSection(viewModel: _viewModel),
+                      const SizedBox(height: AppSizes.paddingLarge),
+                      BlockedSitesSection(viewModel: _viewModel),
                     ],
                   ),
                 ),

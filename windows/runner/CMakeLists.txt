@@ -37,6 +37,11 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_BUILD=${FLUTT
 # Disable Windows macros that collide with C++ standard library functions.
 target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 
+# The linker embeds its own UAC fragment (requestedExecutionLevel=asInvoker) by
+# default. runner.exe.manifest already declares requireAdministrator, so disable
+# the linker's copy to avoid mt.exe failing on the conflicting entries (LNK1327).
+target_link_options(${BINARY_NAME} PRIVATE "/MANIFESTUAC:NO")
+
 # Add dependency libraries and include directories. Add any application-specific
 # dependencies here.
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)

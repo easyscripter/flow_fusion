@@ -24,6 +24,8 @@ class Session {
 
   List<BlockedApp> blockedApps;
 
+  List<String> blockedSites;
+
   @ignore
   DateTime? get completedAtDateTime =>
       completedAt == null ? null : DateTime.parse(completedAt!);
@@ -38,6 +40,7 @@ class Session {
     required this.updatedAt,
     this.completedAt,
     this.blockedApps = const <BlockedApp>[],
+    this.blockedSites = const <String>[],
   });
 
   factory Session.create({
@@ -46,6 +49,7 @@ class Session {
     String? icon,
     SessionStatus status = SessionStatus.idle,
     List<BlockedApp> blockedApps = const <BlockedApp>[],
+    List<String> blockedSites = const <String>[],
   }) {
     final now = DateTime.now();
     return Session(
@@ -56,6 +60,7 @@ class Session {
       createdAt: now,
       updatedAt: now,
       blockedApps: blockedApps,
+      blockedSites: blockedSites,
     );
   }
 
@@ -66,6 +71,7 @@ class Session {
     SessionStatus? status,
     String? completedAt,
     List<BlockedApp>? blockedApps,
+    List<String>? blockedSites,
   }) {
     return Session(
       id: id,
@@ -77,6 +83,7 @@ class Session {
       updatedAt: DateTime.now(),
       completedAt: completedAt ?? this.completedAt,
       blockedApps: blockedApps ?? this.blockedApps,
+      blockedSites: blockedSites ?? this.blockedSites,
     );
   }
 }

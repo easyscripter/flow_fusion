@@ -512,6 +512,26 @@ class AppLocalizationsRu extends AppLocalizations {
       'Нельзя заблокировать сам Flow Fusion.';
 
   @override
+  String get sessionEditorBlockedSitesTitle => 'Блокируемые сайты';
+
+  @override
+  String get sessionEditorBlockedSitesSubtitle =>
+      'Во время фаз работы перенаправляются в никуда во всех браузерах. Требуются права администратора.';
+
+  @override
+  String get sessionEditorBlockedSitesHint => 'напр. youtube.com';
+
+  @override
+  String get sessionEditorAddBlockedSite => 'Добавить сайт';
+
+  @override
+  String get sessionEditorNoBlockedSites =>
+      'Сайты не добавлены. Введите домен, чтобы блокировать его во время работы.';
+
+  @override
+  String get sessionEditorRemoveBlockedSite => 'Убрать сайт';
+
+  @override
   String get blockedAppsPickerTitle => 'Выберите приложение';
 
   @override

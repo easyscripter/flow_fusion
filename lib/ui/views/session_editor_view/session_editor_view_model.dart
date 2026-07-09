@@ -1,3 +1,4 @@
+import 'package:flow_fusion/controllers/site_blocker_service.dart';
 import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
@@ -52,6 +53,9 @@ abstract class _SessionEditorViewModelBase with Store {
   @observable
   ObservableList<BlockedApp> blockedApps = ObservableList<BlockedApp>();
 
+  @observable
+  ObservableList<String> blockedSites = ObservableList<String>();
+
   @computed
   bool get isEditing => _editingId != null;
 
@@ -86,6 +90,7 @@ abstract class _SessionEditorViewModelBase with Store {
       description = session.description ?? '';
       icon = session.icon;
       blockedApps = ObservableList<BlockedApp>.of(session.blockedApps);
+      blockedSites = ObservableList<String>.of(session.blockedSites);
 
       final exisitinTimers = await _timerDao.findTimersBySessionId(sessionId);
       timers = ObservableList<TimerDraft>.of([
@@ -132,6 +137,16 @@ abstract class _SessionEditorViewModelBase with Store {
   void removeBlockedApp(BlockedApp app) => blockedApps.remove(app);
 
   @action
+  void addBlockedSite(String domain) {
+    final String? normalized = SiteBlockerService.normalizeDomain(domain);
+    if (normalized == null) return;
+    if (!blockedSites.contains(normalized)) blockedSites.add(normalized);
+  }
+
+  @action
+  void removeBlockedSite(String domain) => blockedSites.remove(domain);
+
+  @action
   void reorder(int oldIndex, int newIndex) {
     var target = newIndex;
     if (target > oldIndex) target -= 1;
@@ -169,6 +184,7 @@ abstract class _SessionEditorViewModelBase with Store {
           updatedAt: DateTime.now(),
           completedAt: current.completedAt,
           blockedApps: blockedApps.toList(),
+          blockedSites: blockedSites.toList(),
         );
         await _sessionDao.updateSession(updated);
         sessionId = _editingId!;
@@ -180,6 +196,7 @@ abstract class _SessionEditorViewModelBase with Store {
           description: descriptionValue,
           icon: icon,
           blockedApps: blockedApps.toList(),
+          blockedSites: blockedSites.toList(),
         );
         sessionId = await _sessionDao.insertSession(created);
       }

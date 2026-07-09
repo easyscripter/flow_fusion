@@ -956,6 +956,42 @@ abstract class AppLocalizations {
   /// **'You can\'t block Flow Fusion itself.'**
   String get sessionEditorCannotBlockSelf;
 
+  /// No description provided for @sessionEditorBlockedSitesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked websites'**
+  String get sessionEditorBlockedSitesTitle;
+
+  /// No description provided for @sessionEditorBlockedSitesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Redirected to a dead end in every browser during work phases. Requires administrator rights.'**
+  String get sessionEditorBlockedSitesSubtitle;
+
+  /// No description provided for @sessionEditorBlockedSitesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. youtube.com'**
+  String get sessionEditorBlockedSitesHint;
+
+  /// No description provided for @sessionEditorAddBlockedSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add website'**
+  String get sessionEditorAddBlockedSite;
+
+  /// No description provided for @sessionEditorNoBlockedSites.
+  ///
+  /// In en, this message translates to:
+  /// **'No websites added. Enter a domain to block it during work phases.'**
+  String get sessionEditorNoBlockedSites;
+
+  /// No description provided for @sessionEditorRemoveBlockedSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove website'**
+  String get sessionEditorRemoveBlockedSite;
+
   /// No description provided for @blockedAppsPickerTitle.
   ///
   /// In en, this message translates to:

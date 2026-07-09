@@ -502,6 +502,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'You can\'t block Flow Fusion itself.';
 
   @override
+  String get sessionEditorBlockedSitesTitle => 'Blocked websites';
+
+  @override
+  String get sessionEditorBlockedSitesSubtitle =>
+      'Redirected to a dead end in every browser during work phases. Requires administrator rights.';
+
+  @override
+  String get sessionEditorBlockedSitesHint => 'e.g. youtube.com';
+
+  @override
+  String get sessionEditorAddBlockedSite => 'Add website';
+
+  @override
+  String get sessionEditorNoBlockedSites =>
+      'No websites added. Enter a domain to block it during work phases.';
+
+  @override
+  String get sessionEditorRemoveBlockedSite => 'Remove website';
+
+  @override
   String get blockedAppsPickerTitle => 'Choose an application';
 
   @override

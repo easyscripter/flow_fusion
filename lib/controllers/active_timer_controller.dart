@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flow_fusion/controllers/app_blocker_service.dart';
 import 'package:flow_fusion/controllers/session_lifecycle_observer.dart';
+import 'package:flow_fusion/controllers/site_blocker_service.dart';
 import 'package:flow_fusion/controllers/session_ticker.dart';
 import 'package:flow_fusion/controllers/session_timeline.dart';
 import 'package:flow_fusion/enums/session_status.dart';
@@ -32,6 +33,7 @@ class ActiveTimerController {
     this._timerAlertService,
     this._prefs,
     this._appBlocker,
+    this._siteBlocker,
   );
 
   final SessionDao _sessionDao;
@@ -41,6 +43,7 @@ class ActiveTimerController {
   final TimerAlertService _timerAlertService;
   final Prefs _prefs;
   final AppBlockerService _appBlocker;
+  final SiteBlockerService _siteBlocker;
 
   final ActiveTimerState _state = ActiveTimerState();
 
@@ -67,16 +70,24 @@ class ActiveTimerController {
 
   void _syncBlockingForCurrentPhase() {
     final SessionTimer? timer = _state.currentTimer;
-    final List<BlockedApp> apps = _state.session?.blockedApps ?? const <BlockedApp>[];
-    final bool shouldBlock = hasActiveSession &&
+    final Session? session = _state.session;
+    final bool inWorkPhase = hasActiveSession &&
         !_state.isPaused &&
         !_state.awaitingManualAdvance &&
-        timer?.type == TimerType.work &&
-        apps.isNotEmpty;
-    if (shouldBlock) {
+        timer?.type == TimerType.work;
+
+    final List<BlockedApp> apps = session?.blockedApps ?? const <BlockedApp>[];
+    if (inWorkPhase && apps.isNotEmpty) {
       _appBlocker.startBlocking(apps);
     } else {
       _appBlocker.stopBlocking();
+    }
+
+    final List<String> sites = session?.blockedSites ?? const <String>[];
+    if (inWorkPhase && sites.isNotEmpty) {
+      unawaited(_siteBlocker.startBlocking(sites));
+    } else {
+      unawaited(_siteBlocker.stopBlocking());
     }
   }
 
@@ -84,6 +95,7 @@ class ActiveTimerController {
     if (_initialized) return;
     _initialized = true;
     _lifecycleObserver.start();
+    unawaited(_siteBlocker.stopBlocking());
     await _restore();
   }
 
@@ -470,6 +482,7 @@ class ActiveTimerController {
 
   void _resetState() {
     _appBlocker.stopBlocking();
+    unawaited(_siteBlocker.stopBlocking());
     _state.reset();
     _stateStore.clear();
   }
