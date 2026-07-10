@@ -122,6 +122,20 @@ EncodableList ExtractTokens(const EncodableValue* arguments) {
   return EncodableList();
 }
 
+// Opts the process in/out of Windows' background power throttling
+// (Efficiency Mode / EcoQoS), which otherwise delays our polling timer once
+// the window is minimized to the tray. |disable_throttling| = true keeps the
+// process at normal priority; false restores default OS behavior.
+void SetBackgroundThrottling(bool disable_throttling) {
+  PROCESS_POWER_THROTTLING_STATE state{};
+  state.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
+  state.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+  state.StateMask =
+      disable_throttling ? 0 : PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+  SetProcessInformation(GetCurrentProcess(), ProcessPowerThrottling, &state,
+                         sizeof(state));
+}
+
 }  // namespace
 
 void RegisterAppBlockerChannel(flutter::FlutterEngine* engine) {
@@ -140,6 +154,12 @@ void RegisterAppBlockerChannel(flutter::FlutterEngine* engine) {
           result->Success(EncodableValue(BlockApps(tokens)));
         } else if (call.method_name() == "listInstalledApps") {
           result->Success(EncodableValue(EncodableList()));
+        } else if (call.method_name() == "beginBackgroundExecution") {
+          SetBackgroundThrottling(true);
+          result->Success();
+        } else if (call.method_name() == "endBackgroundExecution") {
+          SetBackgroundThrottling(false);
+          result->Success();
         } else {
           result->NotImplemented();
         }

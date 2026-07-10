@@ -20,6 +20,12 @@ class MainFlutterWindow: NSWindow {
       case "blockApps":
         let tokens = (call.arguments as? [String: Any])?["tokens"] as? [String] ?? []
         result(AppBlocker.blockApps(bundleIds: tokens))
+      case "beginBackgroundExecution":
+        AppBlocker.beginBackgroundExecution()
+        result(nil)
+      case "endBackgroundExecution":
+        AppBlocker.endBackgroundExecution()
+        result(nil)
       default:
         result(FlutterMethodNotImplemented)
       }
@@ -35,6 +41,23 @@ class MainFlutterWindow: NSWindow {
 /// gets the app out of the way.
 enum AppBlocker {
   private static let terminationGrace: TimeInterval = 0.2
+  private static var activityToken: NSObjectProtocol?
+
+  /// Opts the process out of App Nap for the duration of an active work
+  /// session, since a hidden/tray-only window otherwise gets throttled by
+  /// macOS and stops polling for blocked apps in time.
+  static func beginBackgroundExecution() {
+    guard activityToken == nil else { return }
+    activityToken = ProcessInfo.processInfo.beginActivity(
+      options: [.userInitiated, .idleSystemSleepDisabled],
+      reason: "Blocking distracting apps during an active work session")
+  }
+
+  static func endBackgroundExecution() {
+    guard let token = activityToken else { return }
+    ProcessInfo.processInfo.endActivity(token)
+    activityToken = nil
+  }
 
   /// Asks every running app whose bundle id is in [bundleIds] to quit and hides
   /// it. Returns the names acted upon.

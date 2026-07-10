@@ -49,16 +49,35 @@ class AppBlockerService {
     }
     if (_timer != null && listEquals(_activeTokens, tokens)) return;
 
+    final bool wasRunning = _timer != null;
     _activeTokens = tokens;
     _timer?.cancel();
     unawaited(_enforce());
     _timer = Timer.periodic(_interval, (_) => unawaited(_enforce()));
+    if (!wasRunning) {
+      unawaited(_setBackgroundExecution(enabled: true));
+    }
   }
 
   void stopBlocking() {
+    final bool wasRunning = _timer != null;
     _timer?.cancel();
     _timer = null;
     _activeTokens = const <String>[];
+    if (wasRunning) {
+      unawaited(_setBackgroundExecution(enabled: false));
+    }
+  }
+
+  Future<void> _setBackgroundExecution({required bool enabled}) async {
+    if (!_isSupported) return;
+    try {
+      await _channel.invokeMethod<dynamic>(
+        enabled ? 'beginBackgroundExecution' : 'endBackgroundExecution',
+      );
+    } catch (e, s) {
+      AppLogger.error('AppBlockerService.setBackgroundExecution', e, s);
+    }
   }
 
   List<String> _tokensFor(List<BlockedApp> apps) {
