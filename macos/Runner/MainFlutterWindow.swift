@@ -34,6 +34,8 @@ class MainFlutterWindow: NSWindow {
 /// permission, prompted by the system on first use; if denied, `hide()` still
 /// gets the app out of the way.
 enum AppBlocker {
+  private static let terminationGrace: TimeInterval = 0.2
+
   /// Asks every running app whose bundle id is in [bundleIds] to quit and hides
   /// it. Returns the names acted upon.
   static func blockApps(bundleIds: [String]) -> [String] {
@@ -42,15 +44,23 @@ enum AppBlocker {
     let selfBundleId = Bundle.main.bundleIdentifier
     let selfPid = ProcessInfo.processInfo.processIdentifier
     var acted: [String] = []
-    for app in NSWorkspace.shared.runningApplications {
-      guard let bundleId = app.bundleIdentifier, wanted.contains(bundleId) else {
-        continue
+
+    for bundleId in wanted {
+      for app in NSRunningApplication.runningApplications(withBundleIdentifier: bundleId) {
+        // Never close ourselves, even if our bundle id is somehow in the list.
+        if bundleId == selfBundleId || app.processIdentifier == selfPid { continue }
+
+        // Fullscreen apps can sit in a dedicated Space and ignore a hide request
+        // while they remain active. Pull focus back first, then hide and quit.
+        if app.isActive {
+          NSRunningApplication.current.activate(options: [.activateIgnoringOtherApps])
+        }
+
+        app.hide()
+        _ = app.terminate()
+        waitForTermination(of: app, grace: terminationGrace)
+        acted.append(app.localizedName ?? bundleId)
       }
-      // Never close ourselves, even if our bundle id is somehow in the list.
-      if bundleId == selfBundleId || app.processIdentifier == selfPid { continue }
-      app.hide()
-      _ = app.terminate()
-      acted.append(app.localizedName ?? bundleId)
     }
     return acted
   }
@@ -107,5 +117,14 @@ enum AppBlocker {
       let png = rep.representation(using: .png, properties: [:])
     else { return nil }
     return png.base64EncodedString()
+  }
+
+  private static func waitForTermination(of app: NSRunningApplication, grace: TimeInterval) {
+    guard !app.isTerminated else { return }
+
+    let deadline = Date().addingTimeInterval(grace)
+    while !app.isTerminated && deadline.timeIntervalSinceNow > 0 {
+      RunLoop.current.run(mode: .default, before: deadline)
+    }
   }
 }
