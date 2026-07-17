@@ -30,9 +30,16 @@ class UpdateBannerLayout extends StatelessWidget {
         children: [
           Icon(icon, size: 20),
           const SizedBox(width: 12),
-          Expanded(child: Text(message)),
+          Expanded(child: Text(message, overflow: TextOverflow.ellipsis)),
           const SizedBox(width: 12),
-          for (final widget in trailing) ...[widget, const SizedBox(width: 8)],
+          Flexible(
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              spacing: 8,
+              runSpacing: 4,
+              children: trailing,
+            ),
+          ),
         ],
       ),
     );

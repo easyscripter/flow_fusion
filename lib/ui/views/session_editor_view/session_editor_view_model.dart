@@ -188,8 +188,6 @@ abstract class _SessionEditorViewModelBase with Store {
         );
         await _sessionDao.updateSession(updated);
         sessionId = _editingId!;
-
-        await _timerDao.deleteTimersForSession(sessionId);
       } else {
         final created = Session.create(
           title: title.trim(),
@@ -199,7 +197,10 @@ abstract class _SessionEditorViewModelBase with Store {
           blockedSites: blockedSites.toList(),
         );
         sessionId = await _sessionDao.insertSession(created);
+        _editingId = sessionId;
       }
+
+      await _timerDao.deleteTimersForSession(sessionId);
 
       final entities = <SessionTimer>[
         for (var i = 0; i < timers.length; i++)

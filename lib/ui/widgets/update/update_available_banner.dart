@@ -1,4 +1,5 @@
 import 'package:desktop_updater/desktop_updater.dart';
+import 'package:flow_fusion/ui/app/router.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/widgets/update/update_banner_layout.dart';
 import 'package:flow_fusion/ui/widgets/update/update_release_notes_dialog.dart';
@@ -38,8 +39,10 @@ class UpdateAvailableBanner extends StatelessWidget {
   }
 
   void _showWhatsNew(BuildContext context) {
+    final BuildContext? navigatorContext = rootNavigatorKey.currentContext;
+    if (navigatorContext == null) return;
     showDialog<void>(
-      context: context,
+      context: navigatorContext,
       builder: (_) =>
           UpdateReleaseNotesDialog(controller: controller, version: version),
     );
