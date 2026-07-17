@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppLogger {
@@ -19,6 +20,11 @@ class AppLogger {
 
   static Future<void> init() async {
     if (_initialized) return;
+    String version = 'unknown';
+    try {
+      final info = await PackageInfo.fromPlatform();
+      version = '${info.version}+${info.buildNumber}';
+    } catch (_) {}
     try {
       final supportDir = await getApplicationSupportDirectory();
       final dir = Directory('${supportDir.path}${Platform.pathSeparator}logs');
@@ -34,7 +40,10 @@ class AppLogger {
     } finally {
       _initialized = true;
     }
-    info('AppLogger', 'Logging started (file: ${_logFile?.path ?? 'none'})');
+    info(
+      'AppLogger',
+      'Logging started (version: $version, file: ${_logFile?.path ?? 'none'})',
+    );
   }
 
   static void debug(String context, Object? message) =>

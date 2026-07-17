@@ -127,8 +127,16 @@ abstract class _OnboardingControllerBase with Store {
       case OnboardingPhase.sidebar:
         _phase = OnboardingPhase.awaitingEditor;
         // Defer navigation until after the overlay teardown frame.
+        //
+        // The tour starts on Home ('/'), which lives in a different
+        // StatefulShellBranch than the session editor. Imperatively
+        // *pushing* a sub-route that belongs to another branch makes
+        // go_router rebuild the whole StatefulShell on top of itself, so the
+        // sidebar and content render duplicated/overlapping. Using go() to
+        // the editor location activates the sessions branch in place instead
+        // of stacking a second shell.
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          router.push(Routes.sessionNew.path);
+          router.go(Routes.sessionNew.path);
         });
       case OnboardingPhase.editor:
         complete();
