@@ -1,5 +1,16 @@
 # Installing Flow Fusion
 
+## What's new in 1.0.1
+
+- Fixed a crash when saving a session caused by duplicate timer positions.
+- "What's new" in the update banner now opens correctly.
+- Fixed onboarding showing a duplicated, overlapping window.
+- Starter example sessions now appear reliably on first launch.
+- The update banner no longer overflows on narrow windows.
+- The app version is now recorded in the log file for easier diagnostics.
+
+---
+
 Flow Fusion builds are **not code-signed**, so Windows and macOS show a
 warning the first time you run the app. This is expected — follow the steps
 below to launch it. After the first launch, the app updates itself

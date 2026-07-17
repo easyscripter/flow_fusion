@@ -2,28 +2,17 @@
   "schemaVersion": 1,
   "format": "desktop_updater.release_notes.v1",
   "locale": "en",
-  "summary": "Flow Fusion 1.0 — the first stable release.",
+  "summary": "Flow Fusion 1.0.1 — stability fixes.",
   "sections": [
-    {
-      "type": "features",
-      "items": [
-        { "body": "Focus sessions with customizable Work and Chill phases — build your own or start from a ready-made template." },
-        { "body": "Session editor with per-session focus rules and manual phase switching." },
-        { "body": "Focus blocking: distracting apps are closed gracefully (Windows & macOS) and websites are blocked (Windows) during Work phases." },
-        { "body": "Activity heatmap calendar to track your focus streaks." },
-        { "body": "Guided onboarding with in-app tips for first-time users." },
-        { "body": "English and Russian localization." },
-        { "body": "System tray, desktop notifications and native window controls." },
-        { "body": "Automatic updates (OTA) with an in-app update banner, plus \"Check for updates\" and \"What's new\" in Settings." },
-        { "body": "Crash-safe startup: global error handling, file logging and one-click diagnostics export in Settings." }
-      ]
-    },
     {
       "type": "fixes",
       "items": [
-        { "body": "Focus blocking now also covers apps running in fullscreen." },
-        { "body": "More reliable app blocking when a blocked app is reopened mid-phase." },
-        { "body": "Fixed a crash when upgrading the database from an older version (v2 to v3 migration)." }
+        { "body": "Fixed a crash when saving a session caused by duplicate timer positions." },
+        { "body": "\"What's new\" in the update banner now opens correctly." },
+        { "body": "Fixed onboarding showing a duplicated, overlapping window." },
+        { "body": "Starter example sessions now appear reliably on first launch." },
+        { "body": "The update banner no longer overflows on narrow windows." },
+        { "body": "The app version is now recorded in the log file for easier diagnostics." }
       ]
     }
   ]
