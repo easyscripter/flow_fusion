@@ -593,4 +593,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String onboardingStepCounter(int current, int total) {
     return 'Step $current of $total';
   }
+
+  @override
+  String get onboardingBrandTitle => 'This is Flow Fusion';
+
+  @override
+  String get onboardingBrandDescription =>
+      'Your workspace for deep focus sessions. Let\'s take a quick look around.';
+
+  @override
+  String get onboardingNavOverviewTitle => 'Overview';
+
+  @override
+  String get onboardingNavOverviewDescription =>
+      'Your dashboard — see your progress and start a session at a glance.';
+
+  @override
+  String get onboardingNavSessionsTitle => 'Sessions';
+
+  @override
+  String get onboardingNavSessionsDescription =>
+      'Create and manage focus sessions: timers, blocked apps and sites.';
+
+  @override
+  String get onboardingNavSettingsTitle => 'Settings';
+
+  @override
+  String get onboardingNavSettingsDescription =>
+      'Tweak the app to your liking — and replay this tour whenever you want.';
 }

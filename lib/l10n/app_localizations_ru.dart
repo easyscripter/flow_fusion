@@ -606,4 +606,32 @@ class AppLocalizationsRu extends AppLocalizations {
   String onboardingStepCounter(int current, int total) {
     return 'Шаг $current из $total';
   }
+
+  @override
+  String get onboardingBrandTitle => 'Это Flow Fusion';
+
+  @override
+  String get onboardingBrandDescription =>
+      'Ваше пространство для сессий глубокого фокуса. Давайте быстро осмотримся.';
+
+  @override
+  String get onboardingNavOverviewTitle => 'Обзор';
+
+  @override
+  String get onboardingNavOverviewDescription =>
+      'Ваша панель — прогресс и запуск сессии одним взглядом.';
+
+  @override
+  String get onboardingNavSessionsTitle => 'Сессии';
+
+  @override
+  String get onboardingNavSessionsDescription =>
+      'Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.';
+
+  @override
+  String get onboardingNavSettingsTitle => 'Настройки';
+
+  @override
+  String get onboardingNavSettingsDescription =>
+      'Настройте приложение под себя — и повторите этот тур в любой момент.';
 }

@@ -5,6 +5,12 @@ import 'package:mobx/mobx.dart';
 
 part 'onboarding_controller.g.dart';
 
+/// Total number of steps across the whole onboarding tour: 4 sidebar steps
+/// (brand, overview, sessions, settings) + 5 editor steps (details, timers,
+/// blocked apps, blocked sites, save). Used by [OnboardingTooltip] to render
+/// the "step N of M" counter as a single continuous flow.
+const int kOnboardingTotalSteps = 9;
+
 @lazySingleton
 class OnboardingController = _OnboardingControllerBase
     with _$OnboardingController;

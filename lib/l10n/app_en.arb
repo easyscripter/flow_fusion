@@ -276,5 +276,13 @@
         "type": "int"
       }
     }
-  }
+  },
+  "onboardingBrandTitle": "This is Flow Fusion",
+  "onboardingBrandDescription": "Your workspace for deep focus sessions. Let's take a quick look around.",
+  "onboardingNavOverviewTitle": "Overview",
+  "onboardingNavOverviewDescription": "Your dashboard — see your progress and start a session at a glance.",
+  "onboardingNavSessionsTitle": "Sessions",
+  "onboardingNavSessionsDescription": "Create and manage focus sessions: timers, blocked apps and sites.",
+  "onboardingNavSettingsTitle": "Settings",
+  "onboardingNavSettingsDescription": "Tweak the app to your liking — and replay this tour whenever you want."
 }

@@ -1129,6 +1129,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Step {current} of {total}'**
   String onboardingStepCounter(int current, int total);
+
+  /// No description provided for @onboardingBrandTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is Flow Fusion'**
+  String get onboardingBrandTitle;
+
+  /// No description provided for @onboardingBrandDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspace for deep focus sessions. Let\'s take a quick look around.'**
+  String get onboardingBrandDescription;
+
+  /// No description provided for @onboardingNavOverviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get onboardingNavOverviewTitle;
+
+  /// No description provided for @onboardingNavOverviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your dashboard — see your progress and start a session at a glance.'**
+  String get onboardingNavOverviewDescription;
+
+  /// No description provided for @onboardingNavSessionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get onboardingNavSessionsTitle;
+
+  /// No description provided for @onboardingNavSessionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and manage focus sessions: timers, blocked apps and sites.'**
+  String get onboardingNavSessionsDescription;
+
+  /// No description provided for @onboardingNavSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get onboardingNavSettingsTitle;
+
+  /// No description provided for @onboardingNavSettingsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tweak the app to your liking — and replay this tour whenever you want.'**
+  String get onboardingNavSettingsDescription;
 }
 
 class _AppLocalizationsDelegate

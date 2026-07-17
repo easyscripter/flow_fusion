@@ -266,5 +266,13 @@
   "onboardingBack": "Назад",
   "onboardingNext": "Далее",
   "onboardingSkip": "Пропустить",
-  "onboardingStepCounter": "Шаг {current} из {total}"
+  "onboardingStepCounter": "Шаг {current} из {total}",
+  "onboardingBrandTitle": "Это Flow Fusion",
+  "onboardingBrandDescription": "Ваше пространство для сессий глубокого фокуса. Давайте быстро осмотримся.",
+  "onboardingNavOverviewTitle": "Обзор",
+  "onboardingNavOverviewDescription": "Ваша панель — прогресс и запуск сессии одним взглядом.",
+  "onboardingNavSessionsTitle": "Сессии",
+  "onboardingNavSessionsDescription": "Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.",
+  "onboardingNavSettingsTitle": "Настройки",
+  "onboardingNavSettingsDescription": "Настройте приложение под себя — и повторите этот тур в любой момент."
 }
