@@ -1,6 +1,6 @@
-# Installing Flow Fusion (Beta)
+# Installing Flow Fusion
 
-Flow Fusion beta builds are **not code-signed**, so Windows and macOS show a
+Flow Fusion builds are **not code-signed**, so Windows and macOS show a
 warning the first time you run the app. This is expected — follow the steps
 below to launch it. After the first launch, the app updates itself
 automatically (OTA), so you only do this once.
@@ -38,7 +38,7 @@ automatically (OTA), so you only do this once.
      ```
      then open the app normally.
 
-> Because the beta is unsigned, macOS re-checks the app after each OTA update —
+> Because the app is unsigned, macOS re-checks it after each OTA update —
 > if it gets blocked again, repeat the right-click → Open step.
 
 ## Focus blocking
@@ -63,7 +63,7 @@ are released as soon as the phase ends.
 
 ## Updating
 
-You don't need to reinstall. When a new beta is published, Flow Fusion detects
+You don't need to reinstall. When a new version is published, Flow Fusion detects
 it on launch and shows an **update banner** — click **Update**, then
 **Restart & install**. You can also trigger a check from **Settings → Updates →
 Check for updates**.
