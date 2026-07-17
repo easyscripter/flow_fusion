@@ -1,8 +1,8 @@
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/utils/duration_formatter.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
-import 'package:flow_fusion/ui/widgets/stat_card.dart';
-import 'package:flow_fusion/ui/widgets/stat_card_grid.dart';
+import 'package:flow_fusion/ui/views/home_view/widgets/stat_card.dart';
+import 'package:flow_fusion/ui/views/home_view/widgets/stat_card_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

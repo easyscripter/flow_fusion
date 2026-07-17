@@ -30,6 +30,9 @@ abstract class _ActiveTimerState with Store {
   @observable
   int runWorkMs = 0;
 
+  @observable
+  bool awaitingManualAdvance = false;
+
   @computed
   SessionTimer? get currentTimer {
     if (currentIndex < 0 || currentIndex >= timers.length) return null;
@@ -76,6 +79,7 @@ abstract class _ActiveTimerState with Store {
     endsAt = null;
     isPaused = false;
     runWorkMs = 0;
+    awaitingManualAdvance = false;
   }
 
   TimerPersistedState? toPersistedState() {
@@ -86,6 +90,7 @@ abstract class _ActiveTimerState with Store {
       currentIndex: currentIndex,
       isPaused: isPaused,
       runWorkMs: runWorkMs,
+      awaitingManualAdvance: awaitingManualAdvance,
       remainingMs: isPaused ? remaining.inMilliseconds : null,
       endsAtMs: (!isPaused && endsAt != null)
           ? endsAt!.millisecondsSinceEpoch
@@ -93,7 +98,6 @@ abstract class _ActiveTimerState with Store {
     );
   }
 }
-
 
 Duration remainingFromPersistedMs(int value, SessionTimer timer) {
   final clamped = value.clamp(0, timer.plannedDuration.inMilliseconds).toInt();

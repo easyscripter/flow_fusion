@@ -1,5 +1,6 @@
 import 'package:froom/froom.dart';
 import 'package:flow_fusion/enums/session_status.dart';
+import 'package:flow_fusion/model/entity/blocked_app.dart';
 
 @Entity(tableName: 'sessions')
 class Session {
@@ -21,6 +22,10 @@ class Session {
   /// Raw TEXT column (ISO-8601). Use [completedAtDateTime] for a typed value.
   String? completedAt;
 
+  List<BlockedApp> blockedApps;
+
+  List<String> blockedSites;
+
   @ignore
   DateTime? get completedAtDateTime =>
       completedAt == null ? null : DateTime.parse(completedAt!);
@@ -34,6 +39,8 @@ class Session {
     required this.createdAt,
     required this.updatedAt,
     this.completedAt,
+    this.blockedApps = const <BlockedApp>[],
+    this.blockedSites = const <String>[],
   });
 
   factory Session.create({
@@ -41,6 +48,8 @@ class Session {
     String? description,
     String? icon,
     SessionStatus status = SessionStatus.idle,
+    List<BlockedApp> blockedApps = const <BlockedApp>[],
+    List<String> blockedSites = const <String>[],
   }) {
     final now = DateTime.now();
     return Session(
@@ -50,6 +59,8 @@ class Session {
       status: status,
       createdAt: now,
       updatedAt: now,
+      blockedApps: blockedApps,
+      blockedSites: blockedSites,
     );
   }
 
@@ -59,6 +70,8 @@ class Session {
     String? icon,
     SessionStatus? status,
     String? completedAt,
+    List<BlockedApp>? blockedApps,
+    List<String>? blockedSites,
   }) {
     return Session(
       id: id,
@@ -69,6 +82,8 @@ class Session {
       createdAt: createdAt,
       updatedAt: DateTime.now(),
       completedAt: completedAt ?? this.completedAt,
+      blockedApps: blockedApps ?? this.blockedApps,
+      blockedSites: blockedSites ?? this.blockedSites,
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/models/timer_draft.dart';
-import 'package:flow_fusion/ui/widgets/number_stepper_field.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/number_stepper_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

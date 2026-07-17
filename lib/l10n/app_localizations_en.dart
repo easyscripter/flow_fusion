@@ -186,6 +186,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguageDescription => 'Choose your preferred language';
 
   @override
+  String get settingsSectionTimer => 'Timer';
+
+  @override
+  String get settingsManualPhaseSwitch => 'Manual phase switching';
+
+  @override
+  String get settingsManualPhaseSwitchDescription =>
+      'When on, phases don\'t switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.';
+
+  @override
   String get settingsSectionNotifications => 'Notifications';
 
   @override
@@ -236,6 +246,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsLogsUnavailable => 'Logs are unavailable';
+
+  @override
+  String get settingsSectionHelp => 'Help';
+
+  @override
+  String get settingsOnboardingReplay => 'Interactive tour';
+
+  @override
+  String get settingsOnboardingReplayDescription =>
+      'Replay the welcome tour to see how sessions, timers and blocking work.';
+
+  @override
+  String get settingsOnboardingReplayButton => 'Show again';
 
   @override
   String updateAvailable(String version) {
@@ -334,6 +357,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timerSkip => 'Skip';
+
+  @override
+  String get timerNextPhase => 'Next phase';
 
   @override
   String get timerQueueTitle => 'Route';
@@ -468,6 +494,56 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionEditorRemoveTimer => 'Remove timer';
 
   @override
+  String get sessionEditorBlockedAppsTitle => 'Blocked apps';
+
+  @override
+  String get sessionEditorBlockedAppsSubtitle =>
+      'Closed automatically during work phases.';
+
+  @override
+  String get sessionEditorAddBlockedApp => 'Add app';
+
+  @override
+  String get sessionEditorNoBlockedApps =>
+      'No apps selected. Add one to close it during work phases.';
+
+  @override
+  String get sessionEditorRemoveBlockedApp => 'Remove app';
+
+  @override
+  String get sessionEditorCannotBlockSelf =>
+      'You can\'t block Flow Fusion itself.';
+
+  @override
+  String get sessionEditorBlockedSitesTitle => 'Blocked websites';
+
+  @override
+  String get sessionEditorBlockedSitesSubtitle =>
+      'Redirected to a dead end in every browser during work phases. Requires administrator rights.';
+
+  @override
+  String get sessionEditorBlockedSitesHint => 'e.g. youtube.com';
+
+  @override
+  String get sessionEditorAddBlockedSite => 'Add website';
+
+  @override
+  String get sessionEditorNoBlockedSites =>
+      'No websites added. Enter a domain to block it during work phases.';
+
+  @override
+  String get sessionEditorRemoveBlockedSite => 'Remove website';
+
+  @override
+  String get blockedAppsPickerTitle => 'Choose an application';
+
+  @override
+  String get blockedAppsPickerEmpty => 'No applications found.';
+
+  @override
+  String get blockedAppsPickerCancel => 'Cancel';
+
+  @override
   String get sessionEditorSave => 'Save';
 
   @override
@@ -506,4 +582,91 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorDeleteFailed =>
       'Couldn\'t delete the session. Please try again.';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Flow Fusion';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.';
+
+  @override
+  String get onboardingStart => 'Start tour';
+
+  @override
+  String get onboardingBack => 'Back';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String onboardingStepCounter(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get onboardingBrandTitle => 'This is Flow Fusion';
+
+  @override
+  String get onboardingBrandDescription =>
+      'Your workspace for deep focus sessions. Let\'s take a quick look around.';
+
+  @override
+  String get onboardingNavOverviewTitle => 'Overview';
+
+  @override
+  String get onboardingNavOverviewDescription =>
+      'Your stats dashboard: focus totals and an activity heatmap that tracks your progress day by day.';
+
+  @override
+  String get onboardingNavSessionsTitle => 'Sessions';
+
+  @override
+  String get onboardingNavSessionsDescription =>
+      'Create and manage focus sessions: timers, blocked apps and sites.';
+
+  @override
+  String get onboardingNavSettingsTitle => 'Settings';
+
+  @override
+  String get onboardingNavSettingsDescription =>
+      'Tweak the app to your liking — and replay this tour whenever you want.';
+
+  @override
+  String get onboardingEditorDetailsTitle => 'Session details';
+
+  @override
+  String get onboardingEditorDetailsDescription =>
+      'Give your session an icon, a name and an optional description so you know what you\'re focusing on.';
+
+  @override
+  String get onboardingEditorTimersTitle => 'Timers';
+
+  @override
+  String get onboardingEditorTimersDescription =>
+      'Add focus and break intervals to structure your session, Pomodoro-style.';
+
+  @override
+  String get onboardingEditorBlockedAppsTitle => 'Blocked apps';
+
+  @override
+  String get onboardingEditorBlockedAppsDescription =>
+      'Pick apps that close automatically during work phases so they can\'t distract you.';
+
+  @override
+  String get onboardingEditorBlockedSitesTitle => 'Blocked sites';
+
+  @override
+  String get onboardingEditorBlockedSitesDescription =>
+      'Add websites that get blocked during work phases so they can\'t pull you out of the flow.';
+
+  @override
+  String get onboardingEditorSaveTitle => 'Save your session';
+
+  @override
+  String get onboardingEditorSaveDescription =>
+      'That\'s it! Save the session and you\'re ready to start focusing.';
 }

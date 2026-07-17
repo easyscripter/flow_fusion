@@ -7,6 +7,7 @@ project(runner LANGUAGES CXX)
 #
 # Any new source files that you add to the application should be added here.
 add_executable(${BINARY_NAME} WIN32
+  "app_blocker.cpp"
   "flutter_window.cpp"
   "main.cpp"
   "utils.cpp"
@@ -16,9 +17,11 @@ add_executable(${BINARY_NAME} WIN32
   "runner.exe.manifest"
 )
 
-# The CMake target name must stay a valid identifier (no spaces), but the
-# on-disk executable is named "Flow Fusion.exe" for a polished user-facing name.
-set_target_properties(${BINARY_NAME} PROPERTIES OUTPUT_NAME "Flow Fusion")
+# Keep the on-disk executable name equal to BINARY_NAME (flow_fusion.exe) so the
+# Flutter tool can locate it — `flutter run` looks up the exe by BINARY_NAME, and
+# renaming it here breaks that. The polished user-facing name "Flow Fusion" comes
+# from the Start-menu shortcut (installer) and the FileDescription in Runner.rc,
+# so nothing the user actually sees is lowercased.
 
 # Apply the standard set of build settings. This can be removed for applications
 # that need different build settings.
@@ -33,6 +36,11 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_BUILD=${FLUTT
 
 # Disable Windows macros that collide with C++ standard library functions.
 target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
+
+# The linker embeds its own UAC fragment (requestedExecutionLevel=asInvoker) by
+# default. runner.exe.manifest already declares requireAdministrator, so disable
+# the linker's copy to avoid mt.exe failing on the conflicting entries (LNK1327).
+target_link_options(${BINARY_NAME} PRIVATE "/MANIFESTUAC:NO")
 
 # Add dependency libraries and include directories. Add any application-specific
 # dependencies here.

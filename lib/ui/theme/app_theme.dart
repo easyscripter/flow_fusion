@@ -121,6 +121,27 @@ final class AppTheme {
           side: BorderSide(color: extension.cardBorder),
         ),
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return colorScheme.onPrimary;
+          }
+          // Lighter thumb so the "off" state stays readable in dark theme.
+          return extension.mutedForeground;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return colorScheme.primary;
+          }
+          return extension.lineStrong;
+        }),
+        trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return Colors.transparent;
+          }
+          return extension.mutedForeground;
+        }),
+      ),
       navigationDrawerTheme: NavigationDrawerThemeData(
         backgroundColor: extension.sidebarBackground,
         surfaceTintColor: Colors.transparent,

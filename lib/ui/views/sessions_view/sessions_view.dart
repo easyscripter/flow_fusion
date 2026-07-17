@@ -9,8 +9,8 @@ import 'package:flow_fusion/ui/views/sessions_view/sessions_view_view_model.dart
 import 'package:flow_fusion/ui/widgets/app_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/error_retry.dart';
-import 'package:flow_fusion/ui/widgets/sessions_empty_state.dart';
-import 'package:flow_fusion/ui/widgets/sessions_grid.dart';
+import 'package:flow_fusion/ui/views/sessions_view/widgets/sessions_empty_state.dart';
+import 'package:flow_fusion/ui/views/sessions_view/widgets/sessions_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';

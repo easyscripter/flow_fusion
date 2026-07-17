@@ -1,5 +1,5 @@
 import 'package:flow_fusion/ui/theme/theme_context.dart';
-import 'package:flow_fusion/ui/widgets/number_stepper_button.dart';
+import 'package:flow_fusion/ui/views/session_editor_view/widgets/number_stepper_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,10 +15,8 @@ class NumberStepperField extends StatefulWidget {
 
   final String? suffixText;
 
-  /// Optional fill behind the field. Defaults to the theme input fill.
   final Color? fillColor;
 
-  /// Whether to draw the rounded outline. The pill shape is kept either way.
   final bool showBorder;
 
   final double width;

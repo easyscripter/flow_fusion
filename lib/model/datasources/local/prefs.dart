@@ -42,4 +42,23 @@ class Prefs {
   set notificationsEnabled(bool value) {
     _prefs.setBool(_notificationsEnabledKey, value);
   }
+
+  static const String _manualPhaseSwitchKey = 'manual_phase_switch';
+  bool get manualPhaseSwitch =>
+      _prefs.getBool(_manualPhaseSwitchKey) ?? false;
+  set manualPhaseSwitch(bool value) {
+    _prefs.setBool(_manualPhaseSwitchKey, value);
+  }
+
+  static const String _templatesSeededKey = 'templates_seeded';
+  bool get templatesSeeded => _prefs.getBool(_templatesSeededKey) ?? false;
+  set templatesSeeded(bool value) {
+    _prefs.setBool(_templatesSeededKey, value);
+  }
+
+  static const String _hasSeenOnboardingKey = 'has_seen_onboarding';
+  bool get hasSeenOnboarding => _prefs.getBool(_hasSeenOnboardingKey) ?? false;
+  set hasSeenOnboarding(bool value) {
+    _prefs.setBool(_hasSeenOnboardingKey, value);
+  }
 }

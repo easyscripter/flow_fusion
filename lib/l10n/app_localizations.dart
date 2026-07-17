@@ -434,6 +434,24 @@ abstract class AppLocalizations {
   /// **'Choose your preferred language'**
   String get settingsLanguageDescription;
 
+  /// No description provided for @settingsSectionTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get settingsSectionTimer;
+
+  /// No description provided for @settingsManualPhaseSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual phase switching'**
+  String get settingsManualPhaseSwitch;
+
+  /// No description provided for @settingsManualPhaseSwitchDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'When on, phases don\'t switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.'**
+  String get settingsManualPhaseSwitchDescription;
+
   /// No description provided for @settingsSectionNotifications.
   ///
   /// In en, this message translates to:
@@ -529,6 +547,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logs are unavailable'**
   String get settingsLogsUnavailable;
+
+  /// No description provided for @settingsSectionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsSectionHelp;
+
+  /// No description provided for @settingsOnboardingReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive tour'**
+  String get settingsOnboardingReplay;
+
+  /// No description provided for @settingsOnboardingReplayDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the welcome tour to see how sessions, timers and blocking work.'**
+  String get settingsOnboardingReplayDescription;
+
+  /// No description provided for @settingsOnboardingReplayButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Show again'**
+  String get settingsOnboardingReplayButton;
 
   /// No description provided for @updateAvailable.
   ///
@@ -716,6 +758,12 @@ abstract class AppLocalizations {
   /// **'Skip'**
   String get timerSkip;
 
+  /// No description provided for @timerNextPhase.
+  ///
+  /// In en, this message translates to:
+  /// **'Next phase'**
+  String get timerNextPhase;
+
   /// No description provided for @timerQueueTitle.
   ///
   /// In en, this message translates to:
@@ -896,6 +944,96 @@ abstract class AppLocalizations {
   /// **'Remove timer'**
   String get sessionEditorRemoveTimer;
 
+  /// No description provided for @sessionEditorBlockedAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked apps'**
+  String get sessionEditorBlockedAppsTitle;
+
+  /// No description provided for @sessionEditorBlockedAppsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed automatically during work phases.'**
+  String get sessionEditorBlockedAppsSubtitle;
+
+  /// No description provided for @sessionEditorAddBlockedApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Add app'**
+  String get sessionEditorAddBlockedApp;
+
+  /// No description provided for @sessionEditorNoBlockedApps.
+  ///
+  /// In en, this message translates to:
+  /// **'No apps selected. Add one to close it during work phases.'**
+  String get sessionEditorNoBlockedApps;
+
+  /// No description provided for @sessionEditorRemoveBlockedApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove app'**
+  String get sessionEditorRemoveBlockedApp;
+
+  /// No description provided for @sessionEditorCannotBlockSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t block Flow Fusion itself.'**
+  String get sessionEditorCannotBlockSelf;
+
+  /// No description provided for @sessionEditorBlockedSitesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked websites'**
+  String get sessionEditorBlockedSitesTitle;
+
+  /// No description provided for @sessionEditorBlockedSitesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Redirected to a dead end in every browser during work phases. Requires administrator rights.'**
+  String get sessionEditorBlockedSitesSubtitle;
+
+  /// No description provided for @sessionEditorBlockedSitesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. youtube.com'**
+  String get sessionEditorBlockedSitesHint;
+
+  /// No description provided for @sessionEditorAddBlockedSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add website'**
+  String get sessionEditorAddBlockedSite;
+
+  /// No description provided for @sessionEditorNoBlockedSites.
+  ///
+  /// In en, this message translates to:
+  /// **'No websites added. Enter a domain to block it during work phases.'**
+  String get sessionEditorNoBlockedSites;
+
+  /// No description provided for @sessionEditorRemoveBlockedSite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove website'**
+  String get sessionEditorRemoveBlockedSite;
+
+  /// No description provided for @blockedAppsPickerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an application'**
+  String get blockedAppsPickerTitle;
+
+  /// No description provided for @blockedAppsPickerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No applications found.'**
+  String get blockedAppsPickerEmpty;
+
+  /// No description provided for @blockedAppsPickerCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get blockedAppsPickerCancel;
+
   /// No description provided for @sessionEditorSave.
   ///
   /// In en, this message translates to:
@@ -973,6 +1111,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t delete the session. Please try again.'**
   String get errorDeleteFailed;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Flow Fusion'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.'**
+  String get onboardingWelcomeSubtitle;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start tour'**
+  String get onboardingStart;
+
+  /// No description provided for @onboardingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingBack;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingStepCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String onboardingStepCounter(int current, int total);
+
+  /// No description provided for @onboardingBrandTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This is Flow Fusion'**
+  String get onboardingBrandTitle;
+
+  /// No description provided for @onboardingBrandDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your workspace for deep focus sessions. Let\'s take a quick look around.'**
+  String get onboardingBrandDescription;
+
+  /// No description provided for @onboardingNavOverviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get onboardingNavOverviewTitle;
+
+  /// No description provided for @onboardingNavOverviewDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your stats dashboard: focus totals and an activity heatmap that tracks your progress day by day.'**
+  String get onboardingNavOverviewDescription;
+
+  /// No description provided for @onboardingNavSessionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get onboardingNavSessionsTitle;
+
+  /// No description provided for @onboardingNavSessionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and manage focus sessions: timers, blocked apps and sites.'**
+  String get onboardingNavSessionsDescription;
+
+  /// No description provided for @onboardingNavSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get onboardingNavSettingsTitle;
+
+  /// No description provided for @onboardingNavSettingsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tweak the app to your liking — and replay this tour whenever you want.'**
+  String get onboardingNavSettingsDescription;
+
+  /// No description provided for @onboardingEditorDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session details'**
+  String get onboardingEditorDetailsTitle;
+
+  /// No description provided for @onboardingEditorDetailsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Give your session an icon, a name and an optional description so you know what you\'re focusing on.'**
+  String get onboardingEditorDetailsDescription;
+
+  /// No description provided for @onboardingEditorTimersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timers'**
+  String get onboardingEditorTimersTitle;
+
+  /// No description provided for @onboardingEditorTimersDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add focus and break intervals to structure your session, Pomodoro-style.'**
+  String get onboardingEditorTimersDescription;
+
+  /// No description provided for @onboardingEditorBlockedAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked apps'**
+  String get onboardingEditorBlockedAppsTitle;
+
+  /// No description provided for @onboardingEditorBlockedAppsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick apps that close automatically during work phases so they can\'t distract you.'**
+  String get onboardingEditorBlockedAppsDescription;
+
+  /// No description provided for @onboardingEditorBlockedSitesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked sites'**
+  String get onboardingEditorBlockedSitesTitle;
+
+  /// No description provided for @onboardingEditorBlockedSitesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add websites that get blocked during work phases so they can\'t pull you out of the flow.'**
+  String get onboardingEditorBlockedSitesDescription;
+
+  /// No description provided for @onboardingEditorSaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your session'**
+  String get onboardingEditorSaveTitle;
+
+  /// No description provided for @onboardingEditorSaveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s it! Save the session and you\'re ready to start focusing.'**
+  String get onboardingEditorSaveDescription;
 }
 
 class _AppLocalizationsDelegate

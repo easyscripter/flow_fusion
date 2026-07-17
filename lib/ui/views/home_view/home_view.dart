@@ -1,10 +1,11 @@
+import 'package:flow_fusion/controllers/onboarding_controller.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/home_view/home_view_view_model.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/error_retry.dart';
-import 'package:flow_fusion/ui/widgets/home_activity_panel.dart';
-import 'package:flow_fusion/ui/widgets/home_stats_row.dart';
+import 'package:flow_fusion/ui/views/home_view/widgets/home_activity_panel.dart';
+import 'package:flow_fusion/ui/views/home_view/widgets/home_stats_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -18,12 +19,23 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   late final HomeViewViewModel _viewModel;
+  late final OnboardingController _onboarding;
 
   @override
   void initState() {
     super.initState();
     _viewModel = GetIt.I.get<HomeViewViewModel>();
+    _onboarding = GetIt.I.get<OnboardingController>();
     _viewModel.init();
+    _maybeStartOnboarding();
+  }
+
+  void _maybeStartOnboarding() {
+    if (!_onboarding.shouldRun) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _onboarding.launchWelcome(context);
+    });
   }
 
   @override

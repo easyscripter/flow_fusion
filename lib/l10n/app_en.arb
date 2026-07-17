@@ -76,6 +76,9 @@
   "languageRussian": "Русский",
   "settingsLanguageDescription": "Choose your preferred language",
 
+  "settingsSectionTimer": "Timer",
+  "settingsManualPhaseSwitch": "Manual phase switching",
+  "settingsManualPhaseSwitchDescription": "When on, phases don't switch automatically — you tap \"Next phase\" to move on. When off, timers run in automatic mode.",
   "settingsSectionNotifications": "Notifications",
   "settingsNotificationsEnabled": "Timer notifications",
   "settingsNotificationsDescription": "Show a notification when a timer or session finishes. If notifications don't appear, enable them for Flow Fusion in your system settings.",
@@ -93,6 +96,11 @@
   "settingsCopyDiagnostics": "Copy info",
   "settingsDiagnosticsCopied": "Diagnostics copied to clipboard",
   "settingsLogsUnavailable": "Logs are unavailable",
+
+  "settingsSectionHelp": "Help",
+  "settingsOnboardingReplay": "Interactive tour",
+  "settingsOnboardingReplayDescription": "Replay the welcome tour to see how sessions, timers and blocking work.",
+  "settingsOnboardingReplayButton": "Show again",
 
   "updateAvailable": "A new version {version} is available",
   "@updateAvailable": {
@@ -140,6 +148,7 @@
   "timerPause": "Pause",
   "timerResume": "Resume",
   "timerSkip": "Skip",
+  "timerNextPhase": "Next phase",
   "timerQueueTitle": "Route",
   "timerEmptyTitle": "No active timer",
   "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
@@ -226,6 +235,21 @@
   "sessionEditorAddChill": "Add chill",
   "sessionEditorNoTimers": "No timers yet. Add a work or chill block to get started.",
   "sessionEditorRemoveTimer": "Remove timer",
+  "sessionEditorBlockedAppsTitle": "Blocked apps",
+  "sessionEditorBlockedAppsSubtitle": "Closed automatically during work phases.",
+  "sessionEditorAddBlockedApp": "Add app",
+  "sessionEditorNoBlockedApps": "No apps selected. Add one to close it during work phases.",
+  "sessionEditorRemoveBlockedApp": "Remove app",
+  "sessionEditorCannotBlockSelf": "You can't block Flow Fusion itself.",
+  "sessionEditorBlockedSitesTitle": "Blocked websites",
+  "sessionEditorBlockedSitesSubtitle": "Redirected to a dead end in every browser during work phases. Requires administrator rights.",
+  "sessionEditorBlockedSitesHint": "e.g. youtube.com",
+  "sessionEditorAddBlockedSite": "Add website",
+  "sessionEditorNoBlockedSites": "No websites added. Enter a domain to block it during work phases.",
+  "sessionEditorRemoveBlockedSite": "Remove website",
+  "blockedAppsPickerTitle": "Choose an application",
+  "blockedAppsPickerEmpty": "No applications found.",
+  "blockedAppsPickerCancel": "Cancel",
   "sessionEditorSave": "Save",
   "sessionEditorCancel": "Cancel",
   "sessionDelete": "Delete Session",
@@ -239,5 +263,41 @@
   "errorLoadFailed": "Couldn't load data. Please try again.",
   "errorRetry": "Retry",
   "errorSaveFailed": "Couldn't save the session. Please try again.",
-  "errorDeleteFailed": "Couldn't delete the session. Please try again."
+  "errorDeleteFailed": "Couldn't delete the session. Please try again.",
+
+  "onboardingWelcomeTitle": "Welcome to Flow Fusion",
+  "onboardingWelcomeSubtitle": "Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.",
+  "onboardingStart": "Start tour",
+  "onboardingBack": "Back",
+  "onboardingNext": "Next",
+  "onboardingSkip": "Skip",
+  "onboardingStepCounter": "Step {current} of {total}",
+  "@onboardingStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingBrandTitle": "This is Flow Fusion",
+  "onboardingBrandDescription": "Your workspace for deep focus sessions. Let's take a quick look around.",
+  "onboardingNavOverviewTitle": "Overview",
+  "onboardingNavOverviewDescription": "Your stats dashboard: focus totals and an activity heatmap that tracks your progress day by day.",
+  "onboardingNavSessionsTitle": "Sessions",
+  "onboardingNavSessionsDescription": "Create and manage focus sessions: timers, blocked apps and sites.",
+  "onboardingNavSettingsTitle": "Settings",
+  "onboardingNavSettingsDescription": "Tweak the app to your liking — and replay this tour whenever you want.",
+  "onboardingEditorDetailsTitle": "Session details",
+  "onboardingEditorDetailsDescription": "Give your session an icon, a name and an optional description so you know what you're focusing on.",
+  "onboardingEditorTimersTitle": "Timers",
+  "onboardingEditorTimersDescription": "Add focus and break intervals to structure your session, Pomodoro-style.",
+  "onboardingEditorBlockedAppsTitle": "Blocked apps",
+  "onboardingEditorBlockedAppsDescription": "Pick apps that close automatically during work phases so they can't distract you.",
+  "onboardingEditorBlockedSitesTitle": "Blocked sites",
+  "onboardingEditorBlockedSitesDescription": "Add websites that get blocked during work phases so they can't pull you out of the flow.",
+  "onboardingEditorSaveTitle": "Save your session",
+  "onboardingEditorSaveDescription": "That's it! Save the session and you're ready to start focusing."
 }

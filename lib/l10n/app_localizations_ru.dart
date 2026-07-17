@@ -187,6 +187,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLanguageDescription => 'Выберите предпочитаемый язык';
 
   @override
+  String get settingsSectionTimer => 'Таймер';
+
+  @override
+  String get settingsManualPhaseSwitch => 'Ручное переключение фаз';
+
+  @override
+  String get settingsManualPhaseSwitchDescription =>
+      'Когда включено, фазы не переключаются автоматически — вы сами нажимаете «Следующая фаза», чтобы перейти дальше. Когда выключено, таймеры работают в автоматическом режиме.';
+
+  @override
   String get settingsSectionNotifications => 'Уведомления';
 
   @override
@@ -238,6 +248,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsLogsUnavailable => 'Логи недоступны';
+
+  @override
+  String get settingsSectionHelp => 'Помощь';
+
+  @override
+  String get settingsOnboardingReplay => 'Интерактивный тур';
+
+  @override
+  String get settingsOnboardingReplayDescription =>
+      'Повторите приветственный тур, чтобы вспомнить, как работают сессии, таймеры и блокировка.';
+
+  @override
+  String get settingsOnboardingReplayButton => 'Показать снова';
 
   @override
   String updateAvailable(String version) {
@@ -336,6 +359,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get timerSkip => 'Пропустить';
+
+  @override
+  String get timerNextPhase => 'Следующая фаза';
 
   @override
   String get timerQueueTitle => 'Очередь';
@@ -478,6 +504,56 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sessionEditorRemoveTimer => 'Удалить таймер';
 
   @override
+  String get sessionEditorBlockedAppsTitle => 'Блокируемые приложения';
+
+  @override
+  String get sessionEditorBlockedAppsSubtitle =>
+      'Автоматически закрываются во время фаз работы.';
+
+  @override
+  String get sessionEditorAddBlockedApp => 'Добавить приложение';
+
+  @override
+  String get sessionEditorNoBlockedApps =>
+      'Приложения не выбраны. Добавьте, чтобы закрывать его во время работы.';
+
+  @override
+  String get sessionEditorRemoveBlockedApp => 'Убрать приложение';
+
+  @override
+  String get sessionEditorCannotBlockSelf =>
+      'Нельзя заблокировать сам Flow Fusion.';
+
+  @override
+  String get sessionEditorBlockedSitesTitle => 'Блокируемые сайты';
+
+  @override
+  String get sessionEditorBlockedSitesSubtitle =>
+      'Во время фаз работы перенаправляются в никуда во всех браузерах. Требуются права администратора.';
+
+  @override
+  String get sessionEditorBlockedSitesHint => 'напр. youtube.com';
+
+  @override
+  String get sessionEditorAddBlockedSite => 'Добавить сайт';
+
+  @override
+  String get sessionEditorNoBlockedSites =>
+      'Сайты не добавлены. Введите домен, чтобы блокировать его во время работы.';
+
+  @override
+  String get sessionEditorRemoveBlockedSite => 'Убрать сайт';
+
+  @override
+  String get blockedAppsPickerTitle => 'Выберите приложение';
+
+  @override
+  String get blockedAppsPickerEmpty => 'Приложения не найдены.';
+
+  @override
+  String get blockedAppsPickerCancel => 'Отмена';
+
+  @override
   String get sessionEditorSave => 'Сохранить';
 
   @override
@@ -519,4 +595,91 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get errorDeleteFailed =>
       'Не удалось удалить сессию. Попробуйте ещё раз.';
+
+  @override
+  String get onboardingWelcomeTitle => 'Добро пожаловать в Flow Fusion';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Пройдите короткий тур, чтобы узнать, как настраивать сессии фокуса, блокировать отвлечения и оставаться в потоке.';
+
+  @override
+  String get onboardingStart => 'Начать тур';
+
+  @override
+  String get onboardingBack => 'Назад';
+
+  @override
+  String get onboardingNext => 'Далее';
+
+  @override
+  String get onboardingSkip => 'Пропустить';
+
+  @override
+  String onboardingStepCounter(int current, int total) {
+    return 'Шаг $current из $total';
+  }
+
+  @override
+  String get onboardingBrandTitle => 'Это Flow Fusion';
+
+  @override
+  String get onboardingBrandDescription =>
+      'Ваше пространство для сессий глубокого фокуса. Давайте быстро осмотримся.';
+
+  @override
+  String get onboardingNavOverviewTitle => 'Обзор';
+
+  @override
+  String get onboardingNavOverviewDescription =>
+      'Панель статистики: сводка по фокусу и тепловая карта активности по дням.';
+
+  @override
+  String get onboardingNavSessionsTitle => 'Сессии';
+
+  @override
+  String get onboardingNavSessionsDescription =>
+      'Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.';
+
+  @override
+  String get onboardingNavSettingsTitle => 'Настройки';
+
+  @override
+  String get onboardingNavSettingsDescription =>
+      'Настройте приложение под себя — и повторите этот тур в любой момент.';
+
+  @override
+  String get onboardingEditorDetailsTitle => 'Детали сессии';
+
+  @override
+  String get onboardingEditorDetailsDescription =>
+      'Задайте иконку, название и описание сессии, чтобы понимать, на чём фокусируетесь.';
+
+  @override
+  String get onboardingEditorTimersTitle => 'Таймеры';
+
+  @override
+  String get onboardingEditorTimersDescription =>
+      'Добавьте интервалы фокуса и перерывов, чтобы структурировать сессию в стиле Pomodoro.';
+
+  @override
+  String get onboardingEditorBlockedAppsTitle => 'Блокировка приложений';
+
+  @override
+  String get onboardingEditorBlockedAppsDescription =>
+      'Выберите приложения, которые автоматически закрываются во время фаз работы.';
+
+  @override
+  String get onboardingEditorBlockedSitesTitle => 'Блокировка сайтов';
+
+  @override
+  String get onboardingEditorBlockedSitesDescription =>
+      'Добавьте сайты, которые блокируются во время фаз работы, чтобы не выдёргивали из потока.';
+
+  @override
+  String get onboardingEditorSaveTitle => 'Сохраните сессию';
+
+  @override
+  String get onboardingEditorSaveDescription =>
+      'Готово! Сохраните сессию — и можно приступать к фокусу.';
 }

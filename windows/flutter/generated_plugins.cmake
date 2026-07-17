@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   desktop_updater
+  file_selector_windows
   screen_retriever_windows
   tray_manager
   url_launcher_windows
