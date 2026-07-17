@@ -49,4 +49,10 @@ class Prefs {
   set manualPhaseSwitch(bool value) {
     _prefs.setBool(_manualPhaseSwitchKey, value);
   }
+
+  static const String _templatesSeededKey = 'templates_seeded';
+  bool get templatesSeeded => _prefs.getBool(_templatesSeededKey) ?? false;
+  set templatesSeeded(bool value) {
+    _prefs.setBool(_templatesSeededKey, value);
+  }
 }

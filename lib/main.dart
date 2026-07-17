@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' show PlatformDispatcher;
 
 import 'package:flow_fusion/di/di.dart';
+import 'package:flow_fusion/model/seed/session_seeder.dart';
 import 'package:flow_fusion/ui/app/app.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
@@ -33,6 +34,7 @@ Future<void> _startup() async {
   };
 
   await configureDependencies();
+  await GetIt.I.get<SessionSeeder>().seedIfNeeded();
   final timerAlertService = GetIt.I.get<TimerAlertService>();
   final trayService = GetIt.I.get<TrayService>();
   await timerAlertService.init();
