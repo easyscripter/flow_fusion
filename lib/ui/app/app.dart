@@ -9,6 +9,7 @@ import 'package:flow_fusion/ui/widgets/update/update_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -25,8 +26,16 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
+    ShowcaseView.register();
+
     _appViewModel.init();
     GetIt.I.get<ActiveTimerController>().init();
+  }
+
+  @override
+  void dispose() {
+    ShowcaseView.get().unregister();
+    super.dispose();
   }
 
   @override
