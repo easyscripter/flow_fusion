@@ -284,5 +284,15 @@
   "onboardingNavSessionsTitle": "Sessions",
   "onboardingNavSessionsDescription": "Create and manage focus sessions: timers, blocked apps and sites.",
   "onboardingNavSettingsTitle": "Settings",
-  "onboardingNavSettingsDescription": "Tweak the app to your liking — and replay this tour whenever you want."
+  "onboardingNavSettingsDescription": "Tweak the app to your liking — and replay this tour whenever you want.",
+  "onboardingEditorDetailsTitle": "Session details",
+  "onboardingEditorDetailsDescription": "Give your session a name and description so you know what you're focusing on.",
+  "onboardingEditorTimersTitle": "Timers",
+  "onboardingEditorTimersDescription": "Add focus and break intervals to structure your session, Pomodoro-style.",
+  "onboardingEditorBlockedAppsTitle": "Blocked apps",
+  "onboardingEditorBlockedAppsDescription": "Pick apps to close and keep out of reach while the session is running.",
+  "onboardingEditorBlockedSitesTitle": "Blocked sites",
+  "onboardingEditorBlockedSitesDescription": "Add websites to block so they can't pull you out of the flow.",
+  "onboardingEditorSaveTitle": "Save your session",
+  "onboardingEditorSaveDescription": "That's it! Save the session and you're ready to start focusing."
 }

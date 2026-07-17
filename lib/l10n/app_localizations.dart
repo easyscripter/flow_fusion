@@ -1177,6 +1177,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tweak the app to your liking — and replay this tour whenever you want.'**
   String get onboardingNavSettingsDescription;
+
+  /// No description provided for @onboardingEditorDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session details'**
+  String get onboardingEditorDetailsTitle;
+
+  /// No description provided for @onboardingEditorDetailsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Give your session a name and description so you know what you\'re focusing on.'**
+  String get onboardingEditorDetailsDescription;
+
+  /// No description provided for @onboardingEditorTimersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Timers'**
+  String get onboardingEditorTimersTitle;
+
+  /// No description provided for @onboardingEditorTimersDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add focus and break intervals to structure your session, Pomodoro-style.'**
+  String get onboardingEditorTimersDescription;
+
+  /// No description provided for @onboardingEditorBlockedAppsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked apps'**
+  String get onboardingEditorBlockedAppsTitle;
+
+  /// No description provided for @onboardingEditorBlockedAppsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick apps to close and keep out of reach while the session is running.'**
+  String get onboardingEditorBlockedAppsDescription;
+
+  /// No description provided for @onboardingEditorBlockedSitesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked sites'**
+  String get onboardingEditorBlockedSitesTitle;
+
+  /// No description provided for @onboardingEditorBlockedSitesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add websites to block so they can\'t pull you out of the flow.'**
+  String get onboardingEditorBlockedSitesDescription;
+
+  /// No description provided for @onboardingEditorSaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your session'**
+  String get onboardingEditorSaveTitle;
+
+  /// No description provided for @onboardingEditorSaveDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s it! Save the session and you\'re ready to start focusing.'**
+  String get onboardingEditorSaveDescription;
 }
 
 class _AppLocalizationsDelegate

@@ -621,4 +621,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingNavSettingsDescription =>
       'Tweak the app to your liking — and replay this tour whenever you want.';
+
+  @override
+  String get onboardingEditorDetailsTitle => 'Session details';
+
+  @override
+  String get onboardingEditorDetailsDescription =>
+      'Give your session a name and description so you know what you\'re focusing on.';
+
+  @override
+  String get onboardingEditorTimersTitle => 'Timers';
+
+  @override
+  String get onboardingEditorTimersDescription =>
+      'Add focus and break intervals to structure your session, Pomodoro-style.';
+
+  @override
+  String get onboardingEditorBlockedAppsTitle => 'Blocked apps';
+
+  @override
+  String get onboardingEditorBlockedAppsDescription =>
+      'Pick apps to close and keep out of reach while the session is running.';
+
+  @override
+  String get onboardingEditorBlockedSitesTitle => 'Blocked sites';
+
+  @override
+  String get onboardingEditorBlockedSitesDescription =>
+      'Add websites to block so they can\'t pull you out of the flow.';
+
+  @override
+  String get onboardingEditorSaveTitle => 'Save your session';
+
+  @override
+  String get onboardingEditorSaveDescription =>
+      'That\'s it! Save the session and you\'re ready to start focusing.';
 }

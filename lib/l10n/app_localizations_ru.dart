@@ -634,4 +634,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingNavSettingsDescription =>
       'Настройте приложение под себя — и повторите этот тур в любой момент.';
+
+  @override
+  String get onboardingEditorDetailsTitle => 'Детали сессии';
+
+  @override
+  String get onboardingEditorDetailsDescription =>
+      'Дайте сессии название и описание, чтобы понимать, на чём фокусируетесь.';
+
+  @override
+  String get onboardingEditorTimersTitle => 'Таймеры';
+
+  @override
+  String get onboardingEditorTimersDescription =>
+      'Добавьте интервалы фокуса и перерывов, чтобы структурировать сессию в стиле Pomodoro.';
+
+  @override
+  String get onboardingEditorBlockedAppsTitle => 'Блокировка приложений';
+
+  @override
+  String get onboardingEditorBlockedAppsDescription =>
+      'Выберите приложения, которые закроются и будут недоступны во время сессии.';
+
+  @override
+  String get onboardingEditorBlockedSitesTitle => 'Блокировка сайтов';
+
+  @override
+  String get onboardingEditorBlockedSitesDescription =>
+      'Добавьте сайты для блокировки, чтобы они не выдёргивали вас из потока.';
+
+  @override
+  String get onboardingEditorSaveTitle => 'Сохраните сессию';
+
+  @override
+  String get onboardingEditorSaveDescription =>
+      'Готово! Сохраните сессию — и можно приступать к фокусу.';
 }

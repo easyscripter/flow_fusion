@@ -274,5 +274,15 @@
   "onboardingNavSessionsTitle": "Сессии",
   "onboardingNavSessionsDescription": "Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.",
   "onboardingNavSettingsTitle": "Настройки",
-  "onboardingNavSettingsDescription": "Настройте приложение под себя — и повторите этот тур в любой момент."
+  "onboardingNavSettingsDescription": "Настройте приложение под себя — и повторите этот тур в любой момент.",
+  "onboardingEditorDetailsTitle": "Детали сессии",
+  "onboardingEditorDetailsDescription": "Дайте сессии название и описание, чтобы понимать, на чём фокусируетесь.",
+  "onboardingEditorTimersTitle": "Таймеры",
+  "onboardingEditorTimersDescription": "Добавьте интервалы фокуса и перерывов, чтобы структурировать сессию в стиле Pomodoro.",
+  "onboardingEditorBlockedAppsTitle": "Блокировка приложений",
+  "onboardingEditorBlockedAppsDescription": "Выберите приложения, которые закроются и будут недоступны во время сессии.",
+  "onboardingEditorBlockedSitesTitle": "Блокировка сайтов",
+  "onboardingEditorBlockedSitesDescription": "Добавьте сайты для блокировки, чтобы они не выдёргивали вас из потока.",
+  "onboardingEditorSaveTitle": "Сохраните сессию",
+  "onboardingEditorSaveDescription": "Готово! Сохраните сессию — и можно приступать к фокусу."
 }
