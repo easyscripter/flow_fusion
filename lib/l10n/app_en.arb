@@ -258,5 +258,20 @@
   "errorLoadFailed": "Couldn't load data. Please try again.",
   "errorRetry": "Retry",
   "errorSaveFailed": "Couldn't save the session. Please try again.",
-  "errorDeleteFailed": "Couldn't delete the session. Please try again."
+  "errorDeleteFailed": "Couldn't delete the session. Please try again.",
+
+  "onboardingBack": "Back",
+  "onboardingNext": "Next",
+  "onboardingSkip": "Skip",
+  "onboardingStepCounter": "Step {current} of {total}",
+  "@onboardingStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

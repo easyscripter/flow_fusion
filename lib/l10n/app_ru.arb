@@ -258,5 +258,10 @@
   "errorLoadFailed": "Не удалось загрузить данные. Попробуйте ещё раз.",
   "errorRetry": "Повторить",
   "errorSaveFailed": "Не удалось сохранить сессию. Попробуйте ещё раз.",
-  "errorDeleteFailed": "Не удалось удалить сессию. Попробуйте ещё раз."
+  "errorDeleteFailed": "Не удалось удалить сессию. Попробуйте ещё раз.",
+
+  "onboardingBack": "Назад",
+  "onboardingNext": "Далее",
+  "onboardingSkip": "Пропустить",
+  "onboardingStepCounter": "Шаг {current} из {total}"
 }

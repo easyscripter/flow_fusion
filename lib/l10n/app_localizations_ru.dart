@@ -582,4 +582,18 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get errorDeleteFailed =>
       'Не удалось удалить сессию. Попробуйте ещё раз.';
+
+  @override
+  String get onboardingBack => 'Назад';
+
+  @override
+  String get onboardingNext => 'Далее';
+
+  @override
+  String get onboardingSkip => 'Пропустить';
+
+  @override
+  String onboardingStepCounter(int current, int total) {
+    return 'Шаг $current из $total';
+  }
 }

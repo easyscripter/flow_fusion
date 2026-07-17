@@ -569,4 +569,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorDeleteFailed =>
       'Couldn\'t delete the session. Please try again.';
+
+  @override
+  String get onboardingBack => 'Back';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String onboardingStepCounter(int current, int total) {
+    return 'Step $current of $total';
+  }
 }
