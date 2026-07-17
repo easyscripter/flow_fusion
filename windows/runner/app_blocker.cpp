@@ -60,15 +60,17 @@ BOOL CALLBACK CloseWindowsForPid(HWND hwnd, LPARAM lparam) {
   DWORD window_pid = 0;
   GetWindowThreadProcessId(hwnd, &window_pid);
   if (window_pid == context->pid && IsWindowVisible(hwnd)) {
-    // Soft, store-compatible: ask the window to close and get it out of the way.
+    // Soft, macOS-like: only get the window out of the way — the app keeps
+    // running and loses no state. The 2s polling loop re-minimizes the window
+    // again if the user restores it during the work phase.
     ShowWindow(hwnd, SW_MINIMIZE);
-    PostMessageW(hwnd, WM_CLOSE, 0, 0);
   }
   return TRUE;
 }
 
-// Soft-closes every running process whose image name is in |tokens|.
-// Returns the image names actually acted upon (deduplicated).
+// Minimizes the windows of every running process whose image name is in
+// |tokens| (never closes or terminates them). Returns the image names actually
+// acted upon (deduplicated).
 EncodableList BlockApps(const EncodableList& tokens) {
   std::unordered_set<std::string> wanted;
   for (const EncodableValue& token : tokens) {
