@@ -260,6 +260,9 @@
   "errorSaveFailed": "Не удалось сохранить сессию. Попробуйте ещё раз.",
   "errorDeleteFailed": "Не удалось удалить сессию. Попробуйте ещё раз.",
 
+  "onboardingWelcomeTitle": "Добро пожаловать в Flow Fusion",
+  "onboardingWelcomeSubtitle": "Пройдите короткий тур, чтобы узнать, как настраивать сессии фокуса, блокировать отвлечения и оставаться в потоке.",
+  "onboardingStart": "Начать тур",
   "onboardingBack": "Назад",
   "onboardingNext": "Далее",
   "onboardingSkip": "Пропустить",

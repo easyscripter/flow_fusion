@@ -571,6 +571,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t delete the session. Please try again.';
 
   @override
+  String get onboardingWelcomeTitle => 'Welcome to Flow Fusion';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.';
+
+  @override
+  String get onboardingStart => 'Start tour';
+
+  @override
   String get onboardingBack => 'Back';
 
   @override

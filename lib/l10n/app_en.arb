@@ -260,6 +260,9 @@
   "errorSaveFailed": "Couldn't save the session. Please try again.",
   "errorDeleteFailed": "Couldn't delete the session. Please try again.",
 
+  "onboardingWelcomeTitle": "Welcome to Flow Fusion",
+  "onboardingWelcomeSubtitle": "Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.",
+  "onboardingStart": "Start tour",
   "onboardingBack": "Back",
   "onboardingNext": "Next",
   "onboardingSkip": "Skip",

@@ -1088,6 +1088,24 @@ abstract class AppLocalizations {
   /// **'Couldn\'t delete the session. Please try again.'**
   String get errorDeleteFailed;
 
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Flow Fusion'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.'**
+  String get onboardingWelcomeSubtitle;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start tour'**
+  String get onboardingStart;
+
   /// No description provided for @onboardingBack.
   ///
   /// In en, this message translates to:

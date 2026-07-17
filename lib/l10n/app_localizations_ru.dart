@@ -584,6 +584,16 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось удалить сессию. Попробуйте ещё раз.';
 
   @override
+  String get onboardingWelcomeTitle => 'Добро пожаловать в Flow Fusion';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Пройдите короткий тур, чтобы узнать, как настраивать сессии фокуса, блокировать отвлечения и оставаться в потоке.';
+
+  @override
+  String get onboardingStart => 'Начать тур';
+
+  @override
   String get onboardingBack => 'Назад';
 
   @override
