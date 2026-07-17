@@ -250,6 +250,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsLogsUnavailable => 'Логи недоступны';
 
   @override
+  String get settingsSectionHelp => 'Помощь';
+
+  @override
+  String get settingsOnboardingReplay => 'Интерактивный тур';
+
+  @override
+  String get settingsOnboardingReplayDescription =>
+      'Повторите приветственный тур, чтобы вспомнить, как работают сессии, таймеры и блокировка.';
+
+  @override
+  String get settingsOnboardingReplayButton => 'Показать снова';
+
+  @override
   String updateAvailable(String version) {
     return 'Доступна новая версия $version';
   }
@@ -619,7 +632,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingNavOverviewDescription =>
-      'Ваша панель — прогресс и запуск сессии одним взглядом.';
+      'Панель статистики: сводка по фокусу и тепловая карта активности по дням.';
 
   @override
   String get onboardingNavSessionsTitle => 'Сессии';
@@ -640,7 +653,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingEditorDetailsDescription =>
-      'Дайте сессии название и описание, чтобы понимать, на чём фокусируетесь.';
+      'Задайте иконку, название и описание сессии, чтобы понимать, на чём фокусируетесь.';
 
   @override
   String get onboardingEditorTimersTitle => 'Таймеры';
@@ -654,14 +667,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingEditorBlockedAppsDescription =>
-      'Выберите приложения, которые закроются и будут недоступны во время сессии.';
+      'Выберите приложения, которые автоматически закрываются во время фаз работы.';
 
   @override
   String get onboardingEditorBlockedSitesTitle => 'Блокировка сайтов';
 
   @override
   String get onboardingEditorBlockedSitesDescription =>
-      'Добавьте сайты для блокировки, чтобы они не выдёргивали вас из потока.';
+      'Добавьте сайты, которые блокируются во время фаз работы, чтобы не выдёргивали из потока.';
 
   @override
   String get onboardingEditorSaveTitle => 'Сохраните сессию';

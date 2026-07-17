@@ -46,8 +46,8 @@ class SessionEditorHeaderActions extends StatelessWidget {
           container: OnboardingTooltip(
             title: context.l10n.onboardingEditorSaveTitle,
             description: context.l10n.onboardingEditorSaveDescription,
-            currentStep: 9,
-            totalSteps: kOnboardingTotalSteps,
+            currentStep: onboardingSaveStep,
+            totalSteps: onboardingTotalSteps,
           ),
           child: Observer(
             builder: (_) => AppButton(

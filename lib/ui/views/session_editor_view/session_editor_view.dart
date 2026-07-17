@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class SessionEditorView extends StatefulWidget {
@@ -28,6 +29,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
   late final SessionEditorViewModel _viewModel;
   late final OnboardingController _onboarding;
   final _scrollController = ScrollController();
+  ReactionDisposer? _onboardingTourDisposer;
 
   @override
   void initState() {
@@ -35,10 +37,27 @@ class _SessionEditorViewState extends State<SessionEditorView> {
     _viewModel = GetIt.I.get<SessionEditorViewModel>();
     _onboarding = GetIt.I.get<OnboardingController>();
     _viewModel.init(widget.sessionId);
+    _scheduleOnboardingTour();
+  }
+
+  /// Starts the editor leg of the onboarding tour once loading finished and the
+  /// section widgets (the showcase targets) have been laid out.
+  void _scheduleOnboardingTour() {
+    if (!_onboarding.isAwaitingEditor) return;
+    _onboardingTourDisposer = when(
+      (_) => !_viewModel.isLoading,
+      () {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          _onboarding.startEditorTour();
+        });
+      },
+    );
   }
 
   @override
   void dispose() {
+    _onboardingTourDisposer?.call();
     _scrollController.dispose();
     super.dispose();
   }
@@ -91,7 +110,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           description:
                               context.l10n.onboardingEditorDetailsDescription,
                           currentStep: 5,
-                          totalSteps: kOnboardingTotalSteps,
+                          totalSteps: onboardingTotalSteps,
                         ),
                         child: SessionDetailsPanel(viewModel: _viewModel),
                       ),
@@ -103,7 +122,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           description:
                               context.l10n.onboardingEditorTimersDescription,
                           currentStep: 6,
-                          totalSteps: kOnboardingTotalSteps,
+                          totalSteps: onboardingTotalSteps,
                         ),
                         child: SessionTimersSection(
                           viewModel: _viewModel,
@@ -118,7 +137,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           description: context
                               .l10n.onboardingEditorBlockedAppsDescription,
                           currentStep: 7,
-                          totalSteps: kOnboardingTotalSteps,
+                          totalSteps: onboardingTotalSteps,
                         ),
                         child: BlockedAppsSection(viewModel: _viewModel),
                       ),
@@ -130,7 +149,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           description: context
                               .l10n.onboardingEditorBlockedSitesDescription,
                           currentStep: 8,
-                          totalSteps: kOnboardingTotalSteps,
+                          totalSteps: onboardingTotalSteps,
                         ),
                         child: BlockedSitesSection(viewModel: _viewModel),
                       ),

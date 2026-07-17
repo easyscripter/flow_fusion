@@ -548,6 +548,30 @@ abstract class AppLocalizations {
   /// **'Logs are unavailable'**
   String get settingsLogsUnavailable;
 
+  /// No description provided for @settingsSectionHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsSectionHelp;
+
+  /// No description provided for @settingsOnboardingReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive tour'**
+  String get settingsOnboardingReplay;
+
+  /// No description provided for @settingsOnboardingReplayDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the welcome tour to see how sessions, timers and blocking work.'**
+  String get settingsOnboardingReplayDescription;
+
+  /// No description provided for @settingsOnboardingReplayButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Show again'**
+  String get settingsOnboardingReplayButton;
+
   /// No description provided for @updateAvailable.
   ///
   /// In en, this message translates to:
@@ -1151,7 +1175,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingNavOverviewDescription.
   ///
   /// In en, this message translates to:
-  /// **'Your dashboard — see your progress and start a session at a glance.'**
+  /// **'Your stats dashboard: focus totals and an activity heatmap that tracks your progress day by day.'**
   String get onboardingNavOverviewDescription;
 
   /// No description provided for @onboardingNavSessionsTitle.
@@ -1187,7 +1211,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingEditorDetailsDescription.
   ///
   /// In en, this message translates to:
-  /// **'Give your session a name and description so you know what you\'re focusing on.'**
+  /// **'Give your session an icon, a name and an optional description so you know what you\'re focusing on.'**
   String get onboardingEditorDetailsDescription;
 
   /// No description provided for @onboardingEditorTimersTitle.
@@ -1211,7 +1235,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingEditorBlockedAppsDescription.
   ///
   /// In en, this message translates to:
-  /// **'Pick apps to close and keep out of reach while the session is running.'**
+  /// **'Pick apps that close automatically during work phases so they can\'t distract you.'**
   String get onboardingEditorBlockedAppsDescription;
 
   /// No description provided for @onboardingEditorBlockedSitesTitle.
@@ -1223,7 +1247,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingEditorBlockedSitesDescription.
   ///
   /// In en, this message translates to:
-  /// **'Add websites to block so they can\'t pull you out of the flow.'**
+  /// **'Add websites that get blocked during work phases so they can\'t pull you out of the flow.'**
   String get onboardingEditorBlockedSitesDescription;
 
   /// No description provided for @onboardingEditorSaveTitle.

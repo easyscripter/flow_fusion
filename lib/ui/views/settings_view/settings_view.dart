@@ -4,6 +4,7 @@ import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/logs_setting_tile.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/manual_phase_switch_setting_tile.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/notifications_setting_tile.dart';
+import 'package:flow_fusion/ui/views/settings_view/widgets/onboarding_replay_setting_tile.dart';
 import 'package:flow_fusion/ui/views/settings_view/widgets/update_setting_tile.dart';
 import 'package:flow_fusion/ui/widgets/app_dropdown.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
@@ -80,6 +81,12 @@ class _SettingsViewState extends State<SettingsView> {
                       context,
                       title: context.l10n.settingsSectionDiagnostics,
                       children: const [LogsSettingTile()],
+                    ),
+                    const SizedBox(height: 24),
+                    _buildSettingsSection(
+                      context,
+                      title: context.l10n.settingsSectionHelp,
+                      children: const [OnboardingReplaySettingTile()],
                     ),
                   ],
                 ),

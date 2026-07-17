@@ -129,7 +129,7 @@ class SidebarWidget extends StatelessWidget {
               title: context.l10n.onboardingBrandTitle,
               description: context.l10n.onboardingBrandDescription,
               currentStep: 1,
-              totalSteps: kOnboardingTotalSteps,
+              totalSteps: onboardingTotalSteps,
             ),
             child: const SidebarBrand(),
           ),
@@ -153,7 +153,7 @@ class SidebarWidget extends StatelessWidget {
                           title: item.showcaseTitle(context),
                           description: item.showcaseDescription(context),
                           currentStep: item.showcaseStep,
-                          totalSteps: kOnboardingTotalSteps,
+                          totalSteps: onboardingTotalSteps,
                         ),
                         child: SidebarNavButton(
                           icon: item.icon,

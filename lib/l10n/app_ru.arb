@@ -97,6 +97,11 @@
   "settingsDiagnosticsCopied": "Диагностика скопирована в буфер обмена",
   "settingsLogsUnavailable": "Логи недоступны",
 
+  "settingsSectionHelp": "Помощь",
+  "settingsOnboardingReplay": "Интерактивный тур",
+  "settingsOnboardingReplayDescription": "Повторите приветственный тур, чтобы вспомнить, как работают сессии, таймеры и блокировка.",
+  "settingsOnboardingReplayButton": "Показать снова",
+
   "updateAvailable": "Доступна новая версия {version}",
   "@updateAvailable": {
     "placeholders": {
@@ -270,19 +275,19 @@
   "onboardingBrandTitle": "Это Flow Fusion",
   "onboardingBrandDescription": "Ваше пространство для сессий глубокого фокуса. Давайте быстро осмотримся.",
   "onboardingNavOverviewTitle": "Обзор",
-  "onboardingNavOverviewDescription": "Ваша панель — прогресс и запуск сессии одним взглядом.",
+  "onboardingNavOverviewDescription": "Панель статистики: сводка по фокусу и тепловая карта активности по дням.",
   "onboardingNavSessionsTitle": "Сессии",
   "onboardingNavSessionsDescription": "Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.",
   "onboardingNavSettingsTitle": "Настройки",
   "onboardingNavSettingsDescription": "Настройте приложение под себя — и повторите этот тур в любой момент.",
   "onboardingEditorDetailsTitle": "Детали сессии",
-  "onboardingEditorDetailsDescription": "Дайте сессии название и описание, чтобы понимать, на чём фокусируетесь.",
+  "onboardingEditorDetailsDescription": "Задайте иконку, название и описание сессии, чтобы понимать, на чём фокусируетесь.",
   "onboardingEditorTimersTitle": "Таймеры",
   "onboardingEditorTimersDescription": "Добавьте интервалы фокуса и перерывов, чтобы структурировать сессию в стиле Pomodoro.",
   "onboardingEditorBlockedAppsTitle": "Блокировка приложений",
-  "onboardingEditorBlockedAppsDescription": "Выберите приложения, которые закроются и будут недоступны во время сессии.",
+  "onboardingEditorBlockedAppsDescription": "Выберите приложения, которые автоматически закрываются во время фаз работы.",
   "onboardingEditorBlockedSitesTitle": "Блокировка сайтов",
-  "onboardingEditorBlockedSitesDescription": "Добавьте сайты для блокировки, чтобы они не выдёргивали вас из потока.",
+  "onboardingEditorBlockedSitesDescription": "Добавьте сайты, которые блокируются во время фаз работы, чтобы не выдёргивали из потока.",
   "onboardingEditorSaveTitle": "Сохраните сессию",
   "onboardingEditorSaveDescription": "Готово! Сохраните сессию — и можно приступать к фокусу."
 }

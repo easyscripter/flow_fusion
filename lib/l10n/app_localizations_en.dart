@@ -248,6 +248,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLogsUnavailable => 'Logs are unavailable';
 
   @override
+  String get settingsSectionHelp => 'Help';
+
+  @override
+  String get settingsOnboardingReplay => 'Interactive tour';
+
+  @override
+  String get settingsOnboardingReplayDescription =>
+      'Replay the welcome tour to see how sessions, timers and blocking work.';
+
+  @override
+  String get settingsOnboardingReplayButton => 'Show again';
+
+  @override
   String updateAvailable(String version) {
     return 'A new version $version is available';
   }
@@ -606,7 +619,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingNavOverviewDescription =>
-      'Your dashboard — see your progress and start a session at a glance.';
+      'Your stats dashboard: focus totals and an activity heatmap that tracks your progress day by day.';
 
   @override
   String get onboardingNavSessionsTitle => 'Sessions';
@@ -627,7 +640,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingEditorDetailsDescription =>
-      'Give your session a name and description so you know what you\'re focusing on.';
+      'Give your session an icon, a name and an optional description so you know what you\'re focusing on.';
 
   @override
   String get onboardingEditorTimersTitle => 'Timers';
@@ -641,14 +654,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingEditorBlockedAppsDescription =>
-      'Pick apps to close and keep out of reach while the session is running.';
+      'Pick apps that close automatically during work phases so they can\'t distract you.';
 
   @override
   String get onboardingEditorBlockedSitesTitle => 'Blocked sites';
 
   @override
   String get onboardingEditorBlockedSitesDescription =>
-      'Add websites to block so they can\'t pull you out of the flow.';
+      'Add websites that get blocked during work phases so they can\'t pull you out of the flow.';
 
   @override
   String get onboardingEditorSaveTitle => 'Save your session';
