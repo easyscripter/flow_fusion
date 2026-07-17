@@ -55,4 +55,10 @@ class Prefs {
   set templatesSeeded(bool value) {
     _prefs.setBool(_templatesSeededKey, value);
   }
+
+  static const String _hasSeenOnboardingKey = 'has_seen_onboarding';
+  bool get hasSeenOnboarding => _prefs.getBool(_hasSeenOnboardingKey) ?? false;
+  set hasSeenOnboarding(bool value) {
+    _prefs.setBool(_hasSeenOnboardingKey, value);
+  }
 }
