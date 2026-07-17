@@ -16,9 +16,13 @@ class SessionSeeder {
   SessionSeeder(this._prefs, this._sessionDao, this._timerDao);
 
   Future<void> seedIfNeeded() async {
-    if (_prefs.templatesSeeded) return;
-
     try {
+      final List<Session> existing = await _sessionDao.findAllSession();
+      if (existing.isNotEmpty) {
+        _prefs.templatesSeeded = true;
+        return;
+      }
+
       final String lang = _prefs.language ?? 'en';
 
       for (final SessionTemplate template in kSessionTemplates) {
