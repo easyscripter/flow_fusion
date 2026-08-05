@@ -59,16 +59,44 @@ class _TimerProgressTickerState extends State<TimerProgressTicker>
   void initState() {
     super.initState();
     _ticker = createTicker((_) => _tick());
-    _ticker.start();
+    if (_shouldIdle) {
+      _tick();
+    } else {
+      _ticker.start();
+    }
+  }
+
+  bool get _shouldIdle =>
+      widget.state.isPaused || widget.state.awaitingManualAdvance;
+
+  @override
+  void didUpdateWidget(covariant TimerProgressTicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_shouldIdle) {
+      if (_ticker.isActive) {
+        // Compute the final value before freezing so it stays exact at the
+        // instant of the transition rather than stalling on a stale frame.
+        _tick();
+        _ticker.stop();
+      }
+    } else {
+      if (!_ticker.isActive) {
+        _ticker.start();
+      }
+    }
   }
 
   void _tick() {
     final currentTimer = widget.state.currentTimer;
+    if (currentTimer == null) {
+      _progress.value = widget.state.progress;
+      return;
+    }
     final next = computeSmoothProgress(
       isPaused: widget.state.isPaused,
       awaitingManualAdvance: widget.state.awaitingManualAdvance,
       endsAt: widget.state.endsAt,
-      totalMs: currentTimer?.plannedDuration.inMilliseconds ?? 0,
+      totalMs: currentTimer.plannedDuration.inMilliseconds,
       fallbackProgress: widget.state.progress,
       now: widget._now(),
     );
