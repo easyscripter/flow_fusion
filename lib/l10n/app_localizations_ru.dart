@@ -364,6 +364,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timerNextPhase => 'Следующая фаза';
 
   @override
+  String get timerEndSession => 'Завершить сессию';
+
+  @override
+  String get timerEndSessionModalTitle => 'Завершить сессию';
+
+  @override
+  String get timerEndSessionModalContent =>
+      'Вы уверены, что хотите завершить сессию прямо сейчас? Это действие нельзя отменить.';
+
+  @override
   String get timerQueueTitle => 'Очередь';
 
   @override

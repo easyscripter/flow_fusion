@@ -7,7 +7,7 @@ import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_progress_circle.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_item.dart';
 import 'package:flow_fusion/ui/widgets/app_badge.dart';
-import 'package:flow_fusion/ui/widgets/app_button.dart';
+import 'package:flow_fusion/ui/widgets/app_icon_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flutter/material.dart';
@@ -119,50 +119,52 @@ class TimerBody extends StatelessWidget {
                             runSpacing: AppSizes.paddingSmall,
                             children: state.awaitingManualAdvance
                                 ? [
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: context.l10n.timerNextPhase,
-                                        icon: Icons.arrow_forward_rounded,
-                                        onPressed: () async {
-                                          await controller
-                                              .advanceToNextPhaseManually();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: Icons.arrow_forward_rounded,
+                                      tooltip: context.l10n.timerNextPhase,
+                                      onPressed: () async {
+                                        await controller
+                                            .advanceToNextPhaseManually();
+                                      },
+                                    ),
+                                    AppIconButton(
+                                      icon: Icons.stop_rounded,
+                                      tooltip: context.l10n.timerEndSession,
+                                      variant: AppIconButtonVariant.danger,
+                                      onPressed: () =>
+                                          _confirmEndSession(context),
                                     ),
                                   ]
                                 : [
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: state.isPaused
-                                            ? context.l10n.timerResume
-                                            : context.l10n.timerPause,
-                                        icon: state.isPaused
-                                            ? Icons.play_arrow_rounded
-                                            : Icons.pause_rounded,
-                                        onPressed: () async {
-                                          if (state.isPaused) {
-                                            await controller.resume();
-                                            return;
-                                          }
-                                          await controller.pause();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: state.isPaused
+                                          ? Icons.play_arrow_rounded
+                                          : Icons.pause_rounded,
+                                      tooltip: state.isPaused
+                                          ? context.l10n.timerResume
+                                          : context.l10n.timerPause,
+                                      onPressed: () async {
+                                        if (state.isPaused) {
+                                          await controller.resume();
+                                          return;
+                                        }
+                                        await controller.pause();
+                                      },
                                     ),
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: context.l10n.timerSkip,
-                                        icon: Icons.skip_next_rounded,
-                                        variant: AppButtonVariant.secondary,
-                                        onPressed: () async {
-                                          await controller.skipCurrentTimer();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: Icons.skip_next_rounded,
+                                      tooltip: context.l10n.timerSkip,
+                                      variant: AppIconButtonVariant.secondary,
+                                      onPressed: () async {
+                                        await controller.skipCurrentTimer();
+                                      },
+                                    ),
+                                    AppIconButton(
+                                      icon: Icons.stop_rounded,
+                                      tooltip: context.l10n.timerEndSession,
+                                      variant: AppIconButtonVariant.danger,
+                                      onPressed: () =>
+                                          _confirmEndSession(context),
                                     ),
                                   ],
                           ),
@@ -215,5 +217,29 @@ class TimerBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _confirmEndSession(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.timerEndSessionModalTitle),
+        content: Text(context.l10n.timerEndSessionModalContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.deleteModalCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.timerEndSession),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await controller.endSessionNow();
+    }
   }
 }

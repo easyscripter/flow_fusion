@@ -764,6 +764,24 @@ abstract class AppLocalizations {
   /// **'Next phase'**
   String get timerNextPhase;
 
+  /// No description provided for @timerEndSession.
+  ///
+  /// In en, this message translates to:
+  /// **'End session'**
+  String get timerEndSession;
+
+  /// No description provided for @timerEndSessionModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End Session'**
+  String get timerEndSessionModalTitle;
+
+  /// No description provided for @timerEndSessionModalContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to end this session now? This can\'t be undone.'**
+  String get timerEndSessionModalContent;
+
   /// No description provided for @timerQueueTitle.
   ///
   /// In en, this message translates to:

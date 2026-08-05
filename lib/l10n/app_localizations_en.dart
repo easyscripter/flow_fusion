@@ -362,6 +362,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timerNextPhase => 'Next phase';
 
   @override
+  String get timerEndSession => 'End session';
+
+  @override
+  String get timerEndSessionModalTitle => 'End Session';
+
+  @override
+  String get timerEndSessionModalContent =>
+      'Are you sure you want to end this session now? This can\'t be undone.';
+
+  @override
   String get timerQueueTitle => 'Route';
 
   @override

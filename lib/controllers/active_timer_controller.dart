@@ -169,6 +169,22 @@ class ActiveTimerController {
     await _advanceToNextTimer();
   }
 
+  Future<void> endSessionNow() async {
+    if (!hasActiveSession || _isFinalizingSession) return;
+
+    final SessionTimer? current = _state.currentTimer;
+    if (current != null && !_state.awaitingManualAdvance) {
+      final Duration actual = elapsedIn(
+        current.plannedDuration,
+        _state.remaining,
+      );
+      _state.accrueWork(current, actual);
+      await _markTimerSkipped(current, actual);
+    }
+
+    await _clearState(markSessionCompleted: true);
+  }
+
   Future<void> advanceToNextPhaseManually() async {
     if (!hasActiveSession ||
         _isFinalizingSession ||
