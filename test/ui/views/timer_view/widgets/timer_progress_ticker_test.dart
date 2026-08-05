@@ -319,22 +319,20 @@ void main() {
         endsAt: endsAt,
         isPaused: false,
       );
+      // Initialize remaining so state.progress is meaningful (not degenerate 0 or 1)
+      state.remaining = const Duration(minutes: 4, seconds: 30); // 90% remaining = 10% progress
 
-      late double progressBeforePause;
-      late double progressAfterPause;
+      late ValueListenable<double> capturedListenable;
 
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: StatefulBuilder(
-              builder: (context, setState) {
-                return TimerProgressTicker(
-                  state: state,
-                  now: () => currentTime,
-                  builder: (context, progress) {
-                    return Text('Progress: ${progress.value.toStringAsFixed(2)}');
-                  },
-                );
+            body: TimerProgressTicker(
+              state: state,
+              now: () => currentTime,
+              builder: (context, progress) {
+                capturedListenable = progress;
+                return Text('Progress: ${progress.value.toStringAsFixed(2)}');
               },
             ),
           ),
@@ -348,45 +346,33 @@ void main() {
       currentTime = currentTime.add(const Duration(seconds: 30));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Extract progress value from rendered text: "Progress: 0.10"
-      var text = find.byType(Text).evaluate().first.widget as Text;
-      var textValue = (text.data ?? '').replaceAll('Progress: ', '');
-      progressBeforePause = double.tryParse(textValue) ?? 0.0;
-      expect(progressBeforePause, greaterThan(0.0)); // Verify we have progress
+      // Capture progress value after first advance (should be somewhere in mid-range)
+      final progressBeforePause = capturedListenable.value;
+      expect(progressBeforePause, isNot(equals(0.0))); // Not at start
+      expect(progressBeforePause, isNot(equals(1.0))); // Not at end
 
-      // Now pause the timer
+      // Now pause the timer by mutating state directly
+      // _tick() reads widget.state.isPaused live on each frame, so it will see this change
       state.isPaused = true;
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: StatefulBuilder(
-              builder: (context, setState) {
-                return TimerProgressTicker(
-                  state: state,
-                  now: () => currentTime,
-                  builder: (context, progress) {
-                    return Text('Progress: ${progress.value.toStringAsFixed(2)}');
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-      );
-
-      await tester.pump(const Duration(milliseconds: 16));
 
       // Advance time further while paused
       currentTime = currentTime.add(const Duration(seconds: 30));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Extract progress value again
-      text = find.byType(Text).evaluate().first.widget as Text;
-      textValue = (text.data ?? '').replaceAll('Progress: ', '');
-      progressAfterPause = double.tryParse(textValue) ?? 0.0;
+      // Capture progress value after pause (ticker should have frozen the value)
+      final progressAfterPause = capturedListenable.value;
 
-      // When paused, progress should NOT have changed despite time advancing
-      expect(progressAfterPause, equals(progressBeforePause));
+      // When paused, progress should NOT have changed despite time advancing 30 more seconds
+      expect(progressAfterPause, equals(progressBeforePause),
+          reason: 'Progress should freeze when isPaused=true');
+
+      // Advance time even more to be certain
+      currentTime = currentTime.add(const Duration(seconds: 60));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // Should still be frozen
+      expect(capturedListenable.value, equals(progressBeforePause),
+          reason: 'Progress should remain frozen across multiple ticks');
     });
 
     testWidgets('disposes ticker and ValueNotifier properly',
