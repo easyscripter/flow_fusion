@@ -4,6 +4,7 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TimerQueueItem extends StatelessWidget {
@@ -14,6 +15,7 @@ class TimerQueueItem extends StatelessWidget {
     required this.total,
     required this.isCurrent,
     required this.isDone,
+    this.liveProgress,
   });
 
   final SessionTimer timer;
@@ -21,6 +23,7 @@ class TimerQueueItem extends StatelessWidget {
   final int total;
   final bool isCurrent;
   final bool isDone;
+  final ValueListenable<double>? liveProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +66,21 @@ class TimerQueueItem extends StatelessWidget {
                   if (rightVisible)
                     Positioned(
                       right: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 280),
-                        curve: Curves.easeOutCubic,
-                        width: 52,
-                        height: 3,
-                        color: stationColor.withValues(alpha: 0.7),
-                      ),
+                      child: (isCurrent && liveProgress != null)
+                          ? _LiveConnectorFill(
+                              width: 52,
+                              height: 3,
+                              trackColor: colors.lineStrong,
+                              fillColor: stationColor,
+                              progress: liveProgress!,
+                            )
+                          : AnimatedContainer(
+                              duration: const Duration(milliseconds: 280),
+                              curve: Curves.easeOutCubic,
+                              width: 52,
+                              height: 3,
+                              color: stationColor.withValues(alpha: 0.7),
+                            ),
                     ),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 280),
@@ -143,6 +154,47 @@ class TimerQueueItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LiveConnectorFill extends StatelessWidget {
+  const _LiveConnectorFill({
+    required this.width,
+    required this.height,
+    required this.trackColor,
+    required this.fillColor,
+    required this.progress,
+  });
+
+  final double width;
+  final double height;
+  final Color trackColor;
+  final Color fillColor;
+  final ValueListenable<double> progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Stack(
+        children: [
+          Container(width: width, height: height, color: trackColor),
+          ValueListenableBuilder<double>(
+            valueListenable: progress,
+            builder: (context, value, _) {
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: FractionallySizedBox(
+                  widthFactor: value.clamp(0.0, 1.0),
+                  child: Container(height: height, color: fillColor),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
