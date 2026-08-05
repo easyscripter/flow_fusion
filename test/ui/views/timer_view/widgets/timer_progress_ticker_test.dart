@@ -269,8 +269,10 @@ void main() {
         plannedDuration: const Duration(minutes: 5),
       );
       final state = createTestState(currentTimer: timer, endsAt: endsAt);
+      state.remaining = const Duration(minutes: 5);
 
       var currentTime = baseTime;
+      late ValueListenable<double> capturedListenable;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -279,6 +281,7 @@ void main() {
               state: state,
               now: () => currentTime,
               builder: (context, progress) {
+                capturedListenable = progress;
                 return Text('Progress: ${progress.value.toStringAsFixed(2)}');
               },
             ),
@@ -286,18 +289,19 @@ void main() {
         ),
       );
 
-      // Initial render
+      // Initial render and first tick
       expect(find.byType(TimerProgressTicker), findsOneWidget);
-
-      // Pump to trigger first frame tick
       await tester.pump(const Duration(milliseconds: 16));
+      final initialProgress = capturedListenable.value;
 
       // Move time forward by 1 minute
       currentTime = currentTime.add(const Duration(minutes: 1));
       await tester.pump(const Duration(milliseconds: 16));
 
-      // Progress should be approximately 0.20 (1 minute out of 5)
-      expect(find.textContaining('Progress:'), findsOneWidget);
+      // Check that progress changed to ~0.2
+      final updatedProgress = capturedListenable.value;
+      expect(updatedProgress, closeTo(0.2, 0.01));
+      expect(updatedProgress, greaterThan(initialProgress));
     });
 
     testWidgets('freezes progress when isPaused is true', (WidgetTester tester) async {
@@ -310,13 +314,14 @@ void main() {
       );
 
       var currentTime = baseTime;
-      var state = createTestState(
+      final state = createTestState(
         currentTimer: timer,
         endsAt: endsAt,
         isPaused: false,
       );
 
-      final progressValues = <double>[];
+      late double progressBeforePause;
+      late double progressAfterPause;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -327,7 +332,6 @@ void main() {
                   state: state,
                   now: () => currentTime,
                   builder: (context, progress) {
-                    progressValues.add(progress.value);
                     return Text('Progress: ${progress.value.toStringAsFixed(2)}');
                   },
                 );
@@ -337,19 +341,52 @@ void main() {
         ),
       );
 
-      // Initial frame
-      await tester.pump(const Duration(milliseconds: 16));
-      expect(progressValues.length, greaterThan(0));
-
-      // Advance time
-      currentTime = currentTime.add(const Duration(milliseconds: 100));
+      // Initial frame to get ticker running
       await tester.pump(const Duration(milliseconds: 16));
 
-      final progressBeforePause = progressValues.last;
+      // Advance time by 30 seconds while not paused
+      currentTime = currentTime.add(const Duration(seconds: 30));
+      await tester.pump(const Duration(milliseconds: 16));
 
-      // Note: In a real scenario, we'd need to update state and rebuild.
-      // For now, we're verifying the widget structure works correctly.
-      expect(find.byType(TimerProgressTicker), findsOneWidget);
+      // Extract progress value from rendered text: "Progress: 0.10"
+      var text = find.byType(Text).evaluate().first.widget as Text;
+      var textValue = (text.data ?? '').replaceAll('Progress: ', '');
+      progressBeforePause = double.tryParse(textValue) ?? 0.0;
+      expect(progressBeforePause, greaterThan(0.0)); // Verify we have progress
+
+      // Now pause the timer
+      state.isPaused = true;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: StatefulBuilder(
+              builder: (context, setState) {
+                return TimerProgressTicker(
+                  state: state,
+                  now: () => currentTime,
+                  builder: (context, progress) {
+                    return Text('Progress: ${progress.value.toStringAsFixed(2)}');
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // Advance time further while paused
+      currentTime = currentTime.add(const Duration(seconds: 30));
+      await tester.pump(const Duration(milliseconds: 16));
+
+      // Extract progress value again
+      text = find.byType(Text).evaluate().first.widget as Text;
+      textValue = (text.data ?? '').replaceAll('Progress: ', '');
+      progressAfterPause = double.tryParse(textValue) ?? 0.0;
+
+      // When paused, progress should NOT have changed despite time advancing
+      expect(progressAfterPause, equals(progressBeforePause));
     });
 
     testWidgets('disposes ticker and ValueNotifier properly',
@@ -392,8 +429,11 @@ void main() {
       );
       final state = createTestState(
         currentTimer: timer,
-        progress: 0.42,
       );
+      // Set remaining to 42% of duration (2.1 minutes of 5 minutes)
+      state.remaining = const Duration(minutes: 2, seconds: 54);
+
+      late double capturedProgress;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -401,6 +441,7 @@ void main() {
             body: TimerProgressTicker(
               state: state,
               builder: (context, progress) {
+                capturedProgress = progress.value;
                 return Text('Progress: ${progress.value.toStringAsFixed(2)}');
               },
             ),
@@ -411,8 +452,10 @@ void main() {
       // Just pump once to allow one frame
       await tester.pump(const Duration(milliseconds: 16));
 
-      // The initial progress should be close to the state's progress
+      // The initial progress should match the state's progress value
+      // Without endsAt set, computeSmoothProgress returns fallbackProgress (state.progress)
       expect(find.byType(TimerProgressTicker), findsOneWidget);
+      expect(capturedProgress, closeTo(0.42, 0.01));
     });
 
     testWidgets('uses custom now function if provided', (WidgetTester tester) async {
