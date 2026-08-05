@@ -10,6 +10,7 @@ import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flow_fusion/ui/widgets/app_icon_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TimerBody extends StatelessWidget {
@@ -18,11 +19,13 @@ class TimerBody extends StatelessWidget {
     required this.state,
     required this.controller,
     required this.routeScrollController,
+    required this.smoothProgress,
   });
 
   final ActiveTimerState state;
   final ActiveTimerController controller;
   final ScrollController routeScrollController;
+  final ValueListenable<double> smoothProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +64,17 @@ class TimerBody extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TimerProgressCircle(
-                            progress: state.progress,
-                            color: typeColor,
-                            timeLabel: state.formattedRemaining,
-                            timerLabel: timer.title,
-                            size: compact ? 250 : 320,
+                          ValueListenableBuilder<double>(
+                            valueListenable: smoothProgress,
+                            builder: (context, progress, _) {
+                              return TimerProgressCircle(
+                                progress: progress,
+                                color: typeColor,
+                                timeLabel: state.formattedRemaining,
+                                timerLabel: timer.title,
+                                size: compact ? 250 : 320,
+                              );
+                            },
                           ),
                           SizedBox(
                             height: compact
@@ -198,6 +206,9 @@ class TimerBody extends StatelessWidget {
                                       total: state.timers.length,
                                       isCurrent: index == state.currentIndex,
                                       isDone: index < state.currentIndex,
+                                      liveProgress: index == state.currentIndex
+                                          ? smoothProgress
+                                          : null,
                                     ),
                                     if (index < state.timers.length - 1)
                                       const SizedBox(width: 8),
