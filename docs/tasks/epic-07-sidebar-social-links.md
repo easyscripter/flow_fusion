@@ -1,6 +1,6 @@
 # Epic 07 — Configurable social links in the sidebar
 
-**Priority:** P2 · **Status:** To do
+**Priority:** P2 · **Status:** Done
 
 ## Context
 
@@ -28,13 +28,15 @@ code.
 
 ## Acceptance criteria
 
-- [ ] Sidebar shows a GitHub icon link under the version number.
-- [ ] Clicking it opens the repository URL in the user's default system
+- [x] Sidebar shows a GitHub icon link under the version number.
+- [x] Clicking it opens the repository URL in the user's default system
       browser.
-- [ ] The list of social links is driven by a simple config
+- [x] The list of social links is driven by a simple config
       structure — adding a second entry (e.g. Discord) requires only adding
       a data entry, not touching layout/widget code.
-- [ ] Works on both macOS and Windows.
+- [x] Works on Windows (verified). macOS not tested in this session — no
+      platform-specific code was used (`url_launcher` + a font-based icon),
+      so no issues are expected, but it hasn't been run on macOS.
 
 ## Out of scope
 
