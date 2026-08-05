@@ -83,11 +83,16 @@ class _CirclePainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
 
+    // Butt cap, not round: a round cap extends past its mathematical
+    // endpoint by ~half the stroke width. As the sweep nears a full
+    // circle, the start-cap and end-cap caps overlap and the ring reads
+    // as visually closed several seconds before progress actually hits
+    // 1.0 (worse the larger strokeWidth is relative to the sweep left).
     final progressPaint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round;
+      ..strokeCap = StrokeCap.butt;
 
     canvas.drawCircle(center, radius, trackPaint);
     canvas.drawArc(
