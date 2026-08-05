@@ -11,11 +11,11 @@ if an agent wants more context than the "Why" section here gives.
 |---|------|----------|--------|
 | 01 | [macOS app blocking reliability](epic-01-macos-app-blocking.md) | P0 | **Done** |
 | 02 | [Instant end-session button](epic-02-instant-end-session.md) | P1 | **Done** |
-| 03 | [Live menubar timer](epic-03-menubar-timer.md) | P1 | To do |
+| 03 | [Live menubar timer](epic-03-menubar-timer.md) | P1 | **Done** |
 | 04 | [Task time-tracking](epic-04-task-time-tracking.md) | P1 | To do |
 | 05 | [Usage analytics (self-hosted, opt-in)](epic-05-usage-analytics.md) | P1 | To do |
-| 06 | [Timer visual polish](epic-06-timer-visual-polish.md) | P2 | To do |
-| 07 | [Sidebar social links](epic-07-sidebar-social-links.md) | P2 | To do |
+| 06 | [Timer visual polish](epic-06-timer-visual-polish.md) | P2 | **Done** |
+| 07 | [Sidebar social links](epic-07-sidebar-social-links.md) | P2 | **Done** |
 | 08 | [OTA release-notes locale fallback](epic-08-ota-locale-fallback.md) | P0 | **Done** |
 
 **Priority key:** P0 blocks the release, P1 is expected in it, P2 is
