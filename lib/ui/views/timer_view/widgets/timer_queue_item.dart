@@ -32,7 +32,6 @@ class TimerQueueItem extends StatelessWidget {
         ? colors.workColor
         : colors.chillColor;
     final stationColor = isDone || isCurrent ? typeColor : colors.lineStrong;
-    final leftVisible = index > 0;
     final rightVisible = index < total - 1;
     final pointSize = isCurrent ? 18.0 : 14.0;
     final pointBorder = isCurrent ? 4.0 : 3.0;
@@ -51,24 +50,20 @@ class TimerQueueItem extends StatelessWidget {
               height: 24,
               child: Stack(
                 alignment: Alignment.center,
+                clipBehavior: Clip.none,
                 children: [
-                  if (leftVisible)
-                    Positioned(
-                      left: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 280),
-                        curve: Curves.easeOutCubic,
-                        width: 52,
-                        height: 3,
-                        color: stationColor.withValues(alpha: 0.7),
-                      ),
-                    ),
+                  // Spans from this dot's center, across the gap, to the
+                  // next dot's center — a single unbroken line instead of
+                  // two half-segments meeting (or failing to meet) at the
+                  // item boundary. Overflows this item's own box on
+                  // purpose (needs clipBehavior: Clip.none above); the
+                  // next item paints on top of the tail end, covering it.
                   if (rightVisible)
                     Positioned(
-                      right: 0,
+                      left: 64,
                       child: (isCurrent && liveProgress != null)
                           ? _LiveConnectorFill(
-                              width: 52,
+                              width: 136,
                               height: 3,
                               trackColor: colors.lineStrong,
                               fillColor: stationColor,
@@ -77,7 +72,7 @@ class TimerQueueItem extends StatelessWidget {
                           : AnimatedContainer(
                               duration: const Duration(milliseconds: 280),
                               curve: Curves.easeOutCubic,
-                              width: 52,
+                              width: 136,
                               height: 3,
                               color: stationColor.withValues(alpha: 0.7),
                             ),
@@ -181,7 +176,11 @@ class _LiveConnectorFill extends StatelessWidget {
       height: height,
       child: Stack(
         children: [
-          Container(width: width, height: height, color: trackColor),
+          Container(
+            width: width,
+            height: height,
+            color: trackColor.withValues(alpha: 0.7),
+          ),
           ValueListenableBuilder<double>(
             valueListenable: progress,
             builder: (context, value, _) {
