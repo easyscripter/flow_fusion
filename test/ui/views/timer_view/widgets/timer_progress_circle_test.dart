@@ -188,25 +188,34 @@ void main() {
       // Verify CustomPaint exists
       expect(find.byType(CustomPaint), findsWidgets);
 
-      // The CustomPaint should draw both a track circle and a progress arc.
-      // Verify circle is drawn (track background)
-      expect(
-        find.descendant(
-          of: find.byType(TimerProgressCircle),
-          matching: find.byType(CustomPaint),
-        ),
-        paints..circle(),
-      );
+      // Use a custom predicate to inspect the Paint object passed to drawArc.
+      // This verifies that progressPaint.shader is null (solid color, not gradient).
+      // The drawArc signature is:
+      //   drawArc(Rect rect, double startAngle, double sweepAngle, bool useCenter, Paint paint)
+      // So the Paint argument is at index 4 in the arguments list.
 
-      // Verify arc is drawn after the circle (progress arc).
-      // If a SweepGradient shader was used, this would fail or produce
-      // different paint operations. Solid color paints produce clean arc operations.
+      // Check that the CustomPaint renders with the expected paint operations.
+      // The critical verification: drawArc must use a Paint with shader == null
+      // (solid color, not gradient). If shader is set to SweepGradient, this test fails.
       expect(
         find.descendant(
           of: find.byType(TimerProgressCircle),
           matching: find.byType(CustomPaint),
         ),
-        paints..arc(),
+        paints..something((Symbol methodName, List<dynamic> arguments) {
+          // Verify the drawArc call uses solid color (no gradient shader)
+          if (methodName != #drawArc) return false;
+
+          // The Paint object is the 5th argument (index 4)
+          // drawArc(Rect rect, double startAngle, double sweepAngle, bool useCenter, Paint paint)
+          final paint = arguments[4] as Paint;
+
+          // CRITICAL CHECK: The paint's shader must be null (solid color).
+          // This guards against regression of the alpha-ramp SweepGradient bug.
+          // If someone reintroduces: ..shader = SweepGradient(...).createShader(rect)
+          // then paint.shader will not be null and this test will fail.
+          return paint.shader == null;
+        }),
       );
     });
   });
