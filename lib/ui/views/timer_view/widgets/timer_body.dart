@@ -5,6 +5,7 @@ import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_progress_circle.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_end_station.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_item.dart';
 import 'package:flow_fusion/ui/widgets/app_badge.dart';
 import 'package:flow_fusion/ui/widgets/app_icon_button.dart';
@@ -203,16 +204,16 @@ class TimerBody extends StatelessWidget {
                                     TimerQueueItem(
                                       timer: state.timers[index],
                                       index: index,
-                                      total: state.timers.length,
+                                      total: state.timers.length + 1,
                                       isCurrent: index == state.currentIndex,
                                       isDone: index < state.currentIndex,
                                       liveProgress: index == state.currentIndex
                                           ? smoothProgress
                                           : null,
                                     ),
-                                    if (index < state.timers.length - 1)
-                                      const SizedBox(width: 8),
+                                    const SizedBox(width: 8),
                                   ],
+                                  const TimerQueueEndStation(),
                                 ],
                               ),
                             ),

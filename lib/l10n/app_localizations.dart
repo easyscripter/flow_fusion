@@ -788,6 +788,12 @@ abstract class AppLocalizations {
   /// **'Route'**
   String get timerQueueTitle;
 
+  /// No description provided for @timerQueueEndStation.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get timerQueueEndStation;
+
   /// No description provided for @timerEmptyTitle.
   ///
   /// In en, this message translates to:

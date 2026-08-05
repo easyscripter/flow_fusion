@@ -375,6 +375,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timerQueueTitle => 'Route';
 
   @override
+  String get timerQueueEndStation => 'Finish';
+
+  @override
   String get timerEmptyTitle => 'No active timer';
 
   @override

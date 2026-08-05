@@ -377,6 +377,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timerQueueTitle => 'Очередь';
 
   @override
+  String get timerQueueEndStation => 'Конечная';
+
+  @override
   String get timerEmptyTitle => 'Нет активного таймера';
 
   @override

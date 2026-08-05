@@ -153,6 +153,7 @@
   "timerEndSessionModalTitle": "Завершить сессию",
   "timerEndSessionModalContent": "Вы уверены, что хотите завершить сессию прямо сейчас? Это действие нельзя отменить.",
   "timerQueueTitle": "Очередь",
+  "timerQueueEndStation": "Конечная",
   "timerEmptyTitle": "Нет активного таймера",
   "timerEmptyDescription": "Запустите сессию из списка сессий. Активный таймер останется в сайдбаре.",
   "timerFinishedTitle": "Таймер завершён",

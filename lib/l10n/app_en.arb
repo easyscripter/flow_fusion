@@ -153,6 +153,7 @@
   "timerEndSessionModalTitle": "End Session",
   "timerEndSessionModalContent": "Are you sure you want to end this session now? This can't be undone.",
   "timerQueueTitle": "Route",
+  "timerQueueEndStation": "Finish",
   "timerEmptyTitle": "No active timer",
   "timerEmptyDescription": "Start a session from the sessions list. Active timer will stay available in the sidebar.",
   "timerFinishedTitle": "Timer finished",
