@@ -8,6 +8,7 @@ import 'package:flow_fusion/ui/views/onboarding/widgets/onboarding_tooltip.dart'
 import 'package:flow_fusion/ui/widgets/sidebar_brand.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
+import 'package:flow_fusion/ui/widgets/sidebar_social_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -198,7 +199,12 @@ class SidebarWidget extends StatelessWidget {
           ),
           Divider(height: 1, thickness: 1, color: colors.sidebarBorder),
           Padding(
-            padding: const EdgeInsets.all(AppSizes.paddingMedium),
+            padding: const EdgeInsets.fromLTRB(
+              AppSizes.paddingMedium,
+              AppSizes.paddingMedium,
+              AppSizes.paddingMedium,
+              AppSizes.paddingSmall,
+            ),
             child: Text(
               context.l10n.versionLabel(packageVersion),
               textAlign: TextAlign.center,
@@ -207,6 +213,10 @@ class SidebarWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: AppSizes.paddingSmall),
+            child: SidebarSocialLinks(),
           ),
         ],
       ),
