@@ -91,10 +91,20 @@ class AppBlockerService {
 
   Future<void> _enforce() async {
     try {
-      await _channel.invokeMethod<dynamic>(
+      final List<dynamic>? results = await _channel.invokeMethod<List<dynamic>>(
         'blockApps',
         <String, dynamic>{'tokens': _activeTokens},
       );
+      if (!Platform.isMacOS || results == null) return;
+
+      for (final dynamic entry in results) {
+        final Map<String, dynamic> map = (entry as Map).cast<String, dynamic>();
+        if (map['success'] == true) continue;
+        AppLogger.error(
+          'AppBlockerService.blockApps',
+          'failed to quit ${map['name']} (${map['bundleId']}): ${map['reason']}',
+        );
+      }
     } catch (e, s) {
       AppLogger.error('AppBlockerService.blockApps', e, s);
     }
