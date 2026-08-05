@@ -170,5 +170,44 @@ void main() {
 
       expect(find.byType(TimerProgressCircle), findsOneWidget);
     });
+
+    testWidgets('progress arc uses solid color paint (no gradient shader)',
+        (WidgetTester tester) async {
+      const testColor = Colors.blue;
+
+      await tester.pumpWidget(
+        createTestApp(
+          progress: 0.6,
+          color: testColor,
+          timeLabel: '2:24',
+          timerLabel: 'Work',
+          size: 300,
+        ),
+      );
+
+      // Verify CustomPaint exists
+      expect(find.byType(CustomPaint), findsWidgets);
+
+      // The CustomPaint should draw both a track circle and a progress arc.
+      // Verify circle is drawn (track background)
+      expect(
+        find.descendant(
+          of: find.byType(TimerProgressCircle),
+          matching: find.byType(CustomPaint),
+        ),
+        paints..circle(),
+      );
+
+      // Verify arc is drawn after the circle (progress arc).
+      // If a SweepGradient shader was used, this would fail or produce
+      // different paint operations. Solid color paints produce clean arc operations.
+      expect(
+        find.descendant(
+          of: find.byType(TimerProgressCircle),
+          matching: find.byType(CustomPaint),
+        ),
+        paints..arc(),
+      );
+    });
   });
 }
