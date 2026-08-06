@@ -1,0 +1,149 @@
+import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
+import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/views/tasks_view/tasks_view_view_model.dart';
+import 'package:flow_fusion/ui/views/tasks_view/widgets/task_edit_dialog.dart';
+import 'package:flow_fusion/ui/views/tasks_view/widgets/task_list_tile.dart';
+import 'package:flow_fusion/ui/widgets/app_button.dart';
+import 'package:flow_fusion/ui/widgets/app_page_header.dart';
+import 'package:flow_fusion/ui/widgets/error_retry.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+
+class TasksView extends StatefulWidget {
+  const TasksView({super.key});
+
+  @override
+  State<TasksView> createState() => _TasksViewState();
+}
+
+class _TasksViewState extends State<TasksView> {
+  late final TasksViewViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = GetIt.I.get<TasksViewViewModel>();
+    _viewModel.init();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Observer(
+        builder: (context) {
+          if (_viewModel.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (_viewModel.hasError) {
+            return Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingLarge),
+              child: ErrorRetry(
+                message: context.l10n.errorLoadFailed,
+                onRetry: _viewModel.update,
+              ),
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(AppSizes.paddingLarge),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppPageHeader(
+                  title: context.l10n.tasksTitle,
+                  subtitle: context.l10n.tasksSubtitle,
+                  trailing: AppButton(
+                    label: context.l10n.tasksNew,
+                    icon: Icons.add,
+                    onPressed: _createTask,
+                  ),
+                ),
+                const SizedBox(height: AppSizes.paddingLarge),
+                Expanded(
+                  child: _viewModel.tasks.isEmpty
+                      ? _EmptyState(onCreate: _createTask)
+                      : ListView.separated(
+                          itemCount: _viewModel.tasks.length,
+                          separatorBuilder: (_, _) =>
+                              const SizedBox(height: AppSizes.paddingSmall),
+                          itemBuilder: (context, index) {
+                            final task = _viewModel.tasks[index];
+                            return TaskListTile(
+                              task: task,
+                              totalDuration: Duration.zero,
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _createTask() async {
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => const TaskEditDialog(),
+    );
+    if (name == null || !mounted) return;
+
+    final created = await _viewModel.createTask(name);
+    if (!created && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.errorTaskSaveFailed)),
+      );
+    }
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.onCreate});
+
+  final VoidCallback onCreate;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.fusionColors;
+    final theme = Theme.of(context);
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 420),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              context.l10n.tasksEmptyTitle,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: AppSizes.paddingSmall),
+            Text(
+              context.l10n.tasksEmptyDescription,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colors.mutedForeground,
+                height: 1.4,
+              ),
+            ),
+            const SizedBox(height: AppSizes.paddingLarge),
+            AppButton(
+              label: context.l10n.tasksNew,
+              icon: Icons.add,
+              onPressed: onCreate,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

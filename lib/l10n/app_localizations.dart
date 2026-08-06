@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Timer'**
   String get navTimer;
 
+  /// No description provided for @navTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get navTasks;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
@@ -1136,6 +1142,90 @@ abstract class AppLocalizations {
   /// **'Couldn\'t delete the session. Please try again.'**
   String get errorDeleteFailed;
 
+  /// No description provided for @tasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasksTitle;
+
+  /// No description provided for @tasksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track time by task'**
+  String get tasksSubtitle;
+
+  /// No description provided for @tasksNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get tasksNew;
+
+  /// No description provided for @tasksEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks yet'**
+  String get tasksEmptyTitle;
+
+  /// No description provided for @tasksEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a task to start tagging your focus sessions with it.'**
+  String get tasksEmptyDescription;
+
+  /// No description provided for @taskEditDialogCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get taskEditDialogCreateTitle;
+
+  /// No description provided for @taskEditDialogEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename task'**
+  String get taskEditDialogEditTitle;
+
+  /// No description provided for @taskEditDialogNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Task name'**
+  String get taskEditDialogNameHint;
+
+  /// No description provided for @taskEditDialogCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get taskEditDialogCancel;
+
+  /// No description provided for @taskEditDialogSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get taskEditDialogSave;
+
+  /// No description provided for @deleteTaskModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Task'**
+  String get deleteTaskModalTitle;
+
+  /// No description provided for @deleteTaskModalContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this task? Sessions tagged with it will keep their data but lose the task tag.'**
+  String get deleteTaskModalContent;
+
+  /// No description provided for @errorTaskSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the task. Please try again.'**
+  String get errorTaskSaveFailed;
+
+  /// No description provided for @errorTaskDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the task. Please try again.'**
+  String get errorTaskDeleteFailed;
+
   /// No description provided for @onboardingWelcomeTitle.
   ///
   /// In en, this message translates to:
@@ -1213,6 +1303,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create and manage focus sessions: timers, blocked apps and sites.'**
   String get onboardingNavSessionsDescription;
+
+  /// No description provided for @onboardingNavTasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get onboardingNavTasksTitle;
+
+  /// No description provided for @onboardingNavTasksDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag your sessions with a task and see how much time you\'ve tracked on each one.'**
+  String get onboardingNavTasksDescription;
 
   /// No description provided for @onboardingNavSettingsTitle.
   ///

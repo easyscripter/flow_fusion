@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navTimer => 'Timer';
 
   @override
+  String get navTasks => 'Tasks';
+
+  @override
   String get navSettings => 'Settings';
 
   @override
@@ -597,6 +600,52 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t delete the session. Please try again.';
 
   @override
+  String get tasksTitle => 'Tasks';
+
+  @override
+  String get tasksSubtitle => 'Track time by task';
+
+  @override
+  String get tasksNew => 'New task';
+
+  @override
+  String get tasksEmptyTitle => 'No tasks yet';
+
+  @override
+  String get tasksEmptyDescription =>
+      'Create a task to start tagging your focus sessions with it.';
+
+  @override
+  String get taskEditDialogCreateTitle => 'New task';
+
+  @override
+  String get taskEditDialogEditTitle => 'Rename task';
+
+  @override
+  String get taskEditDialogNameHint => 'Task name';
+
+  @override
+  String get taskEditDialogCancel => 'Cancel';
+
+  @override
+  String get taskEditDialogSave => 'Save';
+
+  @override
+  String get deleteTaskModalTitle => 'Delete Task';
+
+  @override
+  String get deleteTaskModalContent =>
+      'Are you sure you want to delete this task? Sessions tagged with it will keep their data but lose the task tag.';
+
+  @override
+  String get errorTaskSaveFailed =>
+      'Couldn\'t save the task. Please try again.';
+
+  @override
+  String get errorTaskDeleteFailed =>
+      'Couldn\'t delete the task. Please try again.';
+
+  @override
   String get onboardingWelcomeTitle => 'Welcome to Flow Fusion';
 
   @override
@@ -640,6 +689,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingNavSessionsDescription =>
       'Create and manage focus sessions: timers, blocked apps and sites.';
+
+  @override
+  String get onboardingNavTasksTitle => 'Tasks';
+
+  @override
+  String get onboardingNavTasksDescription =>
+      'Tag your sessions with a task and see how much time you\'ve tracked on each one.';
 
   @override
   String get onboardingNavSettingsTitle => 'Settings';

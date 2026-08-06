@@ -17,14 +17,14 @@ part 'onboarding_controller.g.dart';
 bool get onboardingHasSitesStep => Platform.isWindows;
 
 /// Total number of steps in the whole tour, rendered by [OnboardingTooltip] as
-/// a single continuous "step N of M" counter. 4 sidebar steps + editor steps
+/// a single continuous "step N of M" counter. 5 sidebar steps + editor steps
 /// (details, timers, blocked apps, [blocked sites,] save); the blocked-sites
 /// step only exists on Windows.
-int get onboardingTotalSteps => onboardingHasSitesStep ? 9 : 8;
+int get onboardingTotalSteps => onboardingHasSitesStep ? 10 : 9;
 
 /// The step number of the final "Save" step, which shifts down by one when the
 /// blocked-sites step is absent.
-int get onboardingSaveStep => onboardingHasSitesStep ? 9 : 8;
+int get onboardingSaveStep => onboardingHasSitesStep ? 10 : 9;
 
 /// Where in the onboarding flow we currently are.
 ///
@@ -45,6 +45,7 @@ abstract class _OnboardingControllerBase with Store {
   final GlobalKey brandKey = GlobalKey();
   final GlobalKey navOverviewKey = GlobalKey();
   final GlobalKey navSessionsKey = GlobalKey();
+  final GlobalKey navTasksKey = GlobalKey();
   final GlobalKey navSettingsKey = GlobalKey();
 
   final GlobalKey editorDetailsKey = GlobalKey();
@@ -101,6 +102,7 @@ abstract class _OnboardingControllerBase with Store {
       brandKey,
       navOverviewKey,
       navSessionsKey,
+      navTasksKey,
       navSettingsKey,
     ]);
   }

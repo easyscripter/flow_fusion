@@ -69,11 +69,21 @@ class SidebarWidget extends StatelessWidget {
       showcaseKey: _sessionsShowcaseKey,
     ),
     _NavItem(
+      route: Routes.tasks,
+      icon: Icons.checklist_outlined,
+      selectedIcon: Icons.checklist_rounded,
+      label: _tasksLabel,
+      showcaseStep: 4,
+      showcaseTitle: _tasksShowcaseTitle,
+      showcaseDescription: _tasksShowcaseDescription,
+      showcaseKey: _tasksShowcaseKey,
+    ),
+    _NavItem(
       route: Routes.settings,
       icon: Icons.tune_outlined,
       selectedIcon: Icons.tune_rounded,
       label: _settingsLabel,
-      showcaseStep: 4,
+      showcaseStep: 5,
       showcaseTitle: _settingsShowcaseTitle,
       showcaseDescription: _settingsShowcaseDescription,
       showcaseKey: _settingsShowcaseKey,
@@ -84,6 +94,7 @@ class SidebarWidget extends StatelessWidget {
       context.l10n.navOverview;
   static String _sessionsLabel(BuildContext context) =>
       context.l10n.navSessions;
+  static String _tasksLabel(BuildContext context) => context.l10n.navTasks;
   static String _settingsLabel(BuildContext context) =>
       context.l10n.navSettings;
 
@@ -100,6 +111,13 @@ class SidebarWidget extends StatelessWidget {
       context.l10n.onboardingNavSessionsDescription;
   static GlobalKey _sessionsShowcaseKey(OnboardingController controller) =>
       controller.navSessionsKey;
+
+  static String _tasksShowcaseTitle(BuildContext context) =>
+      context.l10n.onboardingNavTasksTitle;
+  static String _tasksShowcaseDescription(BuildContext context) =>
+      context.l10n.onboardingNavTasksDescription;
+  static GlobalKey _tasksShowcaseKey(OnboardingController controller) =>
+      controller.navTasksKey;
 
   static String _settingsShowcaseTitle(BuildContext context) =>
       context.l10n.onboardingNavSettingsTitle;

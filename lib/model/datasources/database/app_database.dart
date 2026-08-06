@@ -11,9 +11,11 @@ import 'package:flow_fusion/model/datasources/database/converter/string_list_con
 import 'package:flow_fusion/model/datasources/database/dao/focus_log_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_dao.dart';
 import 'package:flow_fusion/model/datasources/database/dao/session_timer_dao.dart';
+import 'package:flow_fusion/model/datasources/database/dao/task_dao.dart';
 import 'package:flow_fusion/model/entity/database/focus_log.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
+import 'package:flow_fusion/model/entity/database/task.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'app_database.g.dart';
@@ -49,15 +51,24 @@ final migration3To4 = Migration(3, 4, (database) async {
   );
 });
 
+final migration4To5 = Migration(4, 5, (database) async {
+  await database.execute(
+    'CREATE TABLE IF NOT EXISTS `tasks` ('
+    '`id` INTEGER PRIMARY KEY AUTOINCREMENT, '
+    '`name` TEXT NOT NULL)',
+  );
+});
+
 @TypeConverters([
   DurationConverter,
   DateTimeConverter,
   BlockedAppListConverter,
   StringListConverter,
 ])
-@Database(version: 4, entities: [Session, SessionTimer, FocusLog])
+@Database(version: 5, entities: [Session, SessionTimer, FocusLog, Task])
 abstract class AppDatabase extends FroomDatabase {
   SessionDao get sessionDao;
   SessionTimerDao get sessionTimerDao;
   FocusLogDao get focusLogDao;
+  TaskDao get taskDao;
 }

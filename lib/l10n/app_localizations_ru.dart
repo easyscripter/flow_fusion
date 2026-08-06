@@ -21,6 +21,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get navTimer => 'Таймер';
 
   @override
+  String get navTasks => 'Задачи';
+
+  @override
   String get navSettings => 'Настройки';
 
   @override
@@ -610,6 +613,52 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось удалить сессию. Попробуйте ещё раз.';
 
   @override
+  String get tasksTitle => 'Задачи';
+
+  @override
+  String get tasksSubtitle => 'Учёт времени по задачам';
+
+  @override
+  String get tasksNew => 'Новая задача';
+
+  @override
+  String get tasksEmptyTitle => 'Задач пока нет';
+
+  @override
+  String get tasksEmptyDescription =>
+      'Создайте задачу, чтобы отмечать ею сессии фокуса.';
+
+  @override
+  String get taskEditDialogCreateTitle => 'Новая задача';
+
+  @override
+  String get taskEditDialogEditTitle => 'Переименовать задачу';
+
+  @override
+  String get taskEditDialogNameHint => 'Название задачи';
+
+  @override
+  String get taskEditDialogCancel => 'Отмена';
+
+  @override
+  String get taskEditDialogSave => 'Сохранить';
+
+  @override
+  String get deleteTaskModalTitle => 'Удалить задачу';
+
+  @override
+  String get deleteTaskModalContent =>
+      'Вы действительно хотите удалить эту задачу? Сессии, отмеченные ею, сохранят свои данные, но потеряют метку задачи.';
+
+  @override
+  String get errorTaskSaveFailed =>
+      'Не удалось сохранить задачу. Попробуйте ещё раз.';
+
+  @override
+  String get errorTaskDeleteFailed =>
+      'Не удалось удалить задачу. Попробуйте ещё раз.';
+
+  @override
   String get onboardingWelcomeTitle => 'Добро пожаловать в Flow Fusion';
 
   @override
@@ -653,6 +702,13 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingNavSessionsDescription =>
       'Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.';
+
+  @override
+  String get onboardingNavTasksTitle => 'Задачи';
+
+  @override
+  String get onboardingNavTasksDescription =>
+      'Отмечайте сессии задачей и смотрите, сколько времени потрачено на каждую.';
 
   @override
   String get onboardingNavSettingsTitle => 'Настройки';

@@ -4,6 +4,7 @@ enum Routes {
   sessionNew('/sessions/new'),
   sessionEdit('/sessions/edit/:id'),
   timer('/timer'),
+  tasks('/tasks'),
   settings('/settings');
 
   const Routes(this.path);

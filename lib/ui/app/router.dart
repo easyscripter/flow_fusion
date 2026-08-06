@@ -5,6 +5,7 @@ import 'package:flow_fusion/ui/views/home_view/home_view.dart';
 import 'package:flow_fusion/ui/views/session_editor_view/session_editor_view.dart';
 import 'package:flow_fusion/ui/views/sessions_view/sessions_view.dart';
 import 'package:flow_fusion/ui/views/settings_view/settings_view.dart';
+import 'package:flow_fusion/ui/views/tasks_view/tasks_view.dart';
 import 'package:flow_fusion/ui/views/timer_view/timer_view.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_widget.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,13 @@ final router = GoRouter(
               pageBuilder: (context, state) => NoTransitionPage(
                 key: state.pageKey,
                 child: const TimerView(),
+              ),
+            ),
+            GoRoute(
+              path: Routes.tasks.path,
+              pageBuilder: (context, state) => NoTransitionPage(
+                key: state.pageKey,
+                child: const TasksView(),
               ),
             ),
           ],
