@@ -646,6 +646,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t delete the task. Please try again.';
 
   @override
+  String get taskSelectorNoTask => 'No task';
+
+  @override
   String get onboardingWelcomeTitle => 'Welcome to Flow Fusion';
 
   @override

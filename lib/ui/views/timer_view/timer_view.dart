@@ -32,6 +32,7 @@ class _TimerViewState extends State<TimerView> {
         _controller.state.awaitingManualAdvance,
         _controller.state.remaining.inSeconds,
         _controller.state.timers.length,
+        _controller.state.session?.taskId,
       ),
       (_) {
         if (!mounted) return;

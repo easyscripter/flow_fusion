@@ -33,6 +33,7 @@ abstract class DatabaseModule {
       migration2To3,
       migration3To4,
       migration4To5,
+      migration5To6,
     ]).build();
   }
 }

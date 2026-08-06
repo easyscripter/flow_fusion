@@ -59,13 +59,19 @@ final migration4To5 = Migration(4, 5, (database) async {
   );
 });
 
+final migration5To6 = Migration(5, 6, (database) async {
+  await database.execute(
+    'ALTER TABLE sessions ADD COLUMN taskId INTEGER REFERENCES tasks(id)',
+  );
+});
+
 @TypeConverters([
   DurationConverter,
   DateTimeConverter,
   BlockedAppListConverter,
   StringListConverter,
 ])
-@Database(version: 5, entities: [Session, SessionTimer, FocusLog, Task])
+@Database(version: 6, entities: [Session, SessionTimer, FocusLog, Task])
 abstract class AppDatabase extends FroomDatabase {
   SessionDao get sessionDao;
   SessionTimerDao get sessionTimerDao;

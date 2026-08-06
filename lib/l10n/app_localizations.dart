@@ -1226,6 +1226,12 @@ abstract class AppLocalizations {
   /// **'Couldn\'t delete the task. Please try again.'**
   String get errorTaskDeleteFailed;
 
+  /// No description provided for @taskSelectorNoTask.
+  ///
+  /// In en, this message translates to:
+  /// **'No task'**
+  String get taskSelectorNoTask;
+
   /// No description provided for @onboardingWelcomeTitle.
   ///
   /// In en, this message translates to:

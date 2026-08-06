@@ -659,6 +659,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось удалить задачу. Попробуйте ещё раз.';
 
   @override
+  String get taskSelectorNoTask => 'Без задачи';
+
+  @override
   String get onboardingWelcomeTitle => 'Добро пожаловать в Flow Fusion';
 
   @override

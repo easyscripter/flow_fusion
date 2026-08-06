@@ -124,6 +124,18 @@ class ActiveTimerController {
     await _persist();
   }
 
+  Future<void> setTask(int? taskId) async {
+    final Session? session = _state.session;
+    if (session == null) return;
+
+    final Session updated = session.copyWith(
+      taskId: taskId,
+      clearTaskId: taskId == null,
+    );
+    await _sessionDao.updateSession(updated);
+    runInAction(() => _state.session = updated);
+  }
+
   Future<void> pause() async {
     if (!hasActiveSession || _state.isPaused || _state.awaitingManualAdvance) {
       return;

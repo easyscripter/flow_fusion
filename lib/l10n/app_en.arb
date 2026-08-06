@@ -284,6 +284,7 @@
   "deleteTaskModalContent": "Are you sure you want to delete this task? Sessions tagged with it will keep their data but lose the task tag.",
   "errorTaskSaveFailed": "Couldn't save the task. Please try again.",
   "errorTaskDeleteFailed": "Couldn't delete the task. Please try again.",
+  "taskSelectorNoTask": "No task",
 
   "onboardingWelcomeTitle": "Welcome to Flow Fusion",
   "onboardingWelcomeSubtitle": "Take a quick tour to learn how to set up focus sessions, block distractions, and stay in the flow.",

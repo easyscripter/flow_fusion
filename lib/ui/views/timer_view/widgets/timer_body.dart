@@ -4,6 +4,7 @@ import 'package:flow_fusion/model/entity/active_timer_state.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/session_task_selector.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_progress_circle.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_end_station.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_item.dart';
@@ -77,34 +78,7 @@ class TimerBody extends StatelessWidget {
                               );
                             },
                           ),
-                          SizedBox(
-                            height: compact
-                                ? AppSizes.paddingMedium
-                                : AppSizes.paddingLarge,
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              AppBadge(
-                                label: timer.type == TimerType.work
-                                    ? context.l10n.timerWork
-                                    : context.l10n.timerChill,
-                                icon: timer.type == TimerType.work
-                                    ? Icons.bolt_rounded
-                                    : Icons.coffee_rounded,
-                              ),
-                              AppBadge(
-                                label: context.l10n.timerPlannedDuration(
-                                  timer.plannedDuration.inMinutes < 1
-                                      ? 1
-                                      : timer.plannedDuration.inMinutes,
-                                ),
-                                icon: Icons.schedule_rounded,
-                              ),
-                            ],
-                          ),
+                          const SizedBox(height: 2),
                           if ((timer.description ?? '').trim().isNotEmpty)
                             Padding(
                               padding: const EdgeInsets.only(
@@ -177,7 +151,25 @@ class TimerBody extends StatelessWidget {
                                     ),
                                   ],
                           ),
-                          const SizedBox(height: AppSizes.paddingLarge),
+                          SizedBox(
+                            height:
+                                (compact
+                                    ? AppSizes.paddingSmall
+                                    : AppSizes.paddingMedium) +
+                                6,
+                          ),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 280),
+                            child: SessionTaskSelector(
+                              selectedTaskId: session.taskId,
+                              controller: controller,
+                            ),
+                          ),
+                          SizedBox(
+                            height: compact
+                                ? AppSizes.paddingMedium
+                                : AppSizes.paddingLarge,
+                          ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
