@@ -647,6 +647,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get taskListTileEdit => 'Переименовать задачу';
 
   @override
+  String get taskListTileDelete => 'Удалить задачу';
+
+  @override
   String get deleteTaskModalTitle => 'Удалить задачу';
 
   @override

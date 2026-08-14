@@ -12,11 +12,13 @@ class TaskListTile extends StatelessWidget {
     required this.task,
     required this.totalDuration,
     required this.onEdit,
+    required this.onDelete,
   });
 
   final Task task;
   final Duration totalDuration;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,13 @@ class TaskListTile extends StatelessWidget {
             tooltip: context.l10n.taskListTileEdit,
             variant: AppIconButtonVariant.secondary,
             onPressed: onEdit,
+          ),
+          const SizedBox(width: AppSizes.paddingSmall),
+          AppIconButton(
+            icon: Icons.delete_outline,
+            tooltip: context.l10n.taskListTileDelete,
+            variant: AppIconButtonVariant.danger,
+            onPressed: onDelete,
           ),
         ],
       ),

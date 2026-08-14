@@ -98,4 +98,21 @@ abstract class _TasksViewViewModelBase with Store {
       return false;
     }
   }
+
+  @action
+  Future<bool> deleteTask(Task task) async {
+    try {
+      final int? taskId = task.id;
+      if (taskId != null) {
+        await _taskDao.clearTaskFromSessions(taskId);
+        await _taskDao.clearTaskFromFocusLogs(taskId);
+      }
+      await _taskDao.deleteTask(task);
+      await update();
+      return true;
+    } catch (e, s) {
+      AppLogger.error('TasksViewViewModel.deleteTask', e, s);
+      return false;
+    }
+  }
 }

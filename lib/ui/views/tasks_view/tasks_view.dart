@@ -77,6 +77,8 @@ class _TasksViewState extends State<TasksView> {
                               task: taskWithDuration.task,
                               totalDuration: taskWithDuration.totalDuration,
                               onEdit: () => _editTask(taskWithDuration.task),
+                              onDelete: () =>
+                                  _deleteTask(taskWithDuration.task),
                             );
                           },
                         ),
@@ -116,6 +118,36 @@ class _TasksViewState extends State<TasksView> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.errorTaskSaveFailed)),
       );
+    }
+  }
+
+  Future<void> _deleteTask(Task task) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.deleteTaskModalTitle),
+        content: Text(context.l10n.deleteTaskModalContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.deleteModalCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.deleteModalConfirm),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return;
+
+    if (confirmed == true) {
+      final deleted = await _viewModel.deleteTask(task);
+      if (!deleted && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.errorTaskDeleteFailed)),
+        );
+      }
     }
   }
 }

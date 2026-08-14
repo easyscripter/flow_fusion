@@ -281,6 +281,7 @@
   "taskEditDialogCancel": "Отмена",
   "taskEditDialogSave": "Сохранить",
   "taskListTileEdit": "Переименовать задачу",
+  "taskListTileDelete": "Удалить задачу",
   "deleteTaskModalTitle": "Удалить задачу",
   "deleteTaskModalContent": "Вы действительно хотите удалить эту задачу? Сессии, отмеченные ею, сохранят свои данные, но потеряют метку задачи.",
   "errorTaskSaveFailed": "Не удалось сохранить задачу. Попробуйте ещё раз.",

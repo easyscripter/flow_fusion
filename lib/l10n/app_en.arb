@@ -281,6 +281,7 @@
   "taskEditDialogCancel": "Cancel",
   "taskEditDialogSave": "Save",
   "taskListTileEdit": "Rename task",
+  "taskListTileDelete": "Delete task",
   "deleteTaskModalTitle": "Delete Task",
   "deleteTaskModalContent": "Are you sure you want to delete this task? Sessions tagged with it will keep their data but lose the task tag.",
   "errorTaskSaveFailed": "Couldn't save the task. Please try again.",
