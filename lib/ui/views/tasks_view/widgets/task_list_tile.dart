@@ -1,6 +1,8 @@
 import 'package:flow_fusion/model/entity/database/task.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
+import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/widgets/app_icon_button.dart';
 import 'package:flow_fusion/utils/duration_formatter.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +11,12 @@ class TaskListTile extends StatelessWidget {
     super.key,
     required this.task,
     required this.totalDuration,
+    required this.onEdit,
   });
 
   final Task task;
   final Duration totalDuration;
+  final VoidCallback onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,13 @@ class TaskListTile extends StatelessWidget {
               color: colors.mutedForeground,
               fontWeight: FontWeight.w600,
             ),
+          ),
+          const SizedBox(width: AppSizes.paddingSmall),
+          AppIconButton(
+            icon: Icons.edit_outlined,
+            tooltip: context.l10n.taskListTileEdit,
+            variant: AppIconButtonVariant.secondary,
+            onPressed: onEdit,
           ),
         ],
       ),

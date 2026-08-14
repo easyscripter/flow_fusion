@@ -1,3 +1,4 @@
+import 'package:flow_fusion/model/entity/database/task.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
@@ -75,6 +76,7 @@ class _TasksViewState extends State<TasksView> {
                             return TaskListTile(
                               task: taskWithDuration.task,
                               totalDuration: taskWithDuration.totalDuration,
+                              onEdit: () => _editTask(taskWithDuration.task),
                             );
                           },
                         ),
@@ -96,6 +98,21 @@ class _TasksViewState extends State<TasksView> {
 
     final created = await _viewModel.createTask(name);
     if (!created && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.errorTaskSaveFailed)),
+      );
+    }
+  }
+
+  Future<void> _editTask(Task task) async {
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => TaskEditDialog(initialName: task.name),
+    );
+    if (name == null || !mounted) return;
+
+    final renamed = await _viewModel.renameTask(task, name);
+    if (!renamed && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.errorTaskSaveFailed)),
       );

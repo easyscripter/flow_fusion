@@ -644,6 +644,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get taskEditDialogSave => 'Сохранить';
 
   @override
+  String get taskListTileEdit => 'Переименовать задачу';
+
+  @override
   String get deleteTaskModalTitle => 'Удалить задачу';
 
   @override

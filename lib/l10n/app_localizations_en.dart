@@ -631,6 +631,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskEditDialogSave => 'Save';
 
   @override
+  String get taskListTileEdit => 'Rename task';
+
+  @override
   String get deleteTaskModalTitle => 'Delete Task';
 
   @override

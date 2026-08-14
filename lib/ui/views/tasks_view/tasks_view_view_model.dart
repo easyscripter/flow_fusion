@@ -86,4 +86,16 @@ abstract class _TasksViewViewModelBase with Store {
       return false;
     }
   }
+
+  @action
+  Future<bool> renameTask(Task task, String name) async {
+    try {
+      await _taskDao.updateTask(task.copyWith(name: name));
+      await update();
+      return true;
+    } catch (e, s) {
+      AppLogger.error('TasksViewViewModel.renameTask', e, s);
+      return false;
+    }
+  }
 }

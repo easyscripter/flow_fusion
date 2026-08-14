@@ -1202,6 +1202,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get taskEditDialogSave;
 
+  /// No description provided for @taskListTileEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename task'**
+  String get taskListTileEdit;
+
   /// No description provided for @deleteTaskModalTitle.
   ///
   /// In en, this message translates to:
