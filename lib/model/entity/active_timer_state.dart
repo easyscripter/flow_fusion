@@ -1,4 +1,3 @@
-import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/entity/database/session.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/model/entity/timer_persisted_state.dart';
@@ -26,9 +25,6 @@ abstract class _ActiveTimerState with Store {
 
   @observable
   bool isPaused = false;
-
-  @observable
-  int runWorkMs = 0;
 
   @observable
   bool awaitingManualAdvance = false;
@@ -64,13 +60,6 @@ abstract class _ActiveTimerState with Store {
   }
 
   @action
-  void accrueWork(SessionTimer timer, Duration actual) {
-    if (timer.type == TimerType.work) {
-      runWorkMs += actual.inMilliseconds;
-    }
-  }
-
-  @action
   void reset() {
     session = null;
     timers = const [];
@@ -78,7 +67,6 @@ abstract class _ActiveTimerState with Store {
     remaining = Duration.zero;
     endsAt = null;
     isPaused = false;
-    runWorkMs = 0;
     awaitingManualAdvance = false;
   }
 
@@ -89,7 +77,6 @@ abstract class _ActiveTimerState with Store {
       sessionId: sessionId,
       currentIndex: currentIndex,
       isPaused: isPaused,
-      runWorkMs: runWorkMs,
       awaitingManualAdvance: awaitingManualAdvance,
       remainingMs: isPaused ? remaining.inMilliseconds : null,
       endsAtMs: (!isPaused && endsAt != null)

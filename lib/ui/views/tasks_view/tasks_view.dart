@@ -71,10 +71,10 @@ class _TasksViewState extends State<TasksView> {
                           separatorBuilder: (_, _) =>
                               const SizedBox(height: AppSizes.paddingSmall),
                           itemBuilder: (context, index) {
-                            final task = _viewModel.tasks[index];
+                            final taskWithDuration = _viewModel.tasks[index];
                             return TaskListTile(
-                              task: task,
-                              totalDuration: Duration.zero,
+                              task: taskWithDuration.task,
+                              totalDuration: taskWithDuration.totalDuration,
                             );
                           },
                         ),

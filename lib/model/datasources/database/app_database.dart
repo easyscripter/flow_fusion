@@ -65,13 +65,23 @@ final migration5To6 = Migration(5, 6, (database) async {
   );
 });
 
+// `focus_log.taskId` snapshots the task a run was tagged with at the moment
+// it completed. Aggregating via a live join to `sessions.taskId` would
+// retroactively attribute a reused session's entire history to whichever
+// task happens to be tagged on it now — see FocusLog's taskId doc comment.
+final migration6To7 = Migration(6, 7, (database) async {
+  await database.execute(
+    'ALTER TABLE focus_log ADD COLUMN taskId INTEGER REFERENCES tasks(id)',
+  );
+});
+
 @TypeConverters([
   DurationConverter,
   DateTimeConverter,
   BlockedAppListConverter,
   StringListConverter,
 ])
-@Database(version: 6, entities: [Session, SessionTimer, FocusLog, Task])
+@Database(version: 7, entities: [Session, SessionTimer, FocusLog, Task])
 abstract class AppDatabase extends FroomDatabase {
   SessionDao get sessionDao;
   SessionTimerDao get sessionTimerDao;
