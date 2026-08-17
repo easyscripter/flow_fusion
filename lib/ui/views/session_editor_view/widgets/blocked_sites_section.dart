@@ -35,7 +35,9 @@ class _BlockedSitesSectionState extends State<BlockedSitesSection> {
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isWindows) return const SizedBox.shrink();
+    if (!Platform.isWindows && !Platform.isMacOS) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

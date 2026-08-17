@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
+import 'package:flow_fusion/controllers/site_blocker_service.dart';
 import 'package:flow_fusion/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -9,9 +10,10 @@ import 'package:window_manager/window_manager.dart';
 
 @lazySingleton
 class TrayService with TrayListener, WindowListener {
-  TrayService(this._activeTimerController);
+  TrayService(this._activeTimerController, this._siteBlocker);
 
   final ActiveTimerController _activeTimerController;
+  final SiteBlockerService _siteBlocker;
 
   bool _initialized = false;
 
@@ -82,7 +84,7 @@ class TrayService with TrayListener, WindowListener {
         _showWindow();
         break;
       case 'exit_app':
-        windowManager.destroy();
+        _siteBlocker.shutdown().whenComplete(windowManager.destroy);
         break;
     }
   }

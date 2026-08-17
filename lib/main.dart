@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui' show PlatformDispatcher;
 
+import 'package:flow_fusion/controllers/site_blocker_service.dart';
 import 'package:flow_fusion/di/di.dart';
 import 'package:flow_fusion/model/seed/session_seeder.dart';
 import 'package:flow_fusion/ui/app/app.dart';
@@ -37,6 +39,7 @@ Future<void> _startup() async {
   await GetIt.I.get<SessionSeeder>().seedIfNeeded();
   final timerAlertService = GetIt.I.get<TimerAlertService>();
   final trayService = GetIt.I.get<TrayService>();
+  _registerShutdownSignals();
   await timerAlertService.init();
   await windowManager.ensureInitialized();
   await trayService.init();
@@ -59,4 +62,24 @@ Future<void> _startup() async {
   });
 
   runApp(const App());
+}
+
+void _registerShutdownSignals() {
+  if (Platform.isWindows) return;
+
+  final SiteBlockerService siteBlocker = GetIt.I.get<SiteBlockerService>();
+  for (final ProcessSignal signal in <ProcessSignal>[
+    ProcessSignal.sigterm,
+    ProcessSignal.sigint,
+  ]) {
+    signal.watch().listen(
+      (_) async {
+        await siteBlocker.shutdown();
+        exit(0);
+      },
+      onError: (Object _) {
+        // Signal not supported on this platform — nothing to do.
+      },
+    );
+  }
 }

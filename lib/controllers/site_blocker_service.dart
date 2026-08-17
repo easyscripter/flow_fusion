@@ -1,24 +1,32 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flow_fusion/controllers/site_blocking/local_blocking_proxy.dart';
+import 'package:flow_fusion/controllers/site_blocking/macos_proxy_configurator.dart';
+import 'package:flow_fusion/controllers/site_blocking/system_proxy_configurator.dart';
+import 'package:flow_fusion/controllers/site_blocking/windows_proxy_configurator.dart';
 import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SiteBlockerService {
-  static const String _beginMarker = '# >>> Flow Fusion managed block >>>';
-  static const String _endMarker = '# <<< Flow Fusion managed block <<<';
+  SiteBlockerService() : _configurator = _createConfigurator();
+
+  final LocalBlockingProxy _proxy = LocalBlockingProxy();
+  final SystemProxyConfigurator? _configurator;
 
   List<String>? _activeDomains;
+  bool _proxyConfigured = false;
 
   Future<void> _lock = Future<void>.value();
 
-  bool get _isSupported => Platform.isWindows;
+  bool get _isSupported => _configurator != null;
 
-  String get _hostsPath {
-    final String root = Platform.environment['SystemRoot'] ?? r'C:\Windows';
-    return '$root\\System32\\drivers\\etc\\hosts';
+  static SystemProxyConfigurator? _createConfigurator() {
+    if (Platform.isWindows) return WindowsProxyConfigurator();
+    if (Platform.isMacOS) return MacosProxyConfigurator();
+    return null;
   }
 
   Future<void> startBlocking(List<String> domains) {
@@ -30,7 +38,8 @@ class SiteBlockerService {
       return Future<void>.value();
     }
     return _run(() async {
-      await _applyBlock(normalized);
+      if (!await _ensureProxyConfigured()) return;
+      _proxy.updateBlockedDomains(normalized);
       _activeDomains = normalized;
     });
   }
@@ -38,73 +47,54 @@ class SiteBlockerService {
   Future<void> stopBlocking() {
     if (!_isSupported) return Future<void>.value();
     return _run(() async {
-      await _applyBlock(const <String>[]);
+      if (_activeDomains == null) return;
+      _proxy.updateBlockedDomains(const <String>[]);
       _activeDomains = null;
     });
+  }
+
+  /// Cleans up after a previous run that crashed while blocking was active.
+  /// Safe and cheap to call unconditionally on every app start.
+  Future<void> selfHeal() {
+    if (!_isSupported) return Future<void>.value();
+    return _run(() => _configurator!.selfHeal());
+  }
+
+  /// Hands the system proxy pointer back to whatever it was before this app
+  /// run touched it. Must be called before the process exits.
+  Future<void> shutdown() {
+    if (!_isSupported) return Future<void>.value();
+    return _run(() async {
+      _proxy.updateBlockedDomains(const <String>[]);
+      _activeDomains = null;
+      if (_proxyConfigured) {
+        await _configurator?.disable();
+        _proxyConfigured = false;
+      }
+      await _proxy.stop();
+    });
+  }
+
+  Future<bool> _ensureProxyConfigured() async {
+    if (_proxyConfigured) return true;
+    try {
+      final int port = await _proxy.start();
+      final bool ok = await _configurator?.enable(port) ?? false;
+      if (!ok) {
+        await _proxy.stop();
+      }
+      _proxyConfigured = ok;
+      return ok;
+    } catch (e, s) {
+      AppLogger.error('SiteBlockerService._ensureProxyConfigured', e, s);
+      return false;
+    }
   }
 
   Future<void> _run(Future<void> Function() action) {
     final Future<void> next = _lock.then((_) => action());
     _lock = next.catchError((Object _) {});
     return next;
-  }
-
-  Future<void> _applyBlock(List<String> domains) async {
-    try {
-      final File file = File(_hostsPath);
-      if (!await file.exists()) return;
-
-      final String original = await file.readAsString();
-      final String base = _stripManagedBlock(original);
-      final String next = domains.isEmpty ? base : '$base${_buildBlock(domains)}';
-
-      if (next == original) return;
-      await file.writeAsString(next, flush: true);
-      await _flushDns();
-    } catch (e, s) {
-      AppLogger.error('SiteBlockerService._applyBlock', e, s);
-    }
-  }
-
-  String _buildBlock(List<String> domains) {
-    final StringBuffer buffer = StringBuffer()
-      ..write('\r\n')
-      ..write(_beginMarker)
-      ..write('\r\n');
-    for (final String domain in domains) {
-      for (final String host in _hostVariants(domain)) {
-        buffer
-          ..write('127.0.0.1 ')
-          ..write(host)
-          ..write('\r\n')
-          ..write('::1 ')
-          ..write(host)
-          ..write('\r\n');
-      }
-    }
-    buffer
-      ..write(_endMarker)
-      ..write('\r\n');
-    return buffer.toString();
-  }
-
-  String _stripManagedBlock(String content) {
-    final int start = content.indexOf(_beginMarker);
-    if (start == -1) return content;
-    final int endMarker = content.indexOf(_endMarker, start);
-    if (endMarker == -1) return content;
-
-    int from = start;
-    while (from > 0 &&
-        (content[from - 1] == '\n' || content[from - 1] == '\r')) {
-      from--;
-    }
-    int to = endMarker + _endMarker.length;
-    while (to < content.length &&
-        (content[to] == '\n' || content[to] == '\r')) {
-      to++;
-    }
-    return content.substring(0, from) + content.substring(to);
   }
 
   List<String> _normalizeAll(List<String> domains) {
@@ -114,22 +104,6 @@ class SiteBlockerService {
       if (domain != null && !result.contains(domain)) result.add(domain);
     }
     return result;
-  }
-
-  List<String> _hostVariants(String domain) {
-    if (domain.startsWith('www.')) {
-      final String bare = domain.substring(4);
-      return <String>[bare, domain];
-    }
-    return <String>[domain, 'www.$domain'];
-  }
-
-  Future<void> _flushDns() async {
-    try {
-      await Process.run('ipconfig', <String>['/flushdns']);
-    } catch (e, s) {
-      AppLogger.error('SiteBlockerService._flushDns', e, s);
-    }
   }
 
   static String? normalizeDomain(String input) {

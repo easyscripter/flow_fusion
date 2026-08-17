@@ -96,6 +96,7 @@ class ActiveTimerController {
     _initialized = true;
     _lifecycleObserver.start();
     unawaited(_siteBlocker.stopBlocking());
+    unawaited(_siteBlocker.selfHeal());
     await _restore();
   }
 

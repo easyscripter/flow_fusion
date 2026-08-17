@@ -42,11 +42,12 @@ phase hold. When the Work phase ends, everything is released.
   macOS: pick from installed apps). Flow Fusion asks them to quit *gracefully*
   (Windows: `WM_CLOSE` + minimize; macOS: quit + hide — no force-kill), and
   re-closes them if reopened mid-phase. It never closes itself.
-- **Websites** (Windows only for now) — enter domains to block. While a Work
-  phase runs they are redirected to a dead end (`127.0.0.1` / `::1`) in the
-  system `hosts` file, so **every browser is covered at once**. Editing `hosts`
-  requires administrator rights, so the Windows build requests elevation (a UAC
-  prompt) at launch. macOS website blocking is not available yet.
+- **Websites** (Windows & macOS) — enter domains to block. While a Work phase
+  runs, the OS proxy is pointed at a local relay that refuses connections to
+  those domains and passes everything else through untouched, so **every
+  browser is covered at once**. No admin rights needed on Windows (it's a
+  per-user setting); on macOS the one-time setup shows a single authorization
+  prompt, not one per Work phase.
 
 ## Platforms
 

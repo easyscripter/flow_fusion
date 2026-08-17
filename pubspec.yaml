@@ -50,6 +50,8 @@ dependencies:
   file_selector: ^1.0.3
   showcaseview: ^5.1.0
   font_awesome_flutter: ^11.0.0
+  win32_registry: ^2.1.0
+  win32: ^5.15.0
 
 dev_dependencies:
   flutter_test:
