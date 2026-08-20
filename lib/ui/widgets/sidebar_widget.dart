@@ -24,6 +24,7 @@ class _NavItem {
   final String Function(BuildContext context) showcaseTitle;
   final String Function(BuildContext context) showcaseDescription;
   final GlobalKey Function(OnboardingController controller) showcaseKey;
+  final Widget Function(BuildContext context)? showcaseMedia;
 
   const _NavItem({
     required this.route,
@@ -34,6 +35,7 @@ class _NavItem {
     required this.showcaseTitle,
     required this.showcaseDescription,
     required this.showcaseKey,
+    this.showcaseMedia,
   });
 }
 
@@ -77,6 +79,7 @@ class SidebarWidget extends StatelessWidget {
       showcaseTitle: _tasksShowcaseTitle,
       showcaseDescription: _tasksShowcaseDescription,
       showcaseKey: _tasksShowcaseKey,
+      showcaseMedia: _tasksShowcaseMedia,
     ),
     _NavItem(
       route: Routes.settings,
@@ -118,6 +121,15 @@ class SidebarWidget extends StatelessWidget {
       context.l10n.onboardingNavTasksDescription;
   static GlobalKey _tasksShowcaseKey(OnboardingController controller) =>
       controller.navTasksKey;
+  static Widget _tasksShowcaseMedia(BuildContext context) => ClipRRect(
+        borderRadius: BorderRadius.circular(AppSizes.borderRadiusSmall),
+        child: Image.asset(
+          'assets/images/onboarding/tasks_showcase.gif',
+          height: 180,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      );
 
   static String _settingsShowcaseTitle(BuildContext context) =>
       context.l10n.onboardingNavSettingsTitle;
@@ -173,6 +185,7 @@ class SidebarWidget extends StatelessWidget {
                           description: item.showcaseDescription(context),
                           currentStep: item.showcaseStep,
                           totalSteps: onboardingTotalSteps,
+                          media: item.showcaseMedia?.call(context),
                         ),
                         child: SidebarNavButton(
                           icon: item.icon,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/app/router.dart';
@@ -38,9 +39,10 @@ class OnboardingController = _OnboardingControllerBase
     with _$OnboardingController;
 
 abstract class _OnboardingControllerBase with Store {
-  _OnboardingControllerBase(this._prefs);
+  _OnboardingControllerBase(this._prefs, this._analytics);
 
   final Prefs _prefs;
+  final AnalyticsService _analytics;
 
   final GlobalKey brandKey = GlobalKey();
   final GlobalKey navOverviewKey = GlobalKey();
@@ -79,7 +81,10 @@ abstract class _OnboardingControllerBase with Store {
     await OnboardingWelcomeCard.show(
       context,
       onStart: beginSidebarTour,
-      onSkip: complete,
+      onSkip: () {
+        _analytics.trackEvent('onboarding_skipped', {'phase': 'welcome_card'});
+        complete();
+      },
     );
   }
 
@@ -98,6 +103,7 @@ abstract class _OnboardingControllerBase with Store {
   /// "Start" action.
   void beginSidebarTour() {
     _phase = OnboardingPhase.sidebar;
+    _analytics.trackEvent('onboarding_started');
     ShowcaseView.get().startShowCase([
       brandKey,
       navOverviewKey,
@@ -141,6 +147,7 @@ abstract class _OnboardingControllerBase with Store {
           router.go(Routes.sessionNew.path);
         });
       case OnboardingPhase.editor:
+        _analytics.trackEvent('onboarding_completed');
         complete();
       case OnboardingPhase.idle:
       case OnboardingPhase.awaitingEditor:
@@ -152,6 +159,7 @@ abstract class _OnboardingControllerBase with Store {
   /// any step. Ends the whole onboarding.
   void handleShowcaseDismiss() {
     if (_phase == OnboardingPhase.idle) return;
+    _analytics.trackEvent('onboarding_skipped', {'phase': _phase.name});
     complete();
   }
 

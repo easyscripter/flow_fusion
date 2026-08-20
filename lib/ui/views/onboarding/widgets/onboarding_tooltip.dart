@@ -12,6 +12,7 @@ class OnboardingTooltip extends StatelessWidget {
   final String description;
   final int currentStep;
   final int totalSteps;
+  final Widget? media;
 
   const OnboardingTooltip({
     super.key,
@@ -19,6 +20,7 @@ class OnboardingTooltip extends StatelessWidget {
     required this.description,
     required this.currentStep,
     required this.totalSteps,
+    this.media,
   });
 
   @override
@@ -65,6 +67,13 @@ class OnboardingTooltip extends StatelessWidget {
                 color: colors.mutedForeground,
               ),
             ),
+            if (media != null) ...[
+              const SizedBox(height: AppSizes.paddingMedium),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium),
+                child: media!,
+              ),
+            ],
             const SizedBox(height: AppSizes.paddingMedium),
             Row(
               children: [
