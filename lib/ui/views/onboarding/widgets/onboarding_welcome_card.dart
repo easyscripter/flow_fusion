@@ -76,21 +76,24 @@ class OnboardingWelcomeCard extends StatelessWidget {
               Observer(
                 builder: (_) {
                   final appViewModel = GetIt.I.get<AppViewModel>();
-                  return CheckboxListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      context.l10n.onboardingAnalyticsOptIn,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: context.fusionColors.mutedForeground,
+                  return Material(
+                    type: MaterialType.transparency,
+                    child: CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        context.l10n.onboardingAnalyticsOptIn,
+                        style: textTheme.bodySmall?.copyWith(
+                          color: context.fusionColors.mutedForeground,
+                        ),
                       ),
+                      value: appViewModel.analyticsOptIn,
+                      onChanged: (value) {
+                        if (value != null) {
+                          appViewModel.setAnalyticsOptIn(value);
+                        }
+                      },
+                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                    value: appViewModel.analyticsOptIn,
-                    onChanged: (value) {
-                      if (value != null) {
-                        appViewModel.setAnalyticsOptIn(value);
-                      }
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,
                   );
                 },
               ),
