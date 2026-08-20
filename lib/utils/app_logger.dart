@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flow_fusion/controllers/analytics_service.dart';
 
 class AppLogger {
   AppLogger._();
@@ -63,6 +65,17 @@ class AppLogger {
         ..write(stack);
     }
     _write('ERROR', context, buffer.toString());
+    
+    try {
+      if (GetIt.I.isRegistered<AnalyticsService>()) {
+        GetIt.I.get<AnalyticsService>().trackException(
+          '[$context] ${error?.toString() ?? "null"}',
+          stack,
+        );
+      }
+    } catch (_) {
+      // Ignore DI errors during very early startup or shutdown
+    }
   }
 
   static void _write(String level, String context, Object? message) {

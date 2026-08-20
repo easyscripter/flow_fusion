@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/controllers/app_blocker_service.dart';
 import 'package:flow_fusion/controllers/session_lifecycle_observer.dart';
 import 'package:flow_fusion/controllers/site_blocker_service.dart';
@@ -34,6 +35,7 @@ class ActiveTimerController {
     this._prefs,
     this._appBlocker,
     this._siteBlocker,
+    this._analytics,
   );
 
   final SessionDao _sessionDao;
@@ -44,6 +46,7 @@ class ActiveTimerController {
   final Prefs _prefs;
   final AppBlockerService _appBlocker;
   final SiteBlockerService _siteBlocker;
+  final AnalyticsService _analytics;
 
   final ActiveTimerState _state = ActiveTimerState();
 
@@ -122,6 +125,12 @@ class ActiveTimerController {
     _startTicker();
     _syncBlockingForCurrentPhase();
     await _persist();
+    _analytics.trackEvent('session_started', {
+      'has_task': session.taskId != null,
+      'timers_count': timers.length,
+      'has_blocked_apps': session.blockedApps?.isNotEmpty ?? false,
+      'has_blocked_sites': session.blockedSites?.isNotEmpty ?? false,
+    });
   }
 
   Future<void> setTask(int? taskId) async {
@@ -461,24 +470,33 @@ class ActiveTimerController {
     await _persist();
   }
 
-  Future<void> _markTimerCompleted(SessionTimer timer) {
-    return _timerDao.updateTimer(
+  Future<void> _markTimerCompleted(SessionTimer timer) async {
+    await _timerDao.updateTimer(
       timer.copyWith(
         actualDurationMs: timer.plannedDuration.inMilliseconds,
         status: TimerStatus.completed,
         updatedAt: DateTime.now(),
       ),
     );
+    _analytics.trackEvent('timer_completed', {
+      'type': timer.type.name,
+      'duration_mins': timer.plannedDuration.inMinutes,
+    });
   }
 
-  Future<void> _markTimerSkipped(SessionTimer timer, Duration actual) {
-    return _timerDao.updateTimer(
+  Future<void> _markTimerSkipped(SessionTimer timer, Duration actual) async {
+    await _timerDao.updateTimer(
       timer.copyWith(
         actualDurationMs: actual.inMilliseconds,
         status: TimerStatus.skipped,
         updatedAt: DateTime.now(),
       ),
     );
+    _analytics.trackEvent('timer_skipped', {
+      'type': timer.type.name,
+      'planned_mins': timer.plannedDuration.inMinutes,
+      'actual_mins': actual.inMinutes,
+    });
   }
 
   Future<void> _completeSession(Session session) async {
@@ -488,6 +506,9 @@ class ActiveTimerController {
         completedAt: DateTime.now().toIso8601String(),
       ),
     );
+    _analytics.trackEvent('session_completed', {
+      'has_task': session.taskId != null,
+    });
   }
 
   /// Logs one completed work timer's time immediately, tagged with the

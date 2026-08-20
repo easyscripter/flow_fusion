@@ -324,5 +324,10 @@
   "onboardingEditorBlockedSitesTitle": "Blocked sites",
   "onboardingEditorBlockedSitesDescription": "Add websites that get blocked during work phases so they can't pull you out of the flow.",
   "onboardingEditorSaveTitle": "Save your session",
-  "onboardingEditorSaveDescription": "That's it! Save the session and you're ready to start focusing."
+  "onboardingEditorSaveDescription": "That's it! Save the session and you're ready to start focusing.",
+
+  "settingsSectionPrivacy": "Privacy",
+  "settingsAnalyticsOptIn": "Share anonymous usage data",
+  "settingsAnalyticsDescription": "Help us improve Flow Fusion by sharing anonymous usage statistics. No personal data, IP addresses or identifiable information is collected.",
+  "onboardingAnalyticsOptIn": "Share anonymous usage data to help us improve the app. No personal data is collected."
 }

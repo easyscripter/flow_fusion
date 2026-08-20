@@ -1405,6 +1405,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That\'s it! Save the session and you\'re ready to start focusing.'**
   String get onboardingEditorSaveDescription;
+
+  /// No description provided for @settingsSectionPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get settingsSectionPrivacy;
+
+  /// No description provided for @settingsAnalyticsOptIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage data'**
+  String get settingsAnalyticsOptIn;
+
+  /// No description provided for @settingsAnalyticsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us improve Flow Fusion by sharing anonymous usage statistics. No personal data, IP addresses or identifiable information is collected.'**
+  String get settingsAnalyticsDescription;
+
+  /// No description provided for @onboardingAnalyticsOptIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage data to help us improve the app. No personal data is collected.'**
+  String get onboardingAnalyticsOptIn;
 }
 
 class _AppLocalizationsDelegate

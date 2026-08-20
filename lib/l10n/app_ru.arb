@@ -314,5 +314,10 @@
   "onboardingEditorBlockedSitesTitle": "Блокировка сайтов",
   "onboardingEditorBlockedSitesDescription": "Добавьте сайты, которые блокируются во время фаз работы, чтобы не выдёргивали из потока.",
   "onboardingEditorSaveTitle": "Сохраните сессию",
-  "onboardingEditorSaveDescription": "Готово! Сохраните сессию — и можно приступать к фокусу."
+  "onboardingEditorSaveDescription": "Готово! Сохраните сессию — и можно приступать к фокусу.",
+
+  "settingsSectionPrivacy": "Конфиденциальность",
+  "settingsAnalyticsOptIn": "Анонимная аналитика",
+  "settingsAnalyticsDescription": "Помогите нам улучшить Flow Fusion, делясь анонимной статистикой использования. Личные данные, IP-адреса и идентифицирующая информация не собираются.",
+  "onboardingAnalyticsOptIn": "Отправлять анонимную статистику использования, чтобы помочь нам улучшить приложение. Никакие личные данные не собираются."
 }

@@ -1,3 +1,4 @@
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +12,13 @@ part 'app_view_model.g.dart';
 class AppViewModel = _AppViewModelBase with _$AppViewModel;
 
 abstract class _AppViewModelBase with Store {
-  _AppViewModelBase(this.prefs, this._timerAlertService, this._packageInfo);
+  _AppViewModelBase(
+      this.prefs, this._timerAlertService, this._packageInfo, this._analyticsService);
 
   final Prefs prefs;
   final TimerAlertService _timerAlertService;
   final PackageInfo _packageInfo;
+  final AnalyticsService _analyticsService;
   static const _defaultThemeMode = ThemeMode.system;
 
   @observable
@@ -29,6 +32,9 @@ abstract class _AppViewModelBase with Store {
 
   @observable
   bool manualPhaseSwitch = false;
+
+  @observable
+  bool analyticsOptIn = false;
 
   /// Whether the OS currently allows notifications.
   @observable
@@ -46,6 +52,7 @@ abstract class _AppViewModelBase with Store {
     locale = Locale(languageCode);
     notificationsEnabled = prefs.notificationsEnabled;
     manualPhaseSwitch = prefs.manualPhaseSwitch;
+    analyticsOptIn = prefs.analyticsOptIn;
     await refreshNotificationsPermission();
     _lifecycleListener ??= AppLifecycleListener(
       onResume: refreshNotificationsPermission,
@@ -89,6 +96,13 @@ abstract class _AppViewModelBase with Store {
   void setManualPhaseSwitch(bool value) {
     prefs.manualPhaseSwitch = value;
     manualPhaseSwitch = value;
+  }
+
+  @action
+  void setAnalyticsOptIn(bool value) {
+    prefs.analyticsOptIn = value;
+    analyticsOptIn = value;
+    _analyticsService.updateOptIn(value);
   }
 
   Future<void> openSystemNotificationSettings() =>

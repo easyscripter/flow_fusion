@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui' show PlatformDispatcher;
 
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/controllers/site_blocker_service.dart';
 import 'package:flow_fusion/di/di.dart';
 import 'package:flow_fusion/model/seed/session_seeder.dart';
@@ -9,6 +10,7 @@ import 'package:flow_fusion/ui/app/app.dart';
 import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flow_fusion/ui/app/timer_alert_service.dart';
 import 'package:flow_fusion/ui/app/tray_service.dart';
+import 'package:flow_fusion/ui/constants/app_config.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/utils/app_logger.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +61,13 @@ Future<void> _startup() async {
     await windowManager.focus();
     await timerAlertService.requestPermission();
     await GetIt.I.get<AppViewModel>().refreshNotificationsPermission();
+    
+    final analytics = GetIt.I.get<AnalyticsService>();
+    await analytics.init(
+      AppConfig.aptabaseAppKey,
+      host: AppConfig.aptabaseHost,
+    );
+    analytics.trackEvent('app_launched');
   });
 
   runApp(const App());

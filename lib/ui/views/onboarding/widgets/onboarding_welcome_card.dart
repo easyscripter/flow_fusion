@@ -4,7 +4,10 @@ import 'package:flow_fusion/ui/theme/theme_context.dart';
 import 'package:flow_fusion/ui/widgets/app_button.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
 import 'package:flow_fusion/ui/widgets/brand_logo.dart';
+import 'package:flow_fusion/ui/app/app_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 
 class OnboardingWelcomeCard extends StatelessWidget {
@@ -68,6 +71,28 @@ class OnboardingWelcomeCard extends StatelessWidget {
                 style: textTheme.bodyMedium?.copyWith(
                   color: context.fusionColors.mutedForeground,
                 ),
+              ),
+              const SizedBox(height: AppSizes.paddingMedium),
+              Observer(
+                builder: (_) {
+                  final appViewModel = GetIt.I.get<AppViewModel>();
+                  return CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      context.l10n.onboardingAnalyticsOptIn,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: context.fusionColors.mutedForeground,
+                      ),
+                    ),
+                    value: appViewModel.analyticsOptIn,
+                    onChanged: (value) {
+                      if (value != null) {
+                        appViewModel.setAnalyticsOptIn(value);
+                      }
+                    },
+                    controlAffinity: ListTileControlAffinity.leading,
+                  );
+                },
               ),
               const SizedBox(height: AppSizes.paddingLarge),
               Row(

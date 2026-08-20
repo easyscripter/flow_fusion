@@ -760,4 +760,18 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingEditorSaveDescription =>
       'Готово! Сохраните сессию — и можно приступать к фокусу.';
+
+  @override
+  String get settingsSectionPrivacy => 'Конфиденциальность';
+
+  @override
+  String get settingsAnalyticsOptIn => 'Анонимная аналитика';
+
+  @override
+  String get settingsAnalyticsDescription =>
+      'Помогите нам улучшить Flow Fusion, делясь анонимной статистикой использования. Личные данные, IP-адреса и идентифицирующая информация не собираются.';
+
+  @override
+  String get onboardingAnalyticsOptIn =>
+      'Отправлять анонимную статистику использования, чтобы помочь нам улучшить приложение. Никакие личные данные не собираются.';
 }
