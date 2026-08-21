@@ -2,17 +2,23 @@
   "schemaVersion": 1,
   "format": "desktop_updater.release_notes.v1",
   "locale": "en",
-  "summary": "Flow Fusion 1.0.1 — stability fixes.",
+  "summary": "Flow Fusion 1.1.0 — Focus on What Matters: Tasks in Sessions.",
   "sections": [
     {
-      "type": "fixes",
+      "type": "features",
       "items": [
-        { "body": "Fixed a crash when saving a session caused by duplicate timer positions." },
-        { "body": "\"What's new\" in the update banner now opens correctly." },
-        { "body": "Fixed onboarding showing a duplicated, overlapping window." },
-        { "body": "Starter example sessions now appear reliably on first launch." },
-        { "body": "The update banner no longer overflows on narrow windows." },
-        { "body": "The app version is now recorded in the log file for easier diagnostics." }
+        { "body": "Task Tracking in Focus Sessions — attach tasks directly to your focus timer, track progress across sessions, and see exactly where your time goes." },
+        { "body": "Refreshed Onboarding Tour — the first-launch walkthrough now includes a step introducing the Tasks feature." },
+        { "body": "Social Links in Sidebar — quickly access community links and resources right from the sidebar." }
+      ]
+    },
+    {
+      "type": "improvements",
+      "items": [
+        { "body": "Smoother Timer Visuals — progress arcs are now smoother, connector lines are cleaner, and animations feel more refined." },
+        { "body": "Active Timer in System Tray — your running timer now shows in the system tray for at-a-glance session status." },
+        { "body": "Site Blocking Improvements — fixed edge cases and extended site-blocking support to macOS." },
+        { "body": "Under the Hood — added anonymous usage analytics to help us understand how Flow Fusion is used and where to focus development efforts." }
       ]
     }
   ]
