@@ -1,13 +1,17 @@
 # Installing Flow Fusion
 
-## What's new in 1.0.1
+## What's new in 1.1.0
 
-- Fixed a crash when saving a session caused by duplicate timer positions.
-- "What's new" in the update banner now opens correctly.
-- Fixed onboarding showing a duplicated, overlapping window.
-- Starter example sessions now appear reliably on first launch.
-- The update banner no longer overflows on narrow windows.
-- The app version is now recorded in the log file for easier diagnostics.
+### Features
+- **Task Tracking in Focus Sessions** — attach tasks directly to your focus timer, track progress across sessions, and see exactly where your time goes.
+- **Refreshed Onboarding Tour** — the first-launch walkthrough now includes a step introducing the Tasks feature.
+- **Social Links in Sidebar** — quickly access community links and resources right from the sidebar.
+
+### Improvements
+- **Smoother Timer Visuals** — progress arcs are now smoother, connector lines are cleaner, and animations feel more refined.
+- **Active Timer in System Tray** — your running timer now shows in the system tray for at-a-glance session status.
+- **Site Blocking Improvements** — fixed edge cases and extended site-blocking support to macOS.
+- **Under the Hood** — added anonymous usage analytics to help us understand how Flow Fusion is used and where to focus development efforts.
 
 ---
 
