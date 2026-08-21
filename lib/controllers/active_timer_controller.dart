@@ -128,8 +128,8 @@ class ActiveTimerController {
     _analytics.trackEvent('session_started', {
       'has_task': session.taskId != null,
       'timers_count': timers.length,
-      'has_blocked_apps': session.blockedApps?.isNotEmpty ?? false,
-      'has_blocked_sites': session.blockedSites?.isNotEmpty ?? false,
+      'has_blocked_apps': session.blockedApps.isNotEmpty,
+      'has_blocked_sites': session.blockedSites.isNotEmpty,
     });
   }
 

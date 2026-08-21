@@ -148,10 +148,8 @@ abstract class _SessionEditorViewModelBase with Store {
 
   @action
   void reorder(int oldIndex, int newIndex) {
-    var target = newIndex;
-    if (target > oldIndex) target -= 1;
     final moved = timers.removeAt(oldIndex);
-    timers.insert(target, moved);
+    timers.insert(newIndex, moved);
   }
 
   @action
