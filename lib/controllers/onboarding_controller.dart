@@ -14,13 +14,14 @@ import 'package:showcaseview/showcaseview.dart';
 part 'onboarding_controller.g.dart';
 
 /// Whether the site-blocking step is part of the tour. Site blocking is
-/// Windows-only, so the "blocked sites" step is skipped everywhere else.
-bool get onboardingHasSitesStep => Platform.isWindows;
+/// supported on Windows and macOS, so the "blocked sites" step is skipped on
+/// other platforms.
+bool get onboardingHasSitesStep => Platform.isWindows || Platform.isMacOS;
 
 /// Total number of steps in the whole tour, rendered by [OnboardingTooltip] as
 /// a single continuous "step N of M" counter. 5 sidebar steps + editor steps
 /// (details, timers, blocked apps, [blocked sites,] save); the blocked-sites
-/// step only exists on Windows.
+/// step only exists on Windows and macOS.
 int get onboardingTotalSteps => onboardingHasSitesStep ? 10 : 9;
 
 /// The step number of the final "Save" step, which shifts down by one when the
@@ -122,7 +123,7 @@ abstract class _OnboardingControllerBase with Store {
       editorDetailsKey,
       editorTimersKey,
       editorBlockedAppsKey,
-      // Site blocking is Windows-only, so its target does not exist elsewhere.
+      // Site blocking is only on Windows/macOS, so its target does not exist elsewhere.
       if (onboardingHasSitesStep) editorBlockedSitesKey,
       editorSaveKey,
     ]);
