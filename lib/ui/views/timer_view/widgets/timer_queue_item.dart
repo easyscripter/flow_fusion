@@ -4,6 +4,7 @@ import 'package:flow_fusion/enums/timer_type.dart';
 import 'package:flow_fusion/model/entity/database/session_timer.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TimerQueueItem extends StatelessWidget {
@@ -14,6 +15,7 @@ class TimerQueueItem extends StatelessWidget {
     required this.total,
     required this.isCurrent,
     required this.isDone,
+    this.liveProgress,
   });
 
   final SessionTimer timer;
@@ -21,6 +23,7 @@ class TimerQueueItem extends StatelessWidget {
   final int total;
   final bool isCurrent;
   final bool isDone;
+  final ValueListenable<double>? liveProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,6 @@ class TimerQueueItem extends StatelessWidget {
         ? colors.workColor
         : colors.chillColor;
     final stationColor = isDone || isCurrent ? typeColor : colors.lineStrong;
-    final leftVisible = index > 0;
     final rightVisible = index < total - 1;
     final pointSize = isCurrent ? 18.0 : 14.0;
     final pointBorder = isCurrent ? 4.0 : 3.0;
@@ -48,28 +50,32 @@ class TimerQueueItem extends StatelessWidget {
               height: 24,
               child: Stack(
                 alignment: Alignment.center,
+                clipBehavior: Clip.none,
                 children: [
-                  if (leftVisible)
-                    Positioned(
-                      left: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 280),
-                        curve: Curves.easeOutCubic,
-                        width: 52,
-                        height: 3,
-                        color: stationColor.withValues(alpha: 0.7),
-                      ),
-                    ),
+                  // Spans from this dot's center, across the gap, to the
+                  // next dot's center — a single unbroken line instead of
+                  // two half-segments meeting (or failing to meet) at the
+                  // item boundary. Overflows this item's own box on
+                  // purpose (needs clipBehavior: Clip.none above); the
+                  // next item paints on top of the tail end, covering it.
                   if (rightVisible)
                     Positioned(
-                      right: 0,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 280),
-                        curve: Curves.easeOutCubic,
-                        width: 52,
-                        height: 3,
-                        color: stationColor.withValues(alpha: 0.7),
-                      ),
+                      left: 64,
+                      child: (isCurrent && liveProgress != null)
+                          ? _LiveConnectorFill(
+                              width: 136,
+                              height: 3,
+                              trackColor: colors.lineStrong,
+                              fillColor: stationColor,
+                              progress: liveProgress!,
+                            )
+                          : AnimatedContainer(
+                              duration: const Duration(milliseconds: 280),
+                              curve: Curves.easeOutCubic,
+                              width: 136,
+                              height: 3,
+                              color: stationColor.withValues(alpha: 0.7),
+                            ),
                     ),
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 280),
@@ -143,6 +149,51 @@ class TimerQueueItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LiveConnectorFill extends StatelessWidget {
+  const _LiveConnectorFill({
+    required this.width,
+    required this.height,
+    required this.trackColor,
+    required this.fillColor,
+    required this.progress,
+  });
+
+  final double width;
+  final double height;
+  final Color trackColor;
+  final Color fillColor;
+  final ValueListenable<double> progress;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: Stack(
+        children: [
+          Container(
+            width: width,
+            height: height,
+            color: trackColor.withValues(alpha: 0.7),
+          ),
+          ValueListenableBuilder<double>(
+            valueListenable: progress,
+            builder: (context, value, _) {
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: FractionallySizedBox(
+                  widthFactor: value.clamp(0.0, 1.0),
+                  child: Container(height: height, color: fillColor),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

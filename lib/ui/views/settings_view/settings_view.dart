@@ -73,6 +73,14 @@ class _SettingsViewState extends State<SettingsView> {
                     const SizedBox(height: 24),
                     _buildSettingsSection(
                       context,
+                      title: context.l10n.settingsSectionPrivacy,
+                      children: [
+                        Observer(builder: (_) => _buildAnalyticsTile(context)),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    _buildSettingsSection(
+                      context,
                       title: context.l10n.settingsSectionUpdates,
                       children: const [UpdateSettingTile()],
                     ),
@@ -168,6 +176,22 @@ class _SettingsViewState extends State<SettingsView> {
             child: Text(context.l10n.languageRussian),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAnalyticsTile(BuildContext context) {
+    return SettingRow(
+      title: context.l10n.settingsAnalyticsOptIn,
+      description: context.l10n.settingsAnalyticsDescription,
+      control: Align(
+        alignment: Alignment.centerRight,
+        child: Switch(
+          value: _appViewModel.analyticsOptIn,
+          onChanged: (value) {
+            _appViewModel.setAnalyticsOptIn(value);
+          },
+        ),
       ),
     );
   }

@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Timer'**
   String get navTimer;
 
+  /// No description provided for @navTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get navTasks;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
@@ -764,11 +770,35 @@ abstract class AppLocalizations {
   /// **'Next phase'**
   String get timerNextPhase;
 
+  /// No description provided for @timerEndSession.
+  ///
+  /// In en, this message translates to:
+  /// **'End session'**
+  String get timerEndSession;
+
+  /// No description provided for @timerEndSessionModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End Session'**
+  String get timerEndSessionModalTitle;
+
+  /// No description provided for @timerEndSessionModalContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to end this session now? This can\'t be undone.'**
+  String get timerEndSessionModalContent;
+
   /// No description provided for @timerQueueTitle.
   ///
   /// In en, this message translates to:
   /// **'Route'**
   String get timerQueueTitle;
+
+  /// No description provided for @timerQueueEndStation.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get timerQueueEndStation;
 
   /// No description provided for @timerEmptyTitle.
   ///
@@ -1112,6 +1142,108 @@ abstract class AppLocalizations {
   /// **'Couldn\'t delete the session. Please try again.'**
   String get errorDeleteFailed;
 
+  /// No description provided for @tasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasksTitle;
+
+  /// No description provided for @tasksSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track time by task'**
+  String get tasksSubtitle;
+
+  /// No description provided for @tasksNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get tasksNew;
+
+  /// No description provided for @tasksEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks yet'**
+  String get tasksEmptyTitle;
+
+  /// No description provided for @tasksEmptyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a task to start tagging your focus sessions with it.'**
+  String get tasksEmptyDescription;
+
+  /// No description provided for @taskEditDialogCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get taskEditDialogCreateTitle;
+
+  /// No description provided for @taskEditDialogEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename task'**
+  String get taskEditDialogEditTitle;
+
+  /// No description provided for @taskEditDialogNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Task name'**
+  String get taskEditDialogNameHint;
+
+  /// No description provided for @taskEditDialogCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get taskEditDialogCancel;
+
+  /// No description provided for @taskEditDialogSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get taskEditDialogSave;
+
+  /// No description provided for @taskListTileEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename task'**
+  String get taskListTileEdit;
+
+  /// No description provided for @taskListTileDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task'**
+  String get taskListTileDelete;
+
+  /// No description provided for @deleteTaskModalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Task'**
+  String get deleteTaskModalTitle;
+
+  /// No description provided for @deleteTaskModalContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this task? Sessions tagged with it will keep their data but lose the task tag.'**
+  String get deleteTaskModalContent;
+
+  /// No description provided for @errorTaskSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save the task. Please try again.'**
+  String get errorTaskSaveFailed;
+
+  /// No description provided for @errorTaskDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the task. Please try again.'**
+  String get errorTaskDeleteFailed;
+
+  /// No description provided for @taskSelectorNoTask.
+  ///
+  /// In en, this message translates to:
+  /// **'No task'**
+  String get taskSelectorNoTask;
+
   /// No description provided for @onboardingWelcomeTitle.
   ///
   /// In en, this message translates to:
@@ -1190,6 +1322,18 @@ abstract class AppLocalizations {
   /// **'Create and manage focus sessions: timers, blocked apps and sites.'**
   String get onboardingNavSessionsDescription;
 
+  /// No description provided for @onboardingNavTasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get onboardingNavTasksTitle;
+
+  /// No description provided for @onboardingNavTasksDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag your sessions with a task and see how much time you\'ve tracked on each one.'**
+  String get onboardingNavTasksDescription;
+
   /// No description provided for @onboardingNavSettingsTitle.
   ///
   /// In en, this message translates to:
@@ -1261,6 +1405,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That\'s it! Save the session and you\'re ready to start focusing.'**
   String get onboardingEditorSaveDescription;
+
+  /// No description provided for @settingsSectionPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get settingsSectionPrivacy;
+
+  /// No description provided for @settingsAnalyticsOptIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage data'**
+  String get settingsAnalyticsOptIn;
+
+  /// No description provided for @settingsAnalyticsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us improve Flow Fusion by sharing anonymous usage statistics. No personal data, IP addresses or identifiable information is collected.'**
+  String get settingsAnalyticsDescription;
+
+  /// No description provided for @onboardingAnalyticsOptIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage data to help us improve the app. No personal data is collected.'**
+  String get onboardingAnalyticsOptIn;
 }
 
 class _AppLocalizationsDelegate

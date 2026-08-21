@@ -61,4 +61,10 @@ class Prefs {
   set hasSeenOnboarding(bool value) {
     _prefs.setBool(_hasSeenOnboardingKey, value);
   }
+
+  static const String _analyticsOptInKey = 'analytics_opt_in';
+  bool get analyticsOptIn => _prefs.getBool(_analyticsOptInKey) ?? false;
+  set analyticsOptIn(bool value) {
+    _prefs.setBool(_analyticsOptInKey, value);
+  }
 }

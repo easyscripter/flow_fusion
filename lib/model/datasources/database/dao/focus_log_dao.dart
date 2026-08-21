@@ -15,6 +15,9 @@ abstract class FocusLogDao {
   )
   Future<List<FocusLog>> findRunsBetween(String startIso, String endIso);
 
+  @Query('SELECT * FROM focus_log')
+  Future<List<FocusLog>> findAllRuns();
+
   @factoryMethod
   static FocusLogDao create(AppDatabase appDatabase) => appDatabase.focusLogDao;
 }

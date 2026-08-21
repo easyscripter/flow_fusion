@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/enums/routes.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/app/router.dart';
@@ -13,18 +14,19 @@ import 'package:showcaseview/showcaseview.dart';
 part 'onboarding_controller.g.dart';
 
 /// Whether the site-blocking step is part of the tour. Site blocking is
-/// Windows-only, so the "blocked sites" step is skipped everywhere else.
-bool get onboardingHasSitesStep => Platform.isWindows;
+/// supported on Windows and macOS, so the "blocked sites" step is skipped on
+/// other platforms.
+bool get onboardingHasSitesStep => Platform.isWindows || Platform.isMacOS;
 
 /// Total number of steps in the whole tour, rendered by [OnboardingTooltip] as
-/// a single continuous "step N of M" counter. 4 sidebar steps + editor steps
+/// a single continuous "step N of M" counter. 5 sidebar steps + editor steps
 /// (details, timers, blocked apps, [blocked sites,] save); the blocked-sites
-/// step only exists on Windows.
-int get onboardingTotalSteps => onboardingHasSitesStep ? 9 : 8;
+/// step only exists on Windows and macOS.
+int get onboardingTotalSteps => onboardingHasSitesStep ? 10 : 9;
 
 /// The step number of the final "Save" step, which shifts down by one when the
 /// blocked-sites step is absent.
-int get onboardingSaveStep => onboardingHasSitesStep ? 9 : 8;
+int get onboardingSaveStep => onboardingHasSitesStep ? 10 : 9;
 
 /// Where in the onboarding flow we currently are.
 ///
@@ -38,13 +40,15 @@ class OnboardingController = _OnboardingControllerBase
     with _$OnboardingController;
 
 abstract class _OnboardingControllerBase with Store {
-  _OnboardingControllerBase(this._prefs);
+  _OnboardingControllerBase(this._prefs, this._analytics);
 
   final Prefs _prefs;
+  final AnalyticsService _analytics;
 
   final GlobalKey brandKey = GlobalKey();
   final GlobalKey navOverviewKey = GlobalKey();
   final GlobalKey navSessionsKey = GlobalKey();
+  final GlobalKey navTasksKey = GlobalKey();
   final GlobalKey navSettingsKey = GlobalKey();
 
   final GlobalKey editorDetailsKey = GlobalKey();
@@ -78,7 +82,10 @@ abstract class _OnboardingControllerBase with Store {
     await OnboardingWelcomeCard.show(
       context,
       onStart: beginSidebarTour,
-      onSkip: complete,
+      onSkip: () {
+        _analytics.trackEvent('onboarding_skipped', {'phase': 'welcome_card'});
+        complete();
+      },
     );
   }
 
@@ -97,10 +104,12 @@ abstract class _OnboardingControllerBase with Store {
   /// "Start" action.
   void beginSidebarTour() {
     _phase = OnboardingPhase.sidebar;
+    _analytics.trackEvent('onboarding_started');
     ShowcaseView.get().startShowCase([
       brandKey,
       navOverviewKey,
       navSessionsKey,
+      navTasksKey,
       navSettingsKey,
     ]);
   }
@@ -114,7 +123,7 @@ abstract class _OnboardingControllerBase with Store {
       editorDetailsKey,
       editorTimersKey,
       editorBlockedAppsKey,
-      // Site blocking is Windows-only, so its target does not exist elsewhere.
+      // Site blocking is only on Windows/macOS, so its target does not exist elsewhere.
       if (onboardingHasSitesStep) editorBlockedSitesKey,
       editorSaveKey,
     ]);
@@ -139,6 +148,7 @@ abstract class _OnboardingControllerBase with Store {
           router.go(Routes.sessionNew.path);
         });
       case OnboardingPhase.editor:
+        _analytics.trackEvent('onboarding_completed');
         complete();
       case OnboardingPhase.idle:
       case OnboardingPhase.awaitingEditor:
@@ -150,6 +160,7 @@ abstract class _OnboardingControllerBase with Store {
   /// any step. Ends the whole onboarding.
   void handleShowcaseDismiss() {
     if (_phase == OnboardingPhase.idle) return;
+    _analytics.trackEvent('onboarding_skipped', {'phase': _phase.name});
     complete();
   }
 

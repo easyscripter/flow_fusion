@@ -75,7 +75,9 @@ abstract class _HomeViewViewModelBase with Store {
         now.toIso8601String(),
       );
       final newFocusByDay = _focusByDayFromRuns(runs);
-      final newTotalSessions = runs.length;
+      // Multiple runs (one per completed work timer) can belong to the same
+      // session, so count distinct sessions rather than rows.
+      final newTotalSessions = runs.map((r) => r.sessionId).toSet().length;
       runInAction(() {
         focusByDay = ObservableMap.of(newFocusByDay);
         totalSessions = newTotalSessions;

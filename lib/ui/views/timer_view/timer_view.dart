@@ -1,6 +1,7 @@
 import 'package:flow_fusion/controllers/active_timer_controller.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_body.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_empty_state.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/timer_progress_ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +32,7 @@ class _TimerViewState extends State<TimerView> {
         _controller.state.awaitingManualAdvance,
         _controller.state.remaining.inSeconds,
         _controller.state.timers.length,
+        _controller.state.session?.taskId,
       ),
       (_) {
         if (!mounted) return;
@@ -99,10 +101,14 @@ class _TimerViewState extends State<TimerView> {
       backgroundColor: Colors.transparent,
       body: !state.hasActiveSession
           ? const TimerEmptyState()
-          : TimerBody(
+          : TimerProgressTicker(
               state: state,
-              controller: _controller,
-              routeScrollController: _routeScrollController,
+              builder: (context, smoothProgress) => TimerBody(
+                state: state,
+                controller: _controller,
+                routeScrollController: _routeScrollController,
+                smoothProgress: smoothProgress,
+              ),
             ),
     );
   }

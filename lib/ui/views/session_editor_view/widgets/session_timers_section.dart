@@ -86,7 +86,7 @@ class SessionTimersSection extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               buildDefaultDragHandles: false,
               itemCount: viewModel.timers.length,
-              onReorder: viewModel.reorder,
+              onReorderItem: viewModel.reorder,
               proxyDecorator: (child, index, animation) => child,
               itemBuilder: (context, index) {
                 final draft = viewModel.timers[index];

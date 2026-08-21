@@ -4,6 +4,7 @@ import 'package:desktop_updater/desktop_updater.dart';
 import 'package:flow_fusion/model/datasources/local/prefs.dart';
 import 'package:flow_fusion/ui/constants/app_config.dart';
 import 'package:flow_fusion/utils/app_logger.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
@@ -30,7 +31,9 @@ class LocalizedReleaseNotesLoader {
   }
 
   String _resolveLanguage() {
-    final language = _prefs.language ?? _fallbackLanguage;
+    final language =
+        _prefs.language ??
+        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     return _supportedLanguages.contains(language)
         ? language
         : _fallbackLanguage;

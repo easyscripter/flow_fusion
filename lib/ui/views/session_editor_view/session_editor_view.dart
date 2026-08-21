@@ -109,7 +109,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           title: context.l10n.onboardingEditorDetailsTitle,
                           description:
                               context.l10n.onboardingEditorDetailsDescription,
-                          currentStep: 5,
+                          currentStep: 6,
                           totalSteps: onboardingTotalSteps,
                         ),
                         child: SessionDetailsPanel(viewModel: _viewModel),
@@ -121,7 +121,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           title: context.l10n.onboardingEditorTimersTitle,
                           description:
                               context.l10n.onboardingEditorTimersDescription,
-                          currentStep: 6,
+                          currentStep: 7,
                           totalSteps: onboardingTotalSteps,
                         ),
                         child: SessionTimersSection(
@@ -136,7 +136,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           title: context.l10n.onboardingEditorBlockedAppsTitle,
                           description: context
                               .l10n.onboardingEditorBlockedAppsDescription,
-                          currentStep: 7,
+                          currentStep: 8,
                           totalSteps: onboardingTotalSteps,
                         ),
                         child: BlockedAppsSection(viewModel: _viewModel),
@@ -148,7 +148,7 @@ class _SessionEditorViewState extends State<SessionEditorView> {
                           title: context.l10n.onboardingEditorBlockedSitesTitle,
                           description: context
                               .l10n.onboardingEditorBlockedSitesDescription,
-                          currentStep: 8,
+                          currentStep: 9,
                           totalSteps: onboardingTotalSteps,
                         ),
                         child: BlockedSitesSection(viewModel: _viewModel),

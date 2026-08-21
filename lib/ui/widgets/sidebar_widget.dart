@@ -8,6 +8,7 @@ import 'package:flow_fusion/ui/views/onboarding/widgets/onboarding_tooltip.dart'
 import 'package:flow_fusion/ui/widgets/sidebar_brand.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_nav_button.dart';
 import 'package:flow_fusion/ui/widgets/sidebar_section_label.dart';
+import 'package:flow_fusion/ui/widgets/sidebar_social_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -23,6 +24,7 @@ class _NavItem {
   final String Function(BuildContext context) showcaseTitle;
   final String Function(BuildContext context) showcaseDescription;
   final GlobalKey Function(OnboardingController controller) showcaseKey;
+  final Widget Function(BuildContext context)? showcaseMedia;
 
   const _NavItem({
     required this.route,
@@ -33,6 +35,7 @@ class _NavItem {
     required this.showcaseTitle,
     required this.showcaseDescription,
     required this.showcaseKey,
+    this.showcaseMedia,
   });
 }
 
@@ -68,11 +71,22 @@ class SidebarWidget extends StatelessWidget {
       showcaseKey: _sessionsShowcaseKey,
     ),
     _NavItem(
+      route: Routes.tasks,
+      icon: Icons.checklist_outlined,
+      selectedIcon: Icons.checklist_rounded,
+      label: _tasksLabel,
+      showcaseStep: 4,
+      showcaseTitle: _tasksShowcaseTitle,
+      showcaseDescription: _tasksShowcaseDescription,
+      showcaseKey: _tasksShowcaseKey,
+      showcaseMedia: _tasksShowcaseMedia,
+    ),
+    _NavItem(
       route: Routes.settings,
       icon: Icons.tune_outlined,
       selectedIcon: Icons.tune_rounded,
       label: _settingsLabel,
-      showcaseStep: 4,
+      showcaseStep: 5,
       showcaseTitle: _settingsShowcaseTitle,
       showcaseDescription: _settingsShowcaseDescription,
       showcaseKey: _settingsShowcaseKey,
@@ -83,6 +97,7 @@ class SidebarWidget extends StatelessWidget {
       context.l10n.navOverview;
   static String _sessionsLabel(BuildContext context) =>
       context.l10n.navSessions;
+  static String _tasksLabel(BuildContext context) => context.l10n.navTasks;
   static String _settingsLabel(BuildContext context) =>
       context.l10n.navSettings;
 
@@ -99,6 +114,22 @@ class SidebarWidget extends StatelessWidget {
       context.l10n.onboardingNavSessionsDescription;
   static GlobalKey _sessionsShowcaseKey(OnboardingController controller) =>
       controller.navSessionsKey;
+
+  static String _tasksShowcaseTitle(BuildContext context) =>
+      context.l10n.onboardingNavTasksTitle;
+  static String _tasksShowcaseDescription(BuildContext context) =>
+      context.l10n.onboardingNavTasksDescription;
+  static GlobalKey _tasksShowcaseKey(OnboardingController controller) =>
+      controller.navTasksKey;
+  static Widget _tasksShowcaseMedia(BuildContext context) => ClipRRect(
+        borderRadius: BorderRadius.circular(AppSizes.borderRadiusSmall),
+        child: Image.asset(
+          'assets/images/onboarding/tasks_showcase.gif',
+          height: 180,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      );
 
   static String _settingsShowcaseTitle(BuildContext context) =>
       context.l10n.onboardingNavSettingsTitle;
@@ -154,6 +185,7 @@ class SidebarWidget extends StatelessWidget {
                           description: item.showcaseDescription(context),
                           currentStep: item.showcaseStep,
                           totalSteps: onboardingTotalSteps,
+                          media: item.showcaseMedia?.call(context),
                         ),
                         child: SidebarNavButton(
                           icon: item.icon,
@@ -198,7 +230,12 @@ class SidebarWidget extends StatelessWidget {
           ),
           Divider(height: 1, thickness: 1, color: colors.sidebarBorder),
           Padding(
-            padding: const EdgeInsets.all(AppSizes.paddingMedium),
+            padding: const EdgeInsets.fromLTRB(
+              AppSizes.paddingMedium,
+              AppSizes.paddingMedium,
+              AppSizes.paddingMedium,
+              AppSizes.paddingSmall,
+            ),
             child: Text(
               context.l10n.versionLabel(packageVersion),
               textAlign: TextAlign.center,
@@ -207,6 +244,10 @@ class SidebarWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: AppSizes.paddingSmall),
+            child: SidebarSocialLinks(),
           ),
         ],
       ),

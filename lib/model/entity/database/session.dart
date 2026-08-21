@@ -1,8 +1,19 @@
 import 'package:froom/froom.dart';
 import 'package:flow_fusion/enums/session_status.dart';
 import 'package:flow_fusion/model/entity/blocked_app.dart';
+import 'package:flow_fusion/model/entity/database/task.dart';
 
-@Entity(tableName: 'sessions')
+@Entity(
+  tableName: 'sessions',
+  foreignKeys: [
+    ForeignKey(
+      childColumns: ['taskId'],
+      parentColumns: ['id'],
+      entity: Task,
+      onDelete: ForeignKeyAction.setNull,
+    ),
+  ],
+)
 class Session {
   @PrimaryKey(autoGenerate: true)
   final int? id;
@@ -26,6 +37,8 @@ class Session {
 
   List<String> blockedSites;
 
+  int? taskId;
+
   @ignore
   DateTime? get completedAtDateTime =>
       completedAt == null ? null : DateTime.parse(completedAt!);
@@ -41,6 +54,7 @@ class Session {
     this.completedAt,
     this.blockedApps = const <BlockedApp>[],
     this.blockedSites = const <String>[],
+    this.taskId,
   });
 
   factory Session.create({
@@ -72,6 +86,8 @@ class Session {
     String? completedAt,
     List<BlockedApp>? blockedApps,
     List<String>? blockedSites,
+    int? taskId,
+    bool clearTaskId = false,
   }) {
     return Session(
       id: id,
@@ -84,6 +100,7 @@ class Session {
       completedAt: completedAt ?? this.completedAt,
       blockedApps: blockedApps ?? this.blockedApps,
       blockedSites: blockedSites ?? this.blockedSites,
+      taskId: clearTaskId ? null : (taskId ?? this.taskId),
     );
   }
 }

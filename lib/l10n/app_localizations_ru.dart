@@ -21,6 +21,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get navTimer => 'Таймер';
 
   @override
+  String get navTasks => 'Задачи';
+
+  @override
   String get navSettings => 'Настройки';
 
   @override
@@ -364,7 +367,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get timerNextPhase => 'Следующая фаза';
 
   @override
+  String get timerEndSession => 'Завершить сессию';
+
+  @override
+  String get timerEndSessionModalTitle => 'Завершить сессию';
+
+  @override
+  String get timerEndSessionModalContent =>
+      'Вы уверены, что хотите завершить сессию прямо сейчас? Это действие нельзя отменить.';
+
+  @override
   String get timerQueueTitle => 'Очередь';
+
+  @override
+  String get timerQueueEndStation => 'Конечная';
 
   @override
   String get timerEmptyTitle => 'Нет активного таймера';
@@ -597,6 +613,61 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось удалить сессию. Попробуйте ещё раз.';
 
   @override
+  String get tasksTitle => 'Задачи';
+
+  @override
+  String get tasksSubtitle => 'Учёт времени по задачам';
+
+  @override
+  String get tasksNew => 'Новая задача';
+
+  @override
+  String get tasksEmptyTitle => 'Задач пока нет';
+
+  @override
+  String get tasksEmptyDescription =>
+      'Создайте задачу, чтобы отмечать ею сессии фокуса.';
+
+  @override
+  String get taskEditDialogCreateTitle => 'Новая задача';
+
+  @override
+  String get taskEditDialogEditTitle => 'Переименовать задачу';
+
+  @override
+  String get taskEditDialogNameHint => 'Название задачи';
+
+  @override
+  String get taskEditDialogCancel => 'Отмена';
+
+  @override
+  String get taskEditDialogSave => 'Сохранить';
+
+  @override
+  String get taskListTileEdit => 'Переименовать задачу';
+
+  @override
+  String get taskListTileDelete => 'Удалить задачу';
+
+  @override
+  String get deleteTaskModalTitle => 'Удалить задачу';
+
+  @override
+  String get deleteTaskModalContent =>
+      'Вы действительно хотите удалить эту задачу? Сессии, отмеченные ею, сохранят свои данные, но потеряют метку задачи.';
+
+  @override
+  String get errorTaskSaveFailed =>
+      'Не удалось сохранить задачу. Попробуйте ещё раз.';
+
+  @override
+  String get errorTaskDeleteFailed =>
+      'Не удалось удалить задачу. Попробуйте ещё раз.';
+
+  @override
+  String get taskSelectorNoTask => 'Без задачи';
+
+  @override
   String get onboardingWelcomeTitle => 'Добро пожаловать в Flow Fusion';
 
   @override
@@ -642,6 +713,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Создавайте и настраивайте сессии фокуса: таймеры, блокировка приложений и сайтов.';
 
   @override
+  String get onboardingNavTasksTitle => 'Задачи';
+
+  @override
+  String get onboardingNavTasksDescription =>
+      'Отмечайте сессии задачей и смотрите, сколько времени потрачено на каждую.';
+
+  @override
   String get onboardingNavSettingsTitle => 'Настройки';
 
   @override
@@ -682,4 +760,18 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardingEditorSaveDescription =>
       'Готово! Сохраните сессию — и можно приступать к фокусу.';
+
+  @override
+  String get settingsSectionPrivacy => 'Конфиденциальность';
+
+  @override
+  String get settingsAnalyticsOptIn => 'Анонимная аналитика';
+
+  @override
+  String get settingsAnalyticsDescription =>
+      'Помогите нам улучшить Flow Fusion, делясь анонимной статистикой использования. Личные данные, IP-адреса и идентифицирующая информация не собираются.';
+
+  @override
+  String get onboardingAnalyticsOptIn =>
+      'Отправлять анонимную статистику использования, чтобы помочь нам улучшить приложение. Никакие личные данные не собираются.';
 }

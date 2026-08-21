@@ -4,12 +4,15 @@ import 'package:flow_fusion/model/entity/active_timer_state.dart';
 import 'package:flow_fusion/ui/constants/app_sizes.dart';
 import 'package:flow_fusion/ui/l10n/l10n_context.dart';
 import 'package:flow_fusion/ui/theme/theme_context.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/session_task_selector.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_progress_circle.dart';
+import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_end_station.dart';
 import 'package:flow_fusion/ui/views/timer_view/widgets/timer_queue_item.dart';
 import 'package:flow_fusion/ui/widgets/app_badge.dart';
-import 'package:flow_fusion/ui/widgets/app_button.dart';
+import 'package:flow_fusion/ui/widgets/app_icon_button.dart';
 import 'package:flow_fusion/ui/widgets/app_page_header.dart';
 import 'package:flow_fusion/ui/widgets/app_panel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TimerBody extends StatelessWidget {
@@ -18,11 +21,13 @@ class TimerBody extends StatelessWidget {
     required this.state,
     required this.controller,
     required this.routeScrollController,
+    required this.smoothProgress,
   });
 
   final ActiveTimerState state;
   final ActiveTimerController controller;
   final ScrollController routeScrollController;
+  final ValueListenable<double> smoothProgress;
 
   @override
   Widget build(BuildContext context) {
@@ -61,41 +66,19 @@ class TimerBody extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TimerProgressCircle(
-                            progress: state.progress,
-                            color: typeColor,
-                            timeLabel: state.formattedRemaining,
-                            timerLabel: timer.title,
-                            size: compact ? 250 : 320,
+                          ValueListenableBuilder<double>(
+                            valueListenable: smoothProgress,
+                            builder: (context, progress, _) {
+                              return TimerProgressCircle(
+                                progress: progress,
+                                color: typeColor,
+                                timeLabel: state.formattedRemaining,
+                                timerLabel: timer.title,
+                                size: compact ? 250 : 320,
+                              );
+                            },
                           ),
-                          SizedBox(
-                            height: compact
-                                ? AppSizes.paddingMedium
-                                : AppSizes.paddingLarge,
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              AppBadge(
-                                label: timer.type == TimerType.work
-                                    ? context.l10n.timerWork
-                                    : context.l10n.timerChill,
-                                icon: timer.type == TimerType.work
-                                    ? Icons.bolt_rounded
-                                    : Icons.coffee_rounded,
-                              ),
-                              AppBadge(
-                                label: context.l10n.timerPlannedDuration(
-                                  timer.plannedDuration.inMinutes < 1
-                                      ? 1
-                                      : timer.plannedDuration.inMinutes,
-                                ),
-                                icon: Icons.schedule_rounded,
-                              ),
-                            ],
-                          ),
+                          const SizedBox(height: 2),
                           if ((timer.description ?? '').trim().isNotEmpty)
                             Padding(
                               padding: const EdgeInsets.only(
@@ -119,54 +102,74 @@ class TimerBody extends StatelessWidget {
                             runSpacing: AppSizes.paddingSmall,
                             children: state.awaitingManualAdvance
                                 ? [
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: context.l10n.timerNextPhase,
-                                        icon: Icons.arrow_forward_rounded,
-                                        onPressed: () async {
-                                          await controller
-                                              .advanceToNextPhaseManually();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: Icons.arrow_forward_rounded,
+                                      tooltip: context.l10n.timerNextPhase,
+                                      onPressed: () async {
+                                        await controller
+                                            .advanceToNextPhaseManually();
+                                      },
+                                    ),
+                                    AppIconButton(
+                                      icon: Icons.stop_rounded,
+                                      tooltip: context.l10n.timerEndSession,
+                                      variant: AppIconButtonVariant.danger,
+                                      onPressed: () =>
+                                          _confirmEndSession(context),
                                     ),
                                   ]
                                 : [
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: state.isPaused
-                                            ? context.l10n.timerResume
-                                            : context.l10n.timerPause,
-                                        icon: state.isPaused
-                                            ? Icons.play_arrow_rounded
-                                            : Icons.pause_rounded,
-                                        onPressed: () async {
-                                          if (state.isPaused) {
-                                            await controller.resume();
-                                            return;
-                                          }
-                                          await controller.pause();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: state.isPaused
+                                          ? Icons.play_arrow_rounded
+                                          : Icons.pause_rounded,
+                                      tooltip: state.isPaused
+                                          ? context.l10n.timerResume
+                                          : context.l10n.timerPause,
+                                      onPressed: () async {
+                                        if (state.isPaused) {
+                                          await controller.resume();
+                                          return;
+                                        }
+                                        await controller.pause();
+                                      },
                                     ),
-                                    SizedBox(
-                                      width: 176,
-                                      height: 48,
-                                      child: AppButton(
-                                        label: context.l10n.timerSkip,
-                                        icon: Icons.skip_next_rounded,
-                                        variant: AppButtonVariant.secondary,
-                                        onPressed: () async {
-                                          await controller.skipCurrentTimer();
-                                        },
-                                      ),
+                                    AppIconButton(
+                                      icon: Icons.skip_next_rounded,
+                                      tooltip: context.l10n.timerSkip,
+                                      variant: AppIconButtonVariant.secondary,
+                                      onPressed: () async {
+                                        await controller.skipCurrentTimer();
+                                      },
+                                    ),
+                                    AppIconButton(
+                                      icon: Icons.stop_rounded,
+                                      tooltip: context.l10n.timerEndSession,
+                                      variant: AppIconButtonVariant.danger,
+                                      onPressed: () =>
+                                          _confirmEndSession(context),
                                     ),
                                   ],
                           ),
-                          const SizedBox(height: AppSizes.paddingLarge),
+                          SizedBox(
+                            height:
+                                (compact
+                                    ? AppSizes.paddingSmall
+                                    : AppSizes.paddingMedium) +
+                                6,
+                          ),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 280),
+                            child: SessionTaskSelector(
+                              selectedTaskId: session.taskId,
+                              controller: controller,
+                            ),
+                          ),
+                          SizedBox(
+                            height: compact
+                                ? AppSizes.paddingMedium
+                                : AppSizes.paddingLarge,
+                          ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -193,13 +196,16 @@ class TimerBody extends StatelessWidget {
                                     TimerQueueItem(
                                       timer: state.timers[index],
                                       index: index,
-                                      total: state.timers.length,
+                                      total: state.timers.length + 1,
                                       isCurrent: index == state.currentIndex,
                                       isDone: index < state.currentIndex,
+                                      liveProgress: index == state.currentIndex
+                                          ? smoothProgress
+                                          : null,
                                     ),
-                                    if (index < state.timers.length - 1)
-                                      const SizedBox(width: 8),
+                                    const SizedBox(width: 8),
                                   ],
+                                  const TimerQueueEndStation(),
                                 ],
                               ),
                             ),
@@ -215,5 +221,29 @@ class TimerBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _confirmEndSession(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.timerEndSessionModalTitle),
+        content: Text(context.l10n.timerEndSessionModalContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(context.l10n.deleteModalCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(context.l10n.timerEndSession),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await controller.endSessionNow();
+    }
   }
 }

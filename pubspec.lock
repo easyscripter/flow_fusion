@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  aptabase_flutter:
+    dependency: "direct main"
+    description:
+      name: aptabase_flutter
+      sha256: bef8e216351a61b3769ffc642d84a59eca012134e6cc2c1b575441b1c987c1b6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   archive:
     dependency: transitive
     description:
@@ -265,6 +273,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.2+11"
+  device_info_plus:
+    dependency: transitive
+    description:
+      name: device_info_plus
+      sha256: b4fed1b2835da9d670d7bed7db79ae2a94b0f5ad6312268158a9b5479abbacdd
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.4.0"
+  device_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_plus_platform_interface
+      sha256: e1ea89119e34903dca74b883d0dd78eb762814f97fb6c76f35e9ff74d261a18f
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -453,6 +477,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      sha256: "09dcde8ab90ffae1a7d65ff2ef96fc62a17ad9d0ce7c127b317ded676b0d5935"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.0.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -1274,6 +1306,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.8"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      sha256: f63cbc48103236abf48e345e07a03ce5757ea86285ed313a6a032596ed9301e2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1403,13 +1443,21 @@ packages:
     source: hosted
     version: "3.0.3"
   win32:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: win32
       sha256: d7cb55e04cd34096cd3a79b3330245f54cb96a370a1c27adb3c84b917de8b08e
       url: "https://pub.dev"
     source: hosted
     version: "5.15.0"
+  win32_registry:
+    dependency: "direct main"
+    description:
+      name: win32_registry
+      sha256: "6f1b564492d0147b330dd794fee8f512cec4977957f310f9951b5f9d83618dae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   window_manager:
     dependency: "direct main"
     description:

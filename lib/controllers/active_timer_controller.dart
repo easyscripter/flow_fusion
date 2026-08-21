@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flow_fusion/controllers/analytics_service.dart';
 import 'package:flow_fusion/controllers/app_blocker_service.dart';
 import 'package:flow_fusion/controllers/session_lifecycle_observer.dart';
 import 'package:flow_fusion/controllers/site_blocker_service.dart';
@@ -34,6 +35,7 @@ class ActiveTimerController {
     this._prefs,
     this._appBlocker,
     this._siteBlocker,
+    this._analytics,
   );
 
   final SessionDao _sessionDao;
@@ -44,6 +46,7 @@ class ActiveTimerController {
   final Prefs _prefs;
   final AppBlockerService _appBlocker;
   final SiteBlockerService _siteBlocker;
+  final AnalyticsService _analytics;
 
   final ActiveTimerState _state = ActiveTimerState();
 
@@ -96,6 +99,7 @@ class ActiveTimerController {
     _initialized = true;
     _lifecycleObserver.start();
     unawaited(_siteBlocker.stopBlocking());
+    unawaited(_siteBlocker.selfHeal());
     await _restore();
   }
 
@@ -116,12 +120,33 @@ class ActiveTimerController {
         ..remaining = firstDuration
         ..isPaused = false
         ..awaitingManualAdvance = false
-        ..runWorkMs = 0
         ..endsAt = DateTime.now().add(firstDuration);
     });
     _startTicker();
     _syncBlockingForCurrentPhase();
     await _persist();
+    _analytics.trackEvent('session_started', {
+      'has_task': session.taskId != null,
+      'timers_count': timers.length,
+      'has_blocked_apps': session.blockedApps.isNotEmpty,
+      'has_blocked_sites': session.blockedSites.isNotEmpty,
+    });
+  }
+
+  Future<void> setTask(int? taskId) async {
+    final Session? session = _state.session;
+    if (session == null) return;
+
+    final Session updated = session.copyWith(
+      taskId: taskId,
+      clearTaskId: taskId == null,
+    );
+    // Update in-memory state before the awaited DB write so that a session
+    // completion racing this call (e.g. the timer finishes while this write
+    // is still in flight) reads the new taskId instead of a stale reference
+    // and overwriting it back to null when it persists its own completion.
+    runInAction(() => _state.session = updated);
+    await _sessionDao.updateSession(updated);
   }
 
   Future<void> pause() async {
@@ -163,10 +188,26 @@ class ActiveTimerController {
         skipped.plannedDuration,
         _state.remaining,
       );
-      _state.accrueWork(skipped, actual);
+      await _logWorkChunk(_state.session!, skipped, actual);
       await _markTimerSkipped(skipped, actual);
     }
     await _advanceToNextTimer();
+  }
+
+  Future<void> endSessionNow() async {
+    if (!hasActiveSession || _isFinalizingSession) return;
+
+    final SessionTimer? current = _state.currentTimer;
+    if (current != null && !_state.awaitingManualAdvance) {
+      final Duration actual = elapsedIn(
+        current.plannedDuration,
+        _state.remaining,
+      );
+      await _logWorkChunk(_state.session!, current, actual);
+      await _markTimerSkipped(current, actual);
+    }
+
+    await _clearState(markSessionCompleted: true);
   }
 
   Future<void> advanceToNextPhaseManually() async {
@@ -222,7 +263,6 @@ class ActiveTimerController {
             ..timers = timers
             ..currentIndex = persisted.currentIndex
             ..isPaused = false
-            ..runWorkMs = persisted.runWorkMs
             ..remaining = Duration.zero
             ..endsAt = null
             ..awaitingManualAdvance = true;
@@ -241,8 +281,7 @@ class ActiveTimerController {
           ..session = session
           ..timers = timers
           ..currentIndex = persisted.currentIndex
-          ..isPaused = persisted.isPaused
-          ..runWorkMs = persisted.runWorkMs;
+          ..isPaused = persisted.isPaused;
 
         if (persisted.isPaused) {
           _state
@@ -305,8 +344,8 @@ class ActiveTimerController {
     final int completedIndex = _state.currentIndex;
     final SessionTimer completedTimer = _state.timers[completedIndex];
     final SessionTimer nextTimer = _state.timers[completedIndex + 1];
+    final Session session = _state.session!;
 
-    _state.accrueWork(completedTimer, completedTimer.plannedDuration);
     _state
       ..remaining = Duration.zero
       ..endsAt = null
@@ -315,6 +354,9 @@ class ActiveTimerController {
 
     _syncBlockingForCurrentPhase();
 
+    unawaited(
+      _logWorkChunk(session, completedTimer, completedTimer.plannedDuration),
+    );
     unawaited(_markTimerCompleted(completedTimer));
     unawaited(
       _timerAlertService.notifyTimerFinished(
@@ -325,6 +367,7 @@ class ActiveTimerController {
   }
 
   void _advanceAcrossElapsedTime(Duration overshoot) {
+    final Session session = _state.session!;
     final List<TimerTransition> transitions = planAdvance(
       overshoot: overshoot,
       currentIndex: _state.currentIndex,
@@ -339,7 +382,13 @@ class ActiveTimerController {
           final SessionTimer completedTimer = _state.timers[completedIndex];
           final SessionTimer nextTimer = _state.timers[nextIndex];
           _state.currentIndex = nextIndex;
-          _state.accrueWork(completedTimer, completedTimer.plannedDuration);
+          unawaited(
+            _logWorkChunk(
+              session,
+              completedTimer,
+              completedTimer.plannedDuration,
+            ),
+          );
           unawaited(_markTimerCompleted(completedTimer));
           unawaited(
             _timerAlertService.notifyTimerFinished(
@@ -376,22 +425,22 @@ class ActiveTimerController {
     _stopTicker();
 
     Session? session;
-    var workMs = 0;
     runInAction(() {
-      if (completedTimer != null) {
-        _state.accrueWork(completedTimer, completedTimer.plannedDuration);
-      }
       session = _state.session;
-      workMs = _state.runWorkMs;
       _resetState();
     });
 
     try {
-      if (completedTimer != null) {
+      if (completedTimer != null && session != null) {
+        await _logWorkChunk(
+          session!,
+          completedTimer,
+          completedTimer.plannedDuration,
+        );
         await _markTimerCompleted(completedTimer);
       }
       if (session != null) {
-        await _completeSession(session!, workMs: workMs);
+        await _completeSession(session!);
       }
       unawaited(
         _timerAlertService.notifySessionFinished(sessionTitle: sessionTitle),
@@ -421,41 +470,66 @@ class ActiveTimerController {
     await _persist();
   }
 
-  Future<void> _markTimerCompleted(SessionTimer timer) {
-    return _timerDao.updateTimer(
+  Future<void> _markTimerCompleted(SessionTimer timer) async {
+    await _timerDao.updateTimer(
       timer.copyWith(
         actualDurationMs: timer.plannedDuration.inMilliseconds,
         status: TimerStatus.completed,
         updatedAt: DateTime.now(),
       ),
     );
+    _analytics.trackEvent('timer_completed', {
+      'type': timer.type.name,
+      'duration_mins': timer.plannedDuration.inMinutes,
+    });
   }
 
-  Future<void> _markTimerSkipped(SessionTimer timer, Duration actual) {
-    return _timerDao.updateTimer(
+  Future<void> _markTimerSkipped(SessionTimer timer, Duration actual) async {
+    await _timerDao.updateTimer(
       timer.copyWith(
         actualDurationMs: actual.inMilliseconds,
         status: TimerStatus.skipped,
         updatedAt: DateTime.now(),
       ),
     );
+    _analytics.trackEvent('timer_skipped', {
+      'type': timer.type.name,
+      'planned_mins': timer.plannedDuration.inMinutes,
+      'actual_mins': actual.inMinutes,
+    });
   }
 
-  Future<void> _completeSession(Session session, {required int workMs}) async {
+  Future<void> _completeSession(Session session) async {
     await _sessionDao.updateSession(
       session.copyWith(
         status: SessionStatus.completed,
         completedAt: DateTime.now().toIso8601String(),
       ),
     );
-    await _logCompletedRun(session, workMs: workMs);
+    _analytics.trackEvent('session_completed', {
+      'has_task': session.taskId != null,
+    });
   }
 
-  Future<void> _logCompletedRun(Session session, {required int workMs}) async {
+  /// Logs one completed work timer's time immediately, tagged with the
+  /// session's task *at that moment*. Sessions are reusable and their task
+  /// tag can change mid-session, so logging per-timer (rather than once for
+  /// the whole session at the end) keeps each chunk attributed to whatever
+  /// task was actually selected while it ran.
+  Future<void> _logWorkChunk(
+    Session session,
+    SessionTimer timer,
+    Duration actual,
+  ) async {
+    if (timer.type != TimerType.work || actual <= Duration.zero) return;
     final sessionId = session.id;
     if (sessionId == null) return;
     await _focusLogDao.insertRun(
-      FocusLog.create(sessionId: sessionId, workMs: workMs),
+      FocusLog.create(
+        sessionId: sessionId,
+        workMs: actual.inMilliseconds,
+        taskId: session.taskId,
+      ),
     );
   }
 
@@ -471,12 +545,11 @@ class ActiveTimerController {
   Future<void> _clearState({bool markSessionCompleted = false}) async {
     _stopTicker();
     final session = _state.session;
-    final workMs = _state.runWorkMs;
     runInAction(_resetState);
     _isFinalizingSession = false;
 
     if (markSessionCompleted && session != null) {
-      await _completeSession(session, workMs: workMs);
+      await _completeSession(session);
     }
   }
 

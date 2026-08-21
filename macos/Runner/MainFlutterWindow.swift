@@ -35,12 +35,10 @@ class MainFlutterWindow: NSWindow {
   }
 }
 
-/// Soft, store-compatible app blocking for macOS: a graceful "quit" request plus
-/// hide — never a forced SIGKILL. `terminate()` requires the Automation (TCC)
-/// permission, prompted by the system on first use; if denied, `hide()` still
-/// gets the app out of the way.
+
 enum AppBlocker {
-  private static let terminationGrace: TimeInterval = 0.2
+
+  private static let terminationGrace: TimeInterval = 1.5
   private static var activityToken: NSObjectProtocol?
 
   /// Opts the process out of App Nap for the duration of an active work
@@ -59,33 +57,45 @@ enum AppBlocker {
     activityToken = nil
   }
 
-  /// Asks every running app whose bundle id is in [bundleIds] to quit and hides
-  /// it. Returns the names acted upon.
-  static func blockApps(bundleIds: [String]) -> [String] {
+  /// Asks every running app whose bundle id is in [bundleIds] to quit.
+  /// Returns one entry per running instance acted upon, each with the
+  /// app's name/bundle id and whether the quit actually took effect —
+  /// callers must not assume success just because this returned, since a
+  /// stuck app (e.g. an unsaved-changes dialog) surfaces as `success:
+  /// false` here rather than throwing.
+  static func blockApps(bundleIds: [String]) -> [[String: Any]] {
     guard !bundleIds.isEmpty else { return [] }
     let wanted = Set(bundleIds)
     let selfBundleId = Bundle.main.bundleIdentifier
     let selfPid = ProcessInfo.processInfo.processIdentifier
-    var acted: [String] = []
+    var results: [[String: Any]] = []
 
     for bundleId in wanted {
       for app in NSRunningApplication.runningApplications(withBundleIdentifier: bundleId) {
-        // Never close ourselves, even if our bundle id is somehow in the list.
+        // Never touch ourselves, even if our bundle id is somehow in the list.
         if bundleId == selfBundleId || app.processIdentifier == selfPid { continue }
+        if app.isTerminated { continue }
 
-        // Fullscreen apps can sit in a dedicated Space and ignore a hide request
-        // while they remain active. Pull focus back first, then hide and quit.
-        if app.isActive {
-          NSRunningApplication.current.activate(options: [.activateIgnoringOtherApps])
-        }
-
-        app.hide()
         _ = app.terminate()
         waitForTermination(of: app, grace: terminationGrace)
-        acted.append(app.localizedName ?? bundleId)
+        results.append([
+          "bundleId": bundleId,
+          "name": app.localizedName ?? bundleId,
+          "success": app.isTerminated,
+          "reason": app.isTerminated ? "quit" : "failed",
+        ])
       }
     }
-    return acted
+    return results
+  }
+
+  private static func waitForTermination(of app: NSRunningApplication, grace: TimeInterval) {
+    guard !app.isTerminated else { return }
+
+    let deadline = Date().addingTimeInterval(grace)
+    while !app.isTerminated && deadline.timeIntervalSinceNow > 0 {
+      RunLoop.current.run(mode: .default, before: deadline)
+    }
   }
 
   /// Installed applications, for the picker shown in the session editor.
@@ -140,14 +150,5 @@ enum AppBlocker {
       let png = rep.representation(using: .png, properties: [:])
     else { return nil }
     return png.base64EncodedString()
-  }
-
-  private static func waitForTermination(of app: NSRunningApplication, grace: TimeInterval) {
-    guard !app.isTerminated else { return }
-
-    let deadline = Date().addingTimeInterval(grace)
-    while !app.isTerminated && deadline.timeIntervalSinceNow > 0 {
-      RunLoop.current.run(mode: .default, before: deadline)
-    }
   }
 }
